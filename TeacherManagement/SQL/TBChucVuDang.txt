@@ -1,0 +1,30 @@
+﻿--------- Tạo chức vụ Đảng------------------
+
+USE [QuanLyGiaoVien]
+GO
+create procedure [dbo].[ThemTBChucVuDang]  
+(  
+	@TenChucVuDang nvarchar(255)
+)  
+as  
+begin  
+   Insert into TBChucVuDang values(@TenChucVuDang)  
+End 
+go
+
+---------- Danh sách chức vụ đảng--------------
+
+USE [QuanLyGiaoVien]
+GO
+create procedure [dbo].[DanhSachTBChucVuDang]
+as  
+begin  
+   select * from TBChucVuDang  
+End 
+
+
+----------- Sửa thông tin chức vụ Đảng---------------
+
+
+
+------------ Xóa thông tin chức vụ Đảng --------------
