@@ -1,0 +1,30 @@
+﻿@model IEnumerable<TeacherManagement.Models.TBChucVuDang>
+
+<table class="table">
+    <tr>
+        <th>
+            Ma chuc vu dang
+        </th>
+        <th>
+            Ten chuc vu dang
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaChucVuDang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenChucVuDang)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "TBChucVuDang", new { id = item.MaChucVuDang }) |
+                @Html.ActionLink("Delete", "TBChucVuDang", new { id = item.MaChucVuDang }, new { onclick = "return confirm('Are sure wants to delete?');" })
+            </td>
+        </tr>
+
+    }
+
+</table>  
