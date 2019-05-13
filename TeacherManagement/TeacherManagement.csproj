@@ -136,6 +136,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\TBChucVuDangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TBGiaoVienController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -194,6 +195,7 @@
     <Compile Include="Models\TBVietSachChuyenKhao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\TBChucVuDangRepository.cs" />
+    <Compile Include="Repository\TBGiaoVienRepository.cs" />
     <Compile Include="Utils\ConnectionString.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1969,6 +1971,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\TBChucVuDang\Index.cshtml" />
+    <Content Include="Views\TBGiaoVien\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
