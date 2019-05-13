@@ -1,7 +1,10 @@
 namespace TeacherManagement.Models
 {
+    using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
     [Table("TBDKMienGiam")]
     public partial class TBDKMienGiam
@@ -14,7 +17,8 @@ namespace TeacherManagement.Models
         public int? MaChucVuChinhQuyen { get; set; }
 
         public double? TyLe { get; set; }
-        
+
+        [StringLength(255)]
         public string NoiDung { get; set; }
 
         public virtual TBChucVuChinhQuyen TBChucVuChinhQuyen { get; set; }
