@@ -4,27 +4,18 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using TeacherManagement.Models;
+using TeacherManagement.Utils;
+
 namespace TeacherManagement.Repository
 {
     public class TBChucVuDangRepository
     {
-        private SqlConnection connection;
+        private SqlConnection connection = ConnectionString.Connection();
 
-        private void Connection()
-        {
-            string connectionString = ConfigurationManager
-                                    .ConnectionStrings["TeacherManagementConnectString"].ToString();
-            // nếu chưa tồn tại connection thì mới khởi tạo đối tượng
-            if (connection == null)
-            {
-                connection = new SqlConnection(connectionString);
-            }
-        }
-
+        
         // GET: Lấy ra danh sách Chức Vụ Đảng
         public List<TBChucVuDang> GetList()
         {
-            Connection();
 
             List<TBChucVuDang> list = new List<TBChucVuDang>();
 
