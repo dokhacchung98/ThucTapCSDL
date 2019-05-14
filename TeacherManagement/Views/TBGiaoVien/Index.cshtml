@@ -35,8 +35,24 @@
                         {
                         <tr>
                             <td>@item.TenGV</td>
-                            <td>@item.TBChiTietHocHams.ToList()[0].TBHocHam.TenHocHam</td>
-                            <td>@item.TBChiTietHocVis.ToList()[0].TBHocVi.TenHocVi</td>
+                            @if (@item.TBChiTietHocHams.ToList().Count > 0)
+                            {
+                                <td>@item.TBChiTietHocHams.ToList()[0].TBHocHam.TenHocHam</td>
+                            }
+                            else
+                            {
+                                <td>Không có dữ liệu</td>
+                            }
+                            @if (@item.TBChiTietHocVis.ToList().Count > 0)
+                            {
+                                <td>@item.TBChiTietHocVis.ToList()[0].TBHocVi.TenHocVi</td>
+                            }
+                            else
+                            {
+                                <td>Không có dữ liệu</td>
+                            }
+
+
                             @if (@item.TBChiTietChucVuChinhQuyens.ToList().Count > 0)
                             {
                                 <td>@item.TBChiTietChucVuChinhQuyens.ToList()[0].TBDonVi.TenDonVi</td>
