@@ -6,57 +6,73 @@
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="#">Dashboard</a>
+            <a href="#">Quản Lý Giáo Viên</a>
         </li>
-        <li class="breadcrumb-item active">Tables</li>
+        <li class="breadcrumb-item active">Danh sách Giáo Viên</li>
     </ol>
     <!-- DataTables Example -->
     <div class="card mb-3">
         <div class="card-header">
             <i class="fas fa-table"></i>
-            Data Table Example
+            Danh Sách Giáo Viên
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Ngay Sinh</th>
-                            <th>Email</th>
-                            <th>SDT</th>
-                            <th>Dia Chi</th>
+                            <th>Tên Giáo Viên</th>
+                            <th>Học Hàm</th>
+                            <th>Học Vị</th>
+                            <th>Đơn Vị</th>
+                            <th>Chuyên Môn</th>
+                            <th>Thao tác</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                        </tr>
-                    </tfoot>
+                    
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>@item.TenGV</td>
-                                <td>@item.NgaySinh</td>
-                                <td>@item.Email</td>
-                                <td>@item.SDT</td>
-                                <td>@item.DiaChi</td>
-                            </tr>
+                        <tr>
+                            <td>@item.TenGV</td>
+                            <td>@item.TBChiTietHocHams.ToList()[0].TBHocHam.TenHocHam</td>
+                            <td>@item.TBChiTietHocVis.ToList()[0].TBHocVi.TenHocVi</td>
+                            @if (@item.TBChiTietChucVuChinhQuyens.ToList().Count > 0)
+                            {
+                                <td>@item.TBChiTietChucVuChinhQuyens.ToList()[0].TBDonVi.TenDonVi</td>
+                            }
+                            else
+                            {
+                                <td>Không có dữ liệu</td>
+                            }
+
+                            @if (@item.TBChiTietChuVuChuyenMons.ToList().Count > 0)
+                            {
+                                <td>@item.TBChiTietChuVuChuyenMons.ToList()[0].TBChucVuChuyenMon.TenChuVuCM</td>
+                            }
+                            else
+                            {
+                                <td>Không có dữ liệu</td>
+                            }
+
+                            <td>
+                                <a class="view" href="#" style="color: #2ecc71">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a class="edit" href="#" style="color: #2980b9">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a class="delete" href="#" style="color: #e74c3c">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
     </div>
-    <p class="small text-center text-muted my-5">
-        <em>More table examples coming soon...</em>
-    </p>
+   
 </div>
 <!-- /.container-fluid -->
