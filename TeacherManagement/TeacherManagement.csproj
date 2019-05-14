@@ -134,8 +134,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\TBChucVuDangController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TBGiaoVienController.cs" />
+    <Compile Include="DTOs\GiaoVienChuyenMonDTO.cs" />
+    <Compile Include="DTOs\GiaoVienDonViDTO.cs" />
+    <Compile Include="DTOs\GiaoVienHocHamDTO.cs" />
+    <Compile Include="DTOs\GiaoVienHocViDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -193,8 +197,7 @@
     <Compile Include="Models\TBVietBaiBaoKhoaHoc.cs" />
     <Compile Include="Models\TBVietSachChuyenKhao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\TBChucVuDangRepository.cs" />
-    <Compile Include="Utils\ConnectionString.cs" />
+    <Compile Include="Repository\TBGiaoVienRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\css\sb-admin.css" />
@@ -1968,7 +1971,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\TBChucVuDang\Index.cshtml" />
+    <Content Include="Views\TBGiaoVien\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
