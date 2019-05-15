@@ -136,8 +136,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TBGiaoVienController.cs" />
+    <Compile Include="DTOs\GiaoVienChucVuDangDTO.cs" />
     <Compile Include="DTOs\GiaoVienChuyenMonDTO.cs" />
     <Compile Include="DTOs\GiaoVienDonViDTO.cs" />
+    <Compile Include="DTOs\GiaoVienDTO.cs" />
     <Compile Include="DTOs\GiaoVienHocHamDTO.cs" />
     <Compile Include="DTOs\GiaoVienHocViDTO.cs" />
     <Compile Include="Global.asax.cs">
@@ -200,12 +202,13 @@
     <Compile Include="Repository\TBGiaoVienRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\css\bootstrap.min.css" />
+    <Content Include="Assets\css\detail.css" />
     <Content Include="Assets\css\sb-admin.css" />
     <Content Include="Assets\css\sb-admin.min.css" />
-    <Content Include="Assets\js\demo\chart-area-demo.js" />
-    <Content Include="Assets\js\demo\chart-bar-demo.js" />
-    <Content Include="Assets\js\demo\chart-pie-demo.js" />
-    <Content Include="Assets\js\demo\datatables-demo.js" />
+    <Content Include="Assets\img\default-avatar.png" />
+    <Content Include="Assets\js\bootstrap.min.js" />
+    <Content Include="Assets\js\jquery.min.js" />
     <Content Include="Assets\js\sb-admin.js" />
     <Content Include="Assets\js\sb-admin.min.js" />
     <Content Include="Assets\vendor\bootstrap\js\bootstrap.bundle.js" />
@@ -1972,6 +1975,7 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\TBGiaoVien\Index.cshtml" />
+    <Content Include="Views\TBGiaoVien\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
