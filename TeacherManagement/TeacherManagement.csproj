@@ -138,13 +138,14 @@
     <Compile Include="Controllers\TBGiaoVienController.cs" />
     <Compile Include="DTOs\GiaoVienChucVuDangDTO.cs" />
     <Compile Include="DTOs\GiaoVienChuyenMonDTO.cs" />
-    <Compile Include="DTOs\GiaoVienDonViDTO.cs" />
+    <Compile Include="DTOs\GiaoVienCVChinhQuyenDTO.cs" />
     <Compile Include="DTOs\GiaoVienDTO.cs" />
     <Compile Include="DTOs\GiaoVienHocHamDTO.cs" />
     <Compile Include="DTOs\GiaoVienHocViDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FormatDateTimeExtention.cs" />
     <Compile Include="Models\TBBaiBao.cs" />
     <Compile Include="Models\TBBienSoanSach.cs" />
     <Compile Include="Models\TBChiTietChucVuChinhQuyen.cs" />
@@ -1976,6 +1977,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\TBGiaoVien\Index.cshtml" />
     <Content Include="Views\TBGiaoVien\Detail.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThongTinGiaoVien.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

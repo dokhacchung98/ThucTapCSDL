@@ -17,7 +17,7 @@ namespace TeacherManagement.Models
         public int? MaGV { get; set; }
 
         [Column(TypeName = "date")]
-        public DateTime? ThoiDiemNhan { get; set; }
+        public DateTime ThoiDiemNhan { get; set; }
 
         public virtual TBGiaoVien TBGiaoVien { get; set; }
 

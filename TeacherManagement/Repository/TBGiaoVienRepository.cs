@@ -90,7 +90,7 @@ namespace TeacherManagement.Repository
                     );
                 }
                 // Lấy ra đơn vị hiện tại của giáo viên
-                GiaoVienDonViDTO giaoVienDonViDTO = DonViGiaoVienHienTai(giaoVienId);
+                GiaoVienCVChinhQuyenDTO giaoVienDonViDTO = DonViGiaoVienHienTai(giaoVienId);
                 List<TBChiTietChucVuChinhQuyen> tBChiTietChucVuChinhQuyens = new List<TBChiTietChucVuChinhQuyen>();
                 if (giaoVienDonViDTO != null)
                 {
@@ -174,7 +174,7 @@ namespace TeacherManagement.Repository
             return null;
         }
 
-        public GiaoVienDonViDTO DonViGiaoVienHienTai(int giaoVienId)
+        public GiaoVienCVChinhQuyenDTO DonViGiaoVienHienTai(int giaoVienId)
         {
             SqlCommand conn = new SqlCommand("dbo.DonViHienTai", connection)
             {
@@ -191,7 +191,7 @@ namespace TeacherManagement.Repository
 
             if (dataTable.Rows.Count > 0)
             {
-                GiaoVienDonViDTO giaoVienDonViDTO = new GiaoVienDonViDTO
+                GiaoVienCVChinhQuyenDTO giaoVienDonViDTO = new GiaoVienCVChinhQuyenDTO
                 {
                     Ma = Convert.ToInt32(dataTable.Rows[0]["Ma"]),
                     MaGV = Convert.ToInt32(dataTable.Rows[0]["MaGV"]),
@@ -303,6 +303,37 @@ namespace TeacherManagement.Repository
             return null;
         }
 
+        public GiaoVienCVChinhQuyenDTO ChucVuChinhQuyenHienTai(int giaoVienId)
+        {
+            SqlCommand conn = new SqlCommand("dbo.ChucVuChinhQuyenHienTai", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = giaoVienId;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+
+            if (dataTable.Rows.Count > 0)
+            {
+                GiaoVienCVChinhQuyenDTO giaoVienChucVuCQDTO = new GiaoVienCVChinhQuyenDTO
+                {
+                    MaGV = Convert.ToInt32(dataTable.Rows[0]["MaGV"]),
+                    ThoiDiemNhan = Convert.ToDateTime(dataTable.Rows[0]["ThoiDiemNhan"]),
+                    ThoiDiemKetThuc = Convert.ToDateTime(dataTable.Rows[0]["ThoiDiemKetThuc"]),
+                    TenChucVuChinhQuyen = Convert.ToString(dataTable.Rows[0]["TenChucVuChinhQuyen"])
+                };
+
+                return giaoVienChucVuCQDTO;
+            }
+
+            return null;
+        }
+
         #endregion
 
         #region Thông tin theo lịch sử của giáo viên
@@ -360,24 +391,29 @@ namespace TeacherManagement.Repository
             }
 
             // Lấy lịch sử đơn vị của giáo viên
-            List<GiaoVienDonViDTO> donViDTOs = LichSuDonVi(maGV);
+            List<GiaoVienCVChinhQuyenDTO> chucVuChinhQuyenDTOs = LichSuCVChinhQuyen(maGV);
 
             List<TBChiTietChucVuChinhQuyen> tBChiTietChucVuChinhQuyens = new List<TBChiTietChucVuChinhQuyen>();
 
-            if (donViDTOs.Count > 0)
+            if (chucVuChinhQuyenDTOs.Count > 0)
             {
-                foreach (var donVi in donViDTOs)
+                foreach (var chucVuChinhQuyen in chucVuChinhQuyenDTOs)
                 {
                     tBChiTietChucVuChinhQuyens.Add(new TBChiTietChucVuChinhQuyen
                     {
-                        Ma = donVi.Ma,
-                        MaGV = donVi.MaGV,
-                        ThoiDiemNhan = donVi.ThoiDiemNhan,
-                        ThoiDiemKetThuc = donVi.ThoiDiemKetThuc,
+                        Ma = chucVuChinhQuyen.Ma,
+                        MaGV = chucVuChinhQuyen.MaGV,
+                        ThoiDiemNhan = chucVuChinhQuyen.ThoiDiemNhan,
+                        ThoiDiemKetThuc = chucVuChinhQuyen.ThoiDiemKetThuc,
                         TBDonVi = new TBDonVi
                         {
-                            MaDonVi = donVi.MaDonVi,
-                            TenDonVi = donVi.TenDonVi
+                            MaDonVi = chucVuChinhQuyen.MaDonVi,
+                            TenDonVi = chucVuChinhQuyen.TenDonVi
+                        },
+                        TBChucVuChinhQuyen = new TBChucVuChinhQuyen
+                        {
+                            MaChucVuChinhQuyen = chucVuChinhQuyen.MaChucVuCQ,
+                            TenChucVuChinhQuyen = chucVuChinhQuyen.TenChucVuChinhQuyen
                         }
                     });
                 }
@@ -464,9 +500,9 @@ namespace TeacherManagement.Repository
             return list;
         }
 
-        public List<GiaoVienDonViDTO> LichSuDonVi(int maGV)
+        public List<GiaoVienCVChinhQuyenDTO> LichSuCVChinhQuyen(int maGV)
         {
-            SqlCommand conn = new SqlCommand("dbo.LichSuDonVi", connection)
+            SqlCommand conn = new SqlCommand("dbo.LichSuCVChinhQuyen", connection)
             {
                 CommandType = CommandType.StoredProcedure,
             };
@@ -479,17 +515,19 @@ namespace TeacherManagement.Repository
 
             sqlDataAdapter.Fill(dataTable);
 
-            List<GiaoVienDonViDTO> list = new List<GiaoVienDonViDTO>();
+            List<GiaoVienCVChinhQuyenDTO> list = new List<GiaoVienCVChinhQuyenDTO>();
             if (dataTable.Rows.Count > 0)
             {
                 foreach (DataRow dr in dataTable.Rows)
                 {
-                    list.Add(new GiaoVienDonViDTO
+                    list.Add(new GiaoVienCVChinhQuyenDTO
                     {
                         Ma = Convert.ToInt32(dr["Ma"]),
                         MaGV = Convert.ToInt32(dr["MaGV"]),
                         TenDonVi = Convert.ToString(dr["TenDonVi"]),
                         MaDonVi = Convert.ToInt32(dr["MaDonVi"]),
+                        MaChucVuCQ = Convert.ToInt32(dr["MaChucVuCQ"]),
+                        TenChucVuChinhQuyen = Convert.ToString(dr["TenChucVuChinhQuyen"]),
                         ThoiDiemNhan = Convert.ToDateTime(dr["ThoiDiemNhan"]),
                         ThoiDiemKetThuc = Convert.ToDateTime(dr["ThoiDiemKetThuc"])
                     });

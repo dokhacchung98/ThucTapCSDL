@@ -1,0 +1,267 @@
+﻿@model TeacherManagement.Models.TBGiaoVien
+@using TeacherManagement.Models
+@using TeacherManagement.DTOs
+@using TeacherManagement.Helpers
+@{
+    GiaoVienHocHamDTO hocHamHienTai = ViewBag.HocHamHienTai;
+
+    GiaoVienHocViDTO hocViHienTai = ViewBag.HocViHienTai;
+
+    GiaoVienCVChinhQuyenDTO donViHienTai = ViewBag.DonViGiaoVienHienTai;
+
+    GiaoVienChuyenMonDTO chuyenMonHienTai = ViewBag.ChucVuChuyenMonHienTai;
+
+    GiaoVienCVChinhQuyenDTO chucVuCQHienTai = ViewBag.ChucVuChinhQuyenHienTai;
+
+    GiaoVienChucVuDangDTO chucVuDang = ViewBag.ChucVuDang;
+}
+
+<div class="container mb-4 main-container">
+    <div class="row">
+        <div class="col-lg-4 pb-5" style="height:100%; box-shadow: none; padding-top: 50px;">
+            <div class="author-card pb-3">
+                <div class="author-card-profile">
+                    <div class="author-card-avatar" style="width:100px; height:100px; ">
+                        <img class="img-profile rounded-circle avatar"
+                             src="~/Assets/img/default-avatar.png" style="width:100%; height:100%" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Orders Table-->
+        <div class="col-lg-8 pb-5 tab-content" id="v-pills-tabContent">
+            <div class="form-horizontal">
+                <div class="title-part">I. Thông tin cơ bản của giáo viên</div>
+                <div class="information-teacher">
+                    <div class="form-group">
+                        <label class="label">Tên Giáo Viên: </label>
+                        @Html.EditorFor(model => model.TenGV, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label">Ngày Sinh: </label>
+                        @Html.EditorFor(model => model.NgaySinh,new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label">Số Điện Thoại: </label>
+                        @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label">Địa Chỉ: </label>
+                        @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label">Chức Vụ Đảng: </label>
+                        <input class="form-control" type="text" value="@chucVuDang.TenChucVuDang" disabled />
+                    </div>
+
+                    <div class="form-group">
+                        <label class="label">Giới Tính: </label>
+                        @if (Model.GioiTinh == true)
+                        {
+                            <input class="form-control" type="text" value="Nam" disabled />
+                        }
+                        else
+                        {
+                            <input class="form-control" type="text" value="Nữ" disabled />
+                        }
+                    </div>
+                </div>
+
+                <div class="title-part">II. Thông tin giáo viên</div>
+                <div class="information-teacher">
+                    <!-- hoc ham giao vien -->
+                    <div class="title-sub-part">II.1. Quá trình Học Hàm</div>
+                    <div class="title-sub-part">II.1.a. Học Hàm Hiện Tại</div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Tên Học Hàm</th>
+                                <th scope="col">Thời Điểm Nhận</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>@hocHamHienTai.TenHocHam</th>
+                                <td>@Html.FormatDateTime2Date(@hocHamHienTai.ThoiDiemNhan)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="title-sub-part">II.1.b. Lịch Sử Học Hàm Của Giáo Viên</div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Tên Học Hàm</th>
+                                <th scope="col">Thời Điểm Nhận</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (TBChiTietHocHam hocHam in Model.TBChiTietHocHams)
+                            {
+                                <tr>
+                                    <th>@hocHam.TBHocHam.TenHocHam</th>
+                                    <td>@Html.FormatDateTime2Date(@hocHam.ThoiDiemNhan)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!--// hoc ham giao vien -->
+                    <!-- hoc vi giao vien -->
+                    <div class="title-sub-part">II.2. Quá trình Học Vị</div>
+                    <div class="title-sub-part">II.2.a. Học Vị Hiện Tại</div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Tên Học Vị</th>
+                                <th scope="col">Thời Điểm Nhận</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>@hocViHienTai.TenHocVi</th>
+                                <td>@Html.FormatDateTime2Date(@hocViHienTai.ThoiDiemNhan)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="title-sub-part">II.2.b. Lịch Sử Học Vị Của Giáo Viên</div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Tên Học Vị</th>
+                                <th scope="col">Thời Điểm Nhận</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (TBChiTietHocVi hocVi in Model.TBChiTietHocVis)
+                            {
+                                <tr>
+                                    <th>@hocVi.TBHocVi.TenHocVi</th>
+                                    <td>@Html.FormatDateTime2Date(@hocVi.ThoiDiemNhan)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!--// hoc vi giao vien -->
+                    <!-- Don vi giao vien-->
+                    <div class="title-sub-part">II.3 Quá Trình Đơn Vị</div>
+                    <div class="title-sub-part">II.3.a. Đơn Vị Hiện Tại</div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Tên Đơn Vị</th>
+                                <th scope="col">Thời Điểm Nhận</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>@donViHienTai.TenDonVi</th>
+                                <td>@Html.FormatDateTime2Date(@donViHienTai.ThoiDiemNhan)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="title-sub-part">II.3.b. Lịch Sử Đơn Vị Của Giáo Viên</div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Tên Đơn Vị</th>
+                                <th scope="col">Thời Điểm Nhận</th>
+                                <th scope="col">Thời Điểm Kết Thúc</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (TBChiTietChucVuChinhQuyen donVi in Model.TBChiTietChucVuChinhQuyens)
+                            {
+                                <tr>
+                                    <th>@donVi.TBDonVi.TenDonVi</th>
+                                    <td>@Html.FormatDateTime2Date(@donVi.ThoiDiemNhan)</td>
+                                    <td>@Html.FormatDateTime2Date(@donVi.ThoiDiemKetThuc)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!--// Don vi giao vien-->
+                    <!-- Chuyen mon giao vien-->
+                    <div class="title-sub-part">II.4 Qúa Trình Chức Vụ Chuyên Môn</div>
+                    <div class="title-sub-part">II.4.a. Chức Vụ Chuyên Môn Hiện Tại</div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Tên CV Chuyên Môn</th>
+                                <th scope="col">Thời Điểm Nhận</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>@chuyenMonHienTai.TenChucVuCM</th>
+                                <td>@Html.FormatDateTime2Date(@chuyenMonHienTai.ThoiDiemNhan)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="title-sub-part">II.4.b. Lịch Sử CV Chuyên Môn Của Giáo Viên</div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Tên CV Chuyên Môn</th>
+                                <th scope="col">Thời Điểm Nhận</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (TBChiTietChuVuChuyenMon chucVuChuyenMon in Model.TBChiTietChuVuChuyenMons)
+                            {
+                                <tr>
+                                    <th>@chucVuChuyenMon.TBChucVuChuyenMon.TenChuVuCM</th>
+                                    <td>@Html.FormatDateTime2Date(@chucVuChuyenMon.ThoiDiemNhan)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!--// Chuyen mon giao vien-->
+                    <!-- chuc vu chinh quyen-->
+                    <div class="title-sub-part">II.5 Qúa Trình Chức Vụ Chính Quyền</div>
+                    <div class="title-sub-part">II.5.a. Chức Vụ Chính Quyền Hiện Tại</div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Tên CV Chính Quyền</th>
+                                <th scope="col">Thời Điểm Nhận</th>
+                                <th scope="col">Thời Điểm Kết Thúc</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>@chucVuCQHienTai.TenChucVuChinhQuyen</th>
+                                <td>@Html.FormatDateTime2Date(@chucVuCQHienTai.ThoiDiemNhan)</td>
+                                <td>@Html.FormatDateTime2Date(@chucVuCQHienTai.ThoiDiemKetThuc)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="title-sub-part">II.5.b. Lịch Sử Chức Vụ Chính Quyền Của Giáo Viên</div>
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Tên CV Chính Quyền</th>
+                                <th scope="col">Thời Điểm Nhận</th>
+                                <th scope="col">Thời Điểm Kết Thúc</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (TBChiTietChucVuChinhQuyen chucVuChinhQuyen in Model.TBChiTietChucVuChinhQuyens)
+                            {
+                                <tr>
+                                    <th>@chucVuChinhQuyen.TBChucVuChinhQuyen.TenChucVuChinhQuyen</th>
+                                    <td>@Html.FormatDateTime2Date(@chucVuChinhQuyen.ThoiDiemNhan)</td>
+                                    <td>@Html.FormatDateTime2Date(@chucVuChinhQuyen.ThoiDiemKetThuc)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!--// chuc vu chinh quyen-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

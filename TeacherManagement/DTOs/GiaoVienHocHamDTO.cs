@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +12,8 @@ namespace TeacherManagement.DTOs
         public int MaGV { get; set; }
         public int MaHocHam { get; set; }
         public string TenHocHam { get; set; }
-        public DateTime? ThoiDiemNhan { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime ThoiDiemNhan { get; set; }
     }
 }

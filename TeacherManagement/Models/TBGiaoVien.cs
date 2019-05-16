@@ -41,8 +41,7 @@ namespace TeacherManagement.Models
         public string TenGV { get; set; }
 
         [Column(TypeName = "date")]
-        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
-        public DateTime? NgaySinh { get; set; }
+        public DateTime NgaySinh { get; set; }
 
         [StringLength(255)]
         public string Email { get; set; }

@@ -19,6 +19,13 @@ namespace TeacherManagement.Controllers
 
         public ActionResult Detail(string id)
         {
+            var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(id));
+
+            return View(giaoVien);
+        }
+
+        public PartialViewResult ThongTinGiaoVien(string id)
+        {
             var hocHamHienTai = _repository.HocHamGiaoVienHienTai(Convert.ToInt32(id));
             ViewBag.HocHamHienTai = hocHamHienTai;
 
@@ -34,9 +41,12 @@ namespace TeacherManagement.Controllers
             var chucVuDangHienTai = _repository.ChucVuDangHienTai(Convert.ToInt32(id));
             ViewBag.ChucVuDang = chucVuDangHienTai;
 
+            var chucVuCQHienTai = _repository.ChucVuChinhQuyenHienTai(Convert.ToInt32(id));
+            ViewBag.ChucVuChinhQuyenHienTai = chucVuCQHienTai;
+
             var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(id));
 
-            return View(giaoVien);
+            return PartialView("_ThongTinGiaoVien", giaoVien);
         }
     }
 }

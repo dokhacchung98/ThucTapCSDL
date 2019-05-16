@@ -11,6 +11,6 @@ namespace TeacherManagement.DTOs
         public int MaGV { get; set; }
         public int MaChucVuCM { get; set; }
         public string TenChucVuCM { get; set; }
-        public DateTime? ThoiDiemNhan { get; set; }
+        public DateTime ThoiDiemNhan { get; set; }
     }
 }
