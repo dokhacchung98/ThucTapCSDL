@@ -1,0 +1,35 @@
+﻿@model IEnumerable<TeacherManagement.DTOs.DonViNhanSuDTO>
+    @using TeacherManagement.Helpers
+    <br />
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên Giáo Viên</th>
+                        <th>Chức Vụ</th>
+                        <th>Học Hàm</th>
+                        <th>Học Vị</th>
+                        <th>Năm Gia Nhập</th>
+                        <th>Năm Kết Thúc</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                    <tr>
+                        <th>
+                            <a href="/TBGiaoVien/Detail/@item.MaGV">@item.TenGV</a>
+                        </th>
+                        <th>@item.ChucVu</th>
+                        <th>@item.HocHam</th>
+                        <th>@item.HocVi</th>
+                        <th>@Html.FormatDateTime2Date(@item.ThoiGianNhan)</th>
+                        <th>@Html.FormatDateTime2Date(@item.ThoiGianKetThuc)</th>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>

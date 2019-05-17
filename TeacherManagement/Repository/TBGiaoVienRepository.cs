@@ -16,7 +16,7 @@ namespace TeacherManagement.Repository
         {
             string connectionString = ConfigurationManager
                                     .ConnectionStrings["TeacherManagementConnectString"].ToString();
-            // nếu chưa tồn tại connection thì mới khởi tạo đối tượng
+            // nếu chưa tồn tại _connection thì mới khởi tạo đối tượng
             if (connection == null)
             {
                 connection = new SqlConnection(connectionString);
