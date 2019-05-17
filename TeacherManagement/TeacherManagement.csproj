@@ -135,7 +135,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TBDonViController.cs" />
     <Compile Include="Controllers\TBGiaoVienController.cs" />
+    <Compile Include="DTOs\DonViDTO.cs" />
+    <Compile Include="DTOs\DonViNhanSuDTO.cs" />
     <Compile Include="Controllers\TongHopController.cs" />
     <Compile Include="DTOs\GiaoVienChucVuDangDTO.cs" />
     <Compile Include="DTOs\GiaoVienChuyenMonDTO.cs" />
@@ -207,6 +210,7 @@
     <Compile Include="Models\TBVietBaiBaoKhoaHoc.cs" />
     <Compile Include="Models\TBVietSachChuyenKhao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\TBDonViRepository.cs" />
     <Compile Include="Repository\TBGiaoVienRepository.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1986,6 +1990,10 @@
     <Content Include="Views\TBGiaoVien\Detail.cshtml" />
     <Content Include="Views\TBGiaoVien\_ThongTinGiaoVien.cshtml" />
     <Content Include="Views\TBGiaoVien\_QuaTrinhHocTap.cshtml" />
+    <Content Include="Views\TBDonVi\Index.cshtml" />
+    <Content Include="Views\TBDonVi\Detail.cshtml" />
+    <Content Include="Views\TBDonVi\_DanhSachGiaoVienHienNay.cshtml" />
+    <Content Include="Views\TBDonVi\_LichSuNhanSu.cshtml" />
     <Content Include="Views\TongHop\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

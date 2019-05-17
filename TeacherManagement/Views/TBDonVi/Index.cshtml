@@ -1,0 +1,58 @@
+﻿@model IEnumerable<TeacherManagement.DTOs.DonViDTO>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Quản Lý Giáo Viên</a>
+        </li>
+        <li class="breadcrumb-item active">Danh sách Đơn Vị</li>
+    </ol>
+    <!-- DataTables Example -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            Danh sách Đơn Vị
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Mã Đơn Vị</th>
+                            <th>Tên Đơn Vị</th>
+                            <th>Số Lượng Giáo Viên Hiện Nay</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.MaDonVi</td>
+                                <td>@item.TenDonVi</td>
+                                <td>@item.SoLuong</td>
+                                <td>
+                                    <a class="view" href="@Url.Action("Detail", "TBDonVi", 
+                                                         new { @id = item.MaDonVi})" style="color: #2ecc71">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                    <a class="edit" href="#" style="color: #2980b9">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a class="delete" href="#" style="color: #e74c3c">
+                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->

@@ -31,6 +31,11 @@
                     <span>Danh Sách Giáo Viên</span>
                 </a>
             </li>
+
+            <li class="nav-item active">
+                <a class="nav-link" href="@Url.Action("Index","TBDonVi")">
+                    <i class="fa fa-object-group"></i>
+                    <span>Danh Sách Đơn Vị</span>
             <li class='nav-item @(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower().Equals("tonghop") ? "active" : "")'>
                 <a class="nav-link" href="@Url.Action("Index","TongHop")">
                     <i class="fa fa-file-alt"></i>

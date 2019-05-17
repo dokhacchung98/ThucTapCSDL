@@ -120,10 +120,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>@hocViHienTai.TenHocVi</th>
-                                <td>@Html.FormatDateTime2Date(@hocViHienTai.ThoiDiemNhan)</td>
-                            </tr>
+                            @if (hocViHienTai != null)
+                            {
+                                <tr>
+                                    <th>
+                                        @hocViHienTai.TenHocVi
+                                    </th>
+                                    <td>@Html.FormatDateTime2Date(@hocViHienTai.ThoiDiemNhan)</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                     <div class="title-sub-part">II.2.b. Lịch Sử Học Vị Của Giáo Viên</div>
@@ -156,10 +161,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>@donViHienTai.TenDonVi</th>
-                                <td>@Html.FormatDateTime2Date(@donViHienTai.ThoiDiemNhan)</td>
-                            </tr>
+                            @if (donViHienTai != null)
+                            {
+                                <tr>
+                                    <th>@donViHienTai.TenDonVi</th>
+                                    <td>@Html.FormatDateTime2Date(@donViHienTai.ThoiDiemNhan)</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                     <div class="title-sub-part">II.3.b. Lịch Sử Đơn Vị Của Giáo Viên</div>
