@@ -136,6 +136,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TBGiaoVienController.cs" />
+    <Compile Include="Controllers\TongHopController.cs" />
     <Compile Include="DTOs\GiaoVienChucVuDangDTO.cs" />
     <Compile Include="DTOs\GiaoVienChuyenMonDTO.cs" />
     <Compile Include="DTOs\GiaoVienCVChinhQuyenDTO.cs" />
@@ -145,6 +146,9 @@
     <Compile Include="DTOs\GiaoVienHocViDTO.cs" />
     <Compile Include="DTOs\GiaoVienThacSiDTO.cs" />
     <Compile Include="DTOs\GiaoVienTienSiDTO.cs" />
+    <Compile Include="DTOs\AbsGiaoVienTongHopTaiDaoTaoDTO.cs" />
+    <Compile Include="DTOs\GiaoVienTongHopTaiDTO.cs" />
+    <Compile Include="DTOs\GiaoVienTongHopTaiDaoTaoDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1982,6 +1986,7 @@
     <Content Include="Views\TBGiaoVien\Detail.cshtml" />
     <Content Include="Views\TBGiaoVien\_ThongTinGiaoVien.cshtml" />
     <Content Include="Views\TBGiaoVien\_QuaTrinhHocTap.cshtml" />
+    <Content Include="Views\TongHop\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -779,5 +779,69 @@ namespace TeacherManagement.Repository
             return null;
         }
         #endregion
+
+
+        #region tổng hợp tải theo năm học
+        public IList<GiaoVienTongHopTaiDTO> TongHopTaiTheoNamHoc(string namHoc)
+        {
+            List<TBGiaoVien> giaoViens = new List<TBGiaoVien>();
+            IList<GiaoVienTongHopTaiDTO> giaoVienTongHopTais = new List<GiaoVienTongHopTaiDTO>();
+
+            SqlCommand conn = new SqlCommand("DanhSachGiaoVien", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable(); ;
+
+            sqlDataAdapter.Fill(dataTable);
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                int maGV = Convert.ToInt32(dr["MaGV"]);
+                var taiDaoTao = TongHopTaiDaoTaoCuaGiaoVienTheoNamHoc(maGV, namHoc);
+                GiaoVienDTO giaoVienDTO = ThongTinCoBan(maGV);
+
+                giaoVienTongHopTais.Add(new GiaoVienTongHopTaiDTO()
+                {
+                    GiaoVien = giaoVienDTO,
+                    TaiDaoTao = taiDaoTao
+                });
+            }
+            return giaoVienTongHopTais;
+        }
+
+        public AbsGiaoVienTongHopTaiDaoTaoDTO TongHopTaiDaoTaoCuaGiaoVienTheoNamHoc(int maGV, string namHoc)
+        {
+            SqlCommand conn = new SqlCommand("dbo.TinhTaiDaoTaoTheoGV", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@NamHoc", SqlDbType.Char).Value = namHoc.Trim();
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+
+            if (dataTable.Rows.Count > 0)
+            {
+                AbsGiaoVienTongHopTaiDaoTaoDTO taiDaoTao = new GiaoVienTongHopTaiDaoTaoDTO()
+                {
+                    MaGV = Convert.ToInt32(dataTable.Rows[0]["MaGV"]),
+                    TenGV = Convert.ToString(dataTable.Rows[0]["TenGV"]),
+                    SoTietYeuCau = Convert.ToDouble(dataTable.Rows[0]["SoTietYeuCau"]),
+                    SoTietThucTe = Convert.ToDouble(dataTable.Rows[0]["SoTietThucTe"])
+                };
+                return taiDaoTao;
+            }
+            return null;
+        }
+        #endregion
     }
 }

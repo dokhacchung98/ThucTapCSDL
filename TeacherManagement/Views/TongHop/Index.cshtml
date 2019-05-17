@@ -1,0 +1,79 @@
+﻿@model IEnumerable<TeacherManagement.DTOs.GiaoVienTongHopTaiDTO>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Quản Lý Giáo Viên</a>
+        </li>
+        <li class="breadcrumb-item active">BẢNG TỔNG HỢP TẢI CÔNG TÁC CỦA CÁN BỘ, GIÁO VIÊN</li>
+    </ol>
+    <!-- DataTables Example -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            Tổng hợp tải theo đơn vị
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead style="font-weight: 500; text-align: center;">
+                        <tr>
+                            <th class="tg-0pky" rowspan="2">STT</th>
+                            <th class="tg-0pky" rowspan="2">Họ và Tên</th>
+                            <th class="tg-0pky" colspan="3">Tải đào tạo</th>
+                            <th class="tg-0pky" colspan="3">Tải nghiên cứu khoa học</th>
+                            <th class="tg-0pky" colspan="3">Tổng tải</th>
+                        </tr>
+                        <tr>
+                            <td class="tg-0pky">Thực tải</td>
+                            <td class="tg-0pky">Tải yêu cầu</td>
+                            <td class="tg-0pky">%Đào tạo</td>
+                            <td class="tg-0pky">Thực tải</td>
+                            <td class="tg-0pky">Tải yêu cầu</td>
+                            <td class="tg-0pky">%NCKH</td>
+                            <td class="tg-0pky">Thực tải</td>
+                            <td class="tg-0pky">Tải yêu cầu</td>
+                            <td class="tg-0pky">%Tổng</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model == null || Model.Count() == 0)
+                        {
+                            <tr>
+                                <td class="tg-0lax" colspan="11" style="text-align:center;">không có dữ liệu</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            int i = 1;
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="tg-0lax">@i</td>
+                                    <td class="tg-0lax">@item.GiaoVien.TenGV</td>
+                                    <td class="tg-0lax" style="text-align:center;">@(item.TaiDaoTao == null ? "0.0" : string.Format("{0:00.0}", item.TaiDaoTao.SoTietYeuCau))</td>
+                                    <td class="tg-0lax" style="text-align:center;">@(item.TaiDaoTao == null ? "0.0" : string.Format("{0:00.0}", item.TaiDaoTao.SoTietThucTe))</td>
+                                    <td class="tg-0lax" style="text-align:center;">@(item.TaiDaoTao == null ? "0.0%" : string.Format("{0:00.0}", item.TaiDaoTao.TinhPhanTram()) + "%")</td>
+                                    <td class="tg-0lax" style="text-align:center;"></td>
+                                    <td class="tg-0lax" style="text-align:center;"></td>
+                                    <td class="tg-0lax" style="text-align:center;"></td>
+                                    <td class="tg-0lax" style="text-align:center;"></td>
+                                    <td class="tg-0lax" style="text-align:center;"></td>
+                                    <td class="tg-0lax" style="text-align:center;">@(string.Format("{0:00.0}", item.TinhTongTaiPhanTram()) + "%")</td>
+                                </tr>
+                                i++;
+                            }
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- /.container-fluid -->
