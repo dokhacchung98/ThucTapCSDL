@@ -129,6 +129,56 @@ namespace TeacherManagement.Repository
                         }
                     });
                 }
+
+                // lay thong tin dai hoc
+
+                List<GiaoVienDaiHocDTO> giaoVienDaiHocDTOs = LayThongTinDaiHoc(giaoVienId);
+                List<TBChiTietDaiHoc> tBChiTietDaiHocs = new List<TBChiTietDaiHoc>();
+                if (giaoVienDaiHocDTOs != null)
+                {
+                    foreach (GiaoVienDaiHocDTO item in giaoVienDaiHocDTOs)
+                    {
+                        tBChiTietDaiHocs.Add(
+                        new TBChiTietDaiHoc
+                        {
+                            MaGV = item.MaGV,
+                            NamTotNghiep = item.NamTotNghiep,
+                            HeDaoTao = item.HeDaoTao,
+                            NganhHoc = item.NganhHoc,
+                            NoiDaoTao = item.NoiDaoTao
+                        });
+                    }
+                }
+
+                GiaoVienThacSiDTO giaoVienThacSiDTO = LayThongTinThacSi(giaoVienId);
+                List<TBChiTietThacSi> tBChiTietThacSis = new List<TBChiTietThacSi>();
+                if (giaoVienThacSiDTO != null)
+                {
+                    tBChiTietThacSis.Add(
+                    new TBChiTietThacSi
+                    {
+                        MaGV = giaoVienThacSiDTO.MaGV,
+                        NamCapBang = giaoVienThacSiDTO.NamCapBang,
+                        TenLuanVan = giaoVienThacSiDTO.TenLuanVan,
+                        ThacSyChuyenNganh = giaoVienThacSiDTO.ThacSyChuyenNganh,
+                        NoiDaoTao = giaoVienThacSiDTO.NoiDaoTao
+                    });
+                }
+
+                GiaoVienTienSiDTO giaoVienTienSiDTO = LayThongTinTienSi(giaoVienId);
+                List<TBChiTietTienSi> tBChiTietTienSis = new List<TBChiTietTienSi>();
+                if (giaoVienTienSiDTO != null)
+                {
+                    tBChiTietTienSis.Add(
+                    new TBChiTietTienSi
+                    {
+                        MaGV = giaoVienTienSiDTO.MaGV,
+                        NamCapBang = giaoVienTienSiDTO.NamCapBang,
+                        TenLuanAn = giaoVienTienSiDTO.TenLuanAn,
+                        NoiDaoTao = giaoVienTienSiDTO.NoiDaoTao
+                    });
+                }
+
                 giaoViens.Add(new TBGiaoVien
                 {
                     MaGV = Convert.ToInt32(dr["MaGV"]),
@@ -136,7 +186,10 @@ namespace TeacherManagement.Repository
                     TBChiTietHocHams = tBChiTietHocHams,
                     TBChiTietHocVis = tBChiTietHocVis,
                     TBChiTietChucVuChinhQuyens = tBChiTietChucVuChinhQuyens,
-                    TBChiTietChuVuChuyenMons = tBChiTietChucVuChuyenMons
+                    TBChiTietChuVuChuyenMons = tBChiTietChucVuChuyenMons,
+                    TBChiTietDaiHocs = tBChiTietDaiHocs,
+                    TBChiTietThacSis = tBChiTietThacSis,
+                    TBChiTietTienSis = tBChiTietTienSis
                 });
             }
 ;
@@ -236,7 +289,7 @@ namespace TeacherManagement.Repository
                 return giaoVienHocViDTO;
             }
 
-            
+
 
             return null;
         }
@@ -346,10 +399,10 @@ namespace TeacherManagement.Repository
             List<GiaoVienHocHamDTO> hocHamDTOs = LichSuHocHam(maGV);
 
             List<TBChiTietHocHam> tBChiTietHocHams = new List<TBChiTietHocHam>();
-            
+
             if (hocHamDTOs.Count > 0)
             {
-                foreach(var hocHam in hocHamDTOs)
+                foreach (var hocHam in hocHamDTOs)
                 {
                     tBChiTietHocHams.Add(new TBChiTietHocHam
                     {
@@ -616,7 +669,7 @@ namespace TeacherManagement.Repository
             List<GiaoVienHocHamDTO> list = new List<GiaoVienHocHamDTO>();
             if (dataTable.Rows.Count > 0)
             {
-                foreach(DataRow dr in dataTable.Rows)
+                foreach (DataRow dr in dataTable.Rows)
                 {
                     list.Add(new GiaoVienHocHamDTO
                     {
@@ -630,6 +683,100 @@ namespace TeacherManagement.Repository
             }
 
             return list;
+        }
+        #endregion
+
+        #region Thông tin học vấn của giáo viên
+        public List<GiaoVienDaiHocDTO> LayThongTinDaiHoc(int giaoVienId)
+        {
+            SqlCommand conn = new SqlCommand("dbo.ChiTietDaiHoc", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = giaoVienId;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+            List<GiaoVienDaiHocDTO> list = new List<GiaoVienDaiHocDTO>();
+
+            if (dataTable.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    list.Add(new GiaoVienDaiHocDTO
+                    {
+                        MaGV = Convert.ToInt32(dr["MaGV"]),
+                        NamTotNghiep = Convert.ToDateTime(dr["NamTotNghiep"]),
+                        HeDaoTao = Convert.ToString(dr["HeDaoTao"]),
+                        NganhHoc = Convert.ToString(dr["NganhHoc"]),
+                        NoiDaoTao = Convert.ToString(dr["NuocDaoTao"])
+                    });
+                }
+            }
+            return list;
+        }
+
+        public GiaoVienThacSiDTO LayThongTinThacSi(int giaoVienId)
+        {
+            SqlCommand conn = new SqlCommand("dbo.ChiTietThacSy", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = giaoVienId;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+
+            if (dataTable.Rows.Count > 0)
+            {
+                GiaoVienThacSiDTO thacSi = new GiaoVienThacSiDTO
+                {
+                    MaGV = Convert.ToInt32(dataTable.Rows[0]["MaGV"]),
+                    NamCapBang = Convert.ToDateTime(dataTable.Rows[0]["NamCapBang"]),
+                    TenLuanVan = Convert.ToString(dataTable.Rows[0]["TenLuanVan"]),
+                    ThacSyChuyenNganh = Convert.ToString(dataTable.Rows[0]["ThacSyChuyenNganh"]),
+                    NoiDaoTao = Convert.ToString(dataTable.Rows[0]["NoiDaoTao"])
+                };
+                return thacSi;
+            }
+            return null;
+        }
+
+        public GiaoVienTienSiDTO LayThongTinTienSi(int giaoVienId)
+        {
+            SqlCommand conn = new SqlCommand("dbo.ChiTietTienSy", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = giaoVienId;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+
+            if (dataTable.Rows.Count > 0)
+            {
+                GiaoVienTienSiDTO tienSi = new GiaoVienTienSiDTO
+                {
+                    MaGV = Convert.ToInt32(dataTable.Rows[0]["MaGV"]),
+                    NamCapBang = Convert.ToDateTime(dataTable.Rows[0]["NamCapBang"]),
+                    TenLuanAn = Convert.ToString(dataTable.Rows[0]["TenLuanAn"]),
+                    NoiDaoTao = Convert.ToString(dataTable.Rows[0]["NoiDaoTao"])
+                };
+                return tienSi;
+            }
+            return null;
         }
         #endregion
     }
