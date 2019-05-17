@@ -139,9 +139,12 @@
     <Compile Include="DTOs\GiaoVienChucVuDangDTO.cs" />
     <Compile Include="DTOs\GiaoVienChuyenMonDTO.cs" />
     <Compile Include="DTOs\GiaoVienCVChinhQuyenDTO.cs" />
+    <Compile Include="DTOs\GiaoVienDaiHocDTO.cs" />
     <Compile Include="DTOs\GiaoVienDTO.cs" />
     <Compile Include="DTOs\GiaoVienHocHamDTO.cs" />
     <Compile Include="DTOs\GiaoVienHocViDTO.cs" />
+    <Compile Include="DTOs\GiaoVienThacSiDTO.cs" />
+    <Compile Include="DTOs\GiaoVienTienSiDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1978,6 +1981,7 @@
     <Content Include="Views\TBGiaoVien\Index.cshtml" />
     <Content Include="Views\TBGiaoVien\Detail.cshtml" />
     <Content Include="Views\TBGiaoVien\_ThongTinGiaoVien.cshtml" />
+    <Content Include="Views\TBGiaoVien\_QuaTrinhHocTap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

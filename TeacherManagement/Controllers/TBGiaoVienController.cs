@@ -48,5 +48,21 @@ namespace TeacherManagement.Controllers
 
             return PartialView("_ThongTinGiaoVien", giaoVien);
         }
+
+        public PartialViewResult QuaTrinhHocTap(string id)
+        {
+            var daiHoc = _repository.LayThongTinDaiHoc(Convert.ToInt32(id));
+            ViewBag.LayThongTinDaiHoc = daiHoc;
+
+            var thacSi = _repository.LayThongTinThacSi(Convert.ToInt32(id));
+            ViewBag.LayThongTinThacSi = thacSi;
+
+            var tienSi = _repository.LayThongTinTienSi(Convert.ToInt32(id));
+            ViewBag.LayThongTinTienSi = tienSi;
+
+            var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(id));
+
+            return PartialView("_QuaTrinhHocTap", giaoVien);
+        }
     }
 }
