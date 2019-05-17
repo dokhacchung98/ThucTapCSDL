@@ -31,7 +31,7 @@
                         <tr>
                             <th>@item.NganhHoc</th>
                             <th>@item.HeDaoTao</th>
-                            <th>@item.NamTotNghiep</th>
+                            <th>@Html.FormatDateTime2Date(@item.NamTotNghiep)</th>
                             <td>@item.NoiDaoTao</td>
                         </tr>
                     }
@@ -54,7 +54,7 @@
                     <tr>
                         <th>@giaoVienThacSiDTO.ThacSyChuyenNganh</th>
                         <th>@giaoVienThacSiDTO.TenLuanVan</th>
-                        <th>@giaoVienThacSiDTO.NamCapBang</th>
+                        <th>@Html.FormatDateTime2Date(@giaoVienThacSiDTO.NamCapBang)</th>
                         <td>@giaoVienThacSiDTO.NoiDaoTao</td>
                     </tr>
                 </tbody>
@@ -67,14 +67,14 @@
                 <thead class="thead-dark">
                     <tr>
                         <th scope="col">Tên luận án</th>
-                        <th scope="col">Năm cáp bằng</th>
+                        <th scope="col">Năm cấp bằng</th>
                         <th scope="col">Nơi đào tạo</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <th>@giaoVienTienSiDTO.TenLuanAn</th>
-                        <th>@giaoVienTienSiDTO.NamCapBang</th>
+                        <th>@Html.FormatDateTime2Date(@giaoVienTienSiDTO.NamCapBang)</th>
                         <th>@giaoVienTienSiDTO.NoiDaoTao</th>
                     </tr>
                 </tbody>
