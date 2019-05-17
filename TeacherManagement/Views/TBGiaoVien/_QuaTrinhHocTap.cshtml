@@ -1,0 +1,84 @@
+﻿@model TeacherManagement.Models.TBGiaoVien
+@using TeacherManagement.Models
+@using TeacherManagement.DTOs
+@using TeacherManagement.Helpers
+
+@{
+    List<GiaoVienDaiHocDTO> giaoVienDaiHocDTO = ViewBag.LayThongTinDaiHoc;
+    GiaoVienThacSiDTO giaoVienThacSiDTO = ViewBag.LayThongTinThacSi;
+    GiaoVienTienSiDTO giaoVienTienSiDTO = ViewBag.LayThongTinTienSi;
+}
+
+<div class="container mb-4 main-container">
+    <div class="title-part">Quá trình học tập</div>
+    <div class="information-teacher">
+        <!-- Thong tin dai hoc -->
+        @if (giaoVienDaiHocDTO != null)
+        {
+            <div class="title-sub-part">I. Đại học</div>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Ngành học</th>
+                        <th scope="col">Hệ đào tạo</th>
+                        <th scope="col">Năm tốt nghiệp</th>
+                        <th scope="col">Nơi đào tạo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in giaoVienDaiHocDTO)
+                    {
+                        <tr>
+                            <th>@item.NganhHoc</th>
+                            <th>@item.HeDaoTao</th>
+                            <th>@Html.FormatDateTime2Date(@item.NamTotNghiep)</th>
+                            <td>@item.NoiDaoTao</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        @if (giaoVienThacSiDTO != null)
+        {
+            <div class="title-sub-part">II. Thạc sĩ</div>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Thạc sỹ chuyên ngành</th>
+                        <th scope="col">Tên luận văn</th>
+                        <th scope="col">Năm cấp bằng</th>
+                        <th scope="col">Nơi đào tạo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>@giaoVienThacSiDTO.ThacSyChuyenNganh</th>
+                        <th>@giaoVienThacSiDTO.TenLuanVan</th>
+                        <th>@Html.FormatDateTime2Date(@giaoVienThacSiDTO.NamCapBang)</th>
+                        <td>@giaoVienThacSiDTO.NoiDaoTao</td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+        @if (giaoVienTienSiDTO != null)
+        {
+            <div class="title-sub-part">III. Tiến sĩ</div>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Tên luận án</th>
+                        <th scope="col">Năm cấp bằng</th>
+                        <th scope="col">Nơi đào tạo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>@giaoVienTienSiDTO.TenLuanAn</th>
+                        <th>@Html.FormatDateTime2Date(@giaoVienTienSiDTO.NamCapBang)</th>
+                        <th>@giaoVienTienSiDTO.NoiDaoTao</th>
+                    </tr>
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
