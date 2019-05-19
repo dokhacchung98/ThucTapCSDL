@@ -143,11 +143,15 @@
     <Compile Include="Controllers\TongHopController.cs" />
     <Compile Include="DTOs\GiaoVienChucVuDangDTO.cs" />
     <Compile Include="DTOs\GiaoVienChuyenMonDTO.cs" />
+    <Compile Include="DTOs\GiaoVienCongTacKhacDTO.cs" />
     <Compile Include="DTOs\GiaoVienCVChinhQuyenDTO.cs" />
     <Compile Include="DTOs\GiaoVienDaiHocDTO.cs" />
     <Compile Include="DTOs\GiaoVienDTO.cs" />
+    <Compile Include="DTOs\GiaoVienGiangDayDTO.cs" />
+    <Compile Include="DTOs\GiaoVienHoiDongDTO.cs" />
     <Compile Include="DTOs\GiaoVienHocHamDTO.cs" />
     <Compile Include="DTOs\GiaoVienHocViDTO.cs" />
+    <Compile Include="DTOs\GiaoVienHuongDanDTO.cs" />
     <Compile Include="DTOs\GiaoVienThacSiDTO.cs" />
     <Compile Include="DTOs\GiaoVienTienSiDTO.cs" />
     <Compile Include="DTOs\AbsGiaoVienTongHopTaiDaoTaoDTO.cs" />
@@ -157,6 +161,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CreateSchoolYearExtention.cs" />
     <Compile Include="Helpers\FormatDateTimeExtention.cs" />
     <Compile Include="Models\TBBaiBao.cs" />
     <Compile Include="Models\TBBienSoanSach.cs" />
@@ -1998,6 +2003,14 @@
     <Content Include="Views\TBDonVi\_DanhSachGiaoVienHienNay.cshtml" />
     <Content Include="Views\TBDonVi\_LichSuNhanSu.cshtml" />
     <Content Include="Views\TongHop\Index.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaHoatDong.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaHoatDongRenderResult.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaHuongDan.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaHuongDanRenderResult.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaCongTacKhacResult.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaCongTacKhac.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaGiangDay.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaGiangDayKhacResult.cshtml" />
     <Content Include="Views\ThongKeNhanLuc\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

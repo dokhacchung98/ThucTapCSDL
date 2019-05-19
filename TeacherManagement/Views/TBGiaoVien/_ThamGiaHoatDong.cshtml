@@ -1,0 +1,52 @@
+﻿@model TeacherManagement.Models.TBGiaoVien
+@{
+    ViewBag.Title = "_ThamGiaHoatDong";
+    var selectListSchoolYear = ViewBag.SelectListSchoolYear as List<SelectListItem>;
+}
+<div class="container mb-4 main-container">
+    <div class="title-part">Tham Gia Hội Đồng</div>
+    <div class="information-teacher">
+        <div class="form-group">
+            <label class="label">Năm Học: </label>
+            @Html.DropDownList("schoolYear", selectListSchoolYear, new { @class = "form-control text-box single-line", @id = "school-year-hoat-dong" })
+            <br />
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Tên hội đồng</th>
+                        <th scope="col">Tên loại hội đồng</th>
+                        <th scope="col">Số lần tham gia</th>
+                        <th scope="col">Số giờ tham gia</th>
+                        <th scope="col">Ghi chú</th>
+                    </tr>
+                </thead>
+                <tbody id="render-result-hoat-dong"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var value = '@selectListSchoolYear.ElementAt(0).Value';
+        callAjaxGetValueHD(value);
+    });
+
+    $('#school-year-hoat-dong').change(function () {
+        var value = $('#school-year-hoat-dong').val();
+        callAjaxGetValueHD(value);
+    });
+
+    function callAjaxGetValueHD(namHoc) {
+        $.ajax({
+            url: "/TBGiaoVien/ThamGiaHoiDongRenderResult?NamHoc=" + namHoc + "&id=@Model.MaGV",
+            type: 'get',
+            success: function (response) {
+                $('#render-result-hoat-dong').html(response);
+            }
+        });
+    };
+</script>
+
+
