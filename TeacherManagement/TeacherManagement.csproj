@@ -134,28 +134,38 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DinhMucController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\TBDonViController.cs" />
     <Compile Include="Controllers\TBGiaoVienController.cs" />
+    <Compile Include="Controllers\ThongKeNhanLucController.cs" />
+    <Compile Include="DTOs\DinhMucGiangDayDTO.cs" />
+    <Compile Include="DTOs\DinhMucNghienCuuKHDTO.cs" />
     <Compile Include="DTOs\DonViDTO.cs" />
     <Compile Include="DTOs\DonViNhanSuDTO.cs" />
     <Compile Include="Controllers\TongHopController.cs" />
     <Compile Include="DTOs\GiaoVienChucVuDangDTO.cs" />
     <Compile Include="DTOs\GiaoVienChuyenMonDTO.cs" />
+    <Compile Include="DTOs\GiaoVienCongTacKhacDTO.cs" />
     <Compile Include="DTOs\GiaoVienCVChinhQuyenDTO.cs" />
     <Compile Include="DTOs\GiaoVienDaiHocDTO.cs" />
     <Compile Include="DTOs\GiaoVienDTO.cs" />
+    <Compile Include="DTOs\GiaoVienGiangDayDTO.cs" />
+    <Compile Include="DTOs\GiaoVienHoiDongDTO.cs" />
     <Compile Include="DTOs\GiaoVienHocHamDTO.cs" />
     <Compile Include="DTOs\GiaoVienHocViDTO.cs" />
+    <Compile Include="DTOs\GiaoVienHuongDanDTO.cs" />
     <Compile Include="DTOs\GiaoVienThacSiDTO.cs" />
     <Compile Include="DTOs\GiaoVienTienSiDTO.cs" />
     <Compile Include="DTOs\AbsGiaoVienTongHopTaiDaoTaoDTO.cs" />
     <Compile Include="DTOs\GiaoVienTongHopTaiDTO.cs" />
     <Compile Include="DTOs\GiaoVienTongHopTaiDaoTaoDTO.cs" />
     <Compile Include="DTOs\GiaoVienTongHopTaiNCKH.cs" />
+    <Compile Include="DTOs\ThongKeNhanLucDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CreateSchoolYearExtention.cs" />
     <Compile Include="Helpers\FormatDateTimeExtention.cs" />
     <Compile Include="Models\TBBaiBao.cs" />
     <Compile Include="Models\TBBienSoanSach.cs" />
@@ -211,8 +221,10 @@
     <Compile Include="Models\TBVietBaiBaoKhoaHoc.cs" />
     <Compile Include="Models\TBVietSachChuyenKhao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\DinhMucRepository.cs" />
     <Compile Include="Repository\TBDonViRepository.cs" />
     <Compile Include="Repository\TBGiaoVienRepository.cs" />
+    <Compile Include="Repository\ThongKeNhanSuRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\css\bootstrap.min.css" />
@@ -1996,6 +2008,17 @@
     <Content Include="Views\TBDonVi\_DanhSachGiaoVienHienNay.cshtml" />
     <Content Include="Views\TBDonVi\_LichSuNhanSu.cshtml" />
     <Content Include="Views\TongHop\Index.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaHoatDong.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaHoatDongRenderResult.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaHuongDan.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaHuongDanRenderResult.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaCongTacKhacResult.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaCongTacKhac.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaGiangDay.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaGiangDayKhacResult.cshtml" />
+    <Content Include="Views\ThongKeNhanLuc\Index.cshtml" />
+    <Content Include="Views\DinhMuc\DinhMucGiangDay.cshtml" />
+    <Content Include="Views\DinhMuc\DinhMucNghienCuuKhoaHoc.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
