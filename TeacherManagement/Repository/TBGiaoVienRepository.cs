@@ -31,7 +31,6 @@ namespace TeacherManagement.Repository
         #region Thông tin hiện tại của giáo viên
         public List<TBGiaoVien> GetList()
         {
-            List<TBGiaoVien> list = new List<TBGiaoVien>();
             List<TBGiaoVien> giaoViens = new List<TBGiaoVien>();
 
             SqlCommand conn = new SqlCommand("DanhSachGiaoVien", connection)
@@ -49,151 +48,160 @@ namespace TeacherManagement.Repository
             {
                 int giaoVienId = Convert.ToInt32(dr["MaGV"]);
 
-                // Lấy ra học hàm hiện tại của giáo viên
-                GiaoVienHocHamDTO hocHamDTOs = HocHamGiaoVienHienTai(giaoVienId);
+                string tenGiaoVien = Convert.ToString(dr["TenGV"]);
+                TBGiaoVien giaoVien = ThongTinNghiepVuGiaoVien(giaoVienId, tenGiaoVien);
 
-                List<TBChiTietHocHam> tBChiTietHocHams = new List<TBChiTietHocHam>();
-                if (hocHamDTOs != null)
-                {
-                    tBChiTietHocHams.Add(new TBChiTietHocHam
-                    {
-                        Ma = hocHamDTOs.Ma,
-                        MaGV = hocHamDTOs.MaGV,
-                        MaHocHam = hocHamDTOs.MaHocHam,
-                        ThoiDiemNhan = hocHamDTOs.ThoiDiemNhan,
-                        TBHocHam = new TBHocHam
-                        {
-                            MaHocHam = hocHamDTOs.MaHocHam,
-                            TenHocHam = hocHamDTOs.TenHocHam
-                        }
-                    });
-                }
-                // Lấy ra học vị hiện tại của giáo viên
-                GiaoVienHocViDTO hocViDTO = HocViGiaoVienHienTai(giaoVienId);
-
-                List<TBChiTietHocVi> tBChiTietHocVis = new List<TBChiTietHocVi>();
-                if (hocViDTO != null)
-                {
-                    tBChiTietHocVis.Add(
-                        new TBChiTietHocVi
-                        {
-                            Ma = hocViDTO.Ma,
-                            MaGV = hocViDTO.MaGV,
-                            MaHocVi = hocViDTO.MaHocVi,
-                            ThoiDiemNhan = hocViDTO.ThoiDiemNhan,
-                            TBHocVi = new TBHocVi
-                            {
-                                MaHocVi = hocViDTO.MaHocVi,
-                                TenHocVi = hocViDTO.TenHocVi
-                            }
-                        }
-                    );
-                }
-                // Lấy ra đơn vị hiện tại của giáo viên
-                GiaoVienCVChinhQuyenDTO giaoVienDonViDTO = DonViGiaoVienHienTai(giaoVienId);
-                List<TBChiTietChucVuChinhQuyen> tBChiTietChucVuChinhQuyens = new List<TBChiTietChucVuChinhQuyen>();
-                if (giaoVienDonViDTO != null)
-                {
-                    tBChiTietChucVuChinhQuyens.Add(
-                        new TBChiTietChucVuChinhQuyen
-                        {
-                            Ma = giaoVienDonViDTO.Ma,
-                            MaGV = giaoVienDonViDTO.MaGV,
-                            MaDonVi = giaoVienDonViDTO.MaDonVi,
-                            ThoiDiemNhan = giaoVienDonViDTO.ThoiDiemNhan,
-                            ThoiDiemKetThuc = giaoVienDonViDTO.ThoiDiemKetThuc,
-                            TBDonVi = new TBDonVi
-                            {
-                                MaDonVi = giaoVienDonViDTO.MaDonVi,
-                                TenDonVi = giaoVienDonViDTO.TenDonVi
-                            }
-                        });
-                }
-
-                // lấy ra chức vụ chuyên môn hiện tại của giáo viên
-                GiaoVienChuyenMonDTO giaoVienChuyenMonDTO = ChuyenMonGiaoVienHienTai(giaoVienId);
-                List<TBChiTietChuVuChuyenMon> tBChiTietChucVuChuyenMons = new List<TBChiTietChuVuChuyenMon>();
-
-                if (giaoVienChuyenMonDTO != null)
-                {
-                    tBChiTietChucVuChuyenMons.Add(new TBChiTietChuVuChuyenMon
-                    {
-                        Ma = giaoVienChuyenMonDTO.Ma,
-                        MaGV = giaoVienChuyenMonDTO.MaGV,
-                        MaChucVuCM = giaoVienChuyenMonDTO.MaChucVuCM,
-                        ThoiDiemNhan = giaoVienChuyenMonDTO.ThoiDiemNhan,
-                        TBChucVuChuyenMon = new TBChucVuChuyenMon
-                        {
-                            MaChucVuCM = giaoVienChuyenMonDTO.MaChucVuCM,
-                            TenChuVuCM = giaoVienChuyenMonDTO.TenChucVuCM
-                        }
-                    });
-                }
-
-                // lay thong tin dai hoc
-
-                List<GiaoVienDaiHocDTO> giaoVienDaiHocDTOs = LayThongTinDaiHoc(giaoVienId);
-                List<TBChiTietDaiHoc> tBChiTietDaiHocs = new List<TBChiTietDaiHoc>();
-                if (giaoVienDaiHocDTOs != null)
-                {
-                    foreach (GiaoVienDaiHocDTO item in giaoVienDaiHocDTOs)
-                    {
-                        tBChiTietDaiHocs.Add(
-                        new TBChiTietDaiHoc
-                        {
-                            MaGV = item.MaGV,
-                            NamTotNghiep = item.NamTotNghiep,
-                            HeDaoTao = item.HeDaoTao,
-                            NganhHoc = item.NganhHoc,
-                            NoiDaoTao = item.NoiDaoTao
-                        });
-                    }
-                }
-
-                GiaoVienThacSiDTO giaoVienThacSiDTO = LayThongTinThacSi(giaoVienId);
-                List<TBChiTietThacSi> tBChiTietThacSis = new List<TBChiTietThacSi>();
-                if (giaoVienThacSiDTO != null)
-                {
-                    tBChiTietThacSis.Add(
-                    new TBChiTietThacSi
-                    {
-                        MaGV = giaoVienThacSiDTO.MaGV,
-                        NamCapBang = giaoVienThacSiDTO.NamCapBang,
-                        TenLuanVan = giaoVienThacSiDTO.TenLuanVan,
-                        ThacSyChuyenNganh = giaoVienThacSiDTO.ThacSyChuyenNganh,
-                        NoiDaoTao = giaoVienThacSiDTO.NoiDaoTao
-                    });
-                }
-
-                GiaoVienTienSiDTO giaoVienTienSiDTO = LayThongTinTienSi(giaoVienId);
-                List<TBChiTietTienSi> tBChiTietTienSis = new List<TBChiTietTienSi>();
-                if (giaoVienTienSiDTO != null)
-                {
-                    tBChiTietTienSis.Add(
-                    new TBChiTietTienSi
-                    {
-                        MaGV = giaoVienTienSiDTO.MaGV,
-                        NamCapBang = giaoVienTienSiDTO.NamCapBang,
-                        TenLuanAn = giaoVienTienSiDTO.TenLuanAn,
-                        NoiDaoTao = giaoVienTienSiDTO.NoiDaoTao
-                    });
-                }
-
-                giaoViens.Add(new TBGiaoVien
-                {
-                    MaGV = Convert.ToInt32(dr["MaGV"]),
-                    TenGV = Convert.ToString(dr["TenGV"]),
-                    TBChiTietHocHams = tBChiTietHocHams,
-                    TBChiTietHocVis = tBChiTietHocVis,
-                    TBChiTietChucVuChinhQuyens = tBChiTietChucVuChinhQuyens,
-                    TBChiTietChuVuChuyenMons = tBChiTietChucVuChuyenMons,
-                    TBChiTietDaiHocs = tBChiTietDaiHocs,
-                    TBChiTietThacSis = tBChiTietThacSis,
-                    TBChiTietTienSis = tBChiTietTienSis
-                });
+                giaoViens.Add(giaoVien);
             }
 ;
             return giaoViens;
+        }
+
+        public TBGiaoVien ThongTinNghiepVuGiaoVien(int giaoVienId, string tenGiaoVien)
+        {
+            // Lấy ra học hàm hiện tại của giáo viên
+            GiaoVienHocHamDTO hocHamDTOs = HocHamGiaoVienHienTai(giaoVienId);
+
+            List<TBChiTietHocHam> tBChiTietHocHams = new List<TBChiTietHocHam>();
+            if (hocHamDTOs != null)
+            {
+                tBChiTietHocHams.Add(new TBChiTietHocHam
+                {
+                    Ma = hocHamDTOs.Ma,
+                    MaGV = hocHamDTOs.MaGV,
+                    MaHocHam = hocHamDTOs.MaHocHam,
+                    ThoiDiemNhan = hocHamDTOs.ThoiDiemNhan,
+                    TBHocHam = new TBHocHam
+                    {
+                        MaHocHam = hocHamDTOs.MaHocHam,
+                        TenHocHam = hocHamDTOs.TenHocHam
+                    }
+                });
+            }
+            // Lấy ra học vị hiện tại của giáo viên
+            GiaoVienHocViDTO hocViDTO = HocViGiaoVienHienTai(giaoVienId);
+
+            List<TBChiTietHocVi> tBChiTietHocVis = new List<TBChiTietHocVi>();
+            if (hocViDTO != null)
+            {
+                tBChiTietHocVis.Add(
+                    new TBChiTietHocVi
+                    {
+                        Ma = hocViDTO.Ma,
+                        MaGV = hocViDTO.MaGV,
+                        MaHocVi = hocViDTO.MaHocVi,
+                        ThoiDiemNhan = hocViDTO.ThoiDiemNhan,
+                        TBHocVi = new TBHocVi
+                        {
+                            MaHocVi = hocViDTO.MaHocVi,
+                            TenHocVi = hocViDTO.TenHocVi
+                        }
+                    }
+                );
+            }
+            // Lấy ra đơn vị hiện tại của giáo viên
+            GiaoVienCVChinhQuyenDTO giaoVienDonViDTO = DonViGiaoVienHienTai(giaoVienId);
+            List<TBChiTietChucVuChinhQuyen> tBChiTietChucVuChinhQuyens = new List<TBChiTietChucVuChinhQuyen>();
+            if (giaoVienDonViDTO != null)
+            {
+                tBChiTietChucVuChinhQuyens.Add(
+                    new TBChiTietChucVuChinhQuyen
+                    {
+                        Ma = giaoVienDonViDTO.Ma,
+                        MaGV = giaoVienDonViDTO.MaGV,
+                        MaDonVi = giaoVienDonViDTO.MaDonVi,
+                        ThoiDiemNhan = giaoVienDonViDTO.ThoiDiemNhan,
+                        ThoiDiemKetThuc = giaoVienDonViDTO.ThoiDiemKetThuc,
+                        TBDonVi = new TBDonVi
+                        {
+                            MaDonVi = giaoVienDonViDTO.MaDonVi,
+                            TenDonVi = giaoVienDonViDTO.TenDonVi
+                        }
+                    });
+            }
+
+            // lấy ra chức vụ chuyên môn hiện tại của giáo viên
+            GiaoVienChuyenMonDTO giaoVienChuyenMonDTO = ChuyenMonGiaoVienHienTai(giaoVienId);
+            List<TBChiTietChuVuChuyenMon> tBChiTietChucVuChuyenMons = new List<TBChiTietChuVuChuyenMon>();
+
+            if (giaoVienChuyenMonDTO != null)
+            {
+                tBChiTietChucVuChuyenMons.Add(new TBChiTietChuVuChuyenMon
+                {
+                    Ma = giaoVienChuyenMonDTO.Ma,
+                    MaGV = giaoVienChuyenMonDTO.MaGV,
+                    MaChucVuCM = giaoVienChuyenMonDTO.MaChucVuCM,
+                    ThoiDiemNhan = giaoVienChuyenMonDTO.ThoiDiemNhan,
+                    TBChucVuChuyenMon = new TBChucVuChuyenMon
+                    {
+                        MaChucVuCM = giaoVienChuyenMonDTO.MaChucVuCM,
+                        TenChuVuCM = giaoVienChuyenMonDTO.TenChucVuCM
+                    }
+                });
+            }
+
+            // lay thong tin dai hoc
+
+            List<GiaoVienDaiHocDTO> giaoVienDaiHocDTOs = LayThongTinDaiHoc(giaoVienId);
+            List<TBChiTietDaiHoc> tBChiTietDaiHocs = new List<TBChiTietDaiHoc>();
+            if (giaoVienDaiHocDTOs != null)
+            {
+                foreach (GiaoVienDaiHocDTO item in giaoVienDaiHocDTOs)
+                {
+                    tBChiTietDaiHocs.Add(
+                    new TBChiTietDaiHoc
+                    {
+                        MaGV = item.MaGV,
+                        NamTotNghiep = item.NamTotNghiep,
+                        HeDaoTao = item.HeDaoTao,
+                        NganhHoc = item.NganhHoc,
+                        NoiDaoTao = item.NoiDaoTao
+                    });
+                }
+            }
+
+            GiaoVienThacSiDTO giaoVienThacSiDTO = LayThongTinThacSi(giaoVienId);
+            List<TBChiTietThacSi> tBChiTietThacSis = new List<TBChiTietThacSi>();
+            if (giaoVienThacSiDTO != null)
+            {
+                tBChiTietThacSis.Add(
+                new TBChiTietThacSi
+                {
+                    MaGV = giaoVienThacSiDTO.MaGV,
+                    NamCapBang = giaoVienThacSiDTO.NamCapBang,
+                    TenLuanVan = giaoVienThacSiDTO.TenLuanVan,
+                    ThacSyChuyenNganh = giaoVienThacSiDTO.ThacSyChuyenNganh,
+                    NoiDaoTao = giaoVienThacSiDTO.NoiDaoTao
+                });
+            }
+
+            GiaoVienTienSiDTO giaoVienTienSiDTO = LayThongTinTienSi(giaoVienId);
+            List<TBChiTietTienSi> tBChiTietTienSis = new List<TBChiTietTienSi>();
+            if (giaoVienTienSiDTO != null)
+            {
+                tBChiTietTienSis.Add(
+                new TBChiTietTienSi
+                {
+                    MaGV = giaoVienTienSiDTO.MaGV,
+                    NamCapBang = giaoVienTienSiDTO.NamCapBang,
+                    TenLuanAn = giaoVienTienSiDTO.TenLuanAn,
+                    NoiDaoTao = giaoVienTienSiDTO.NoiDaoTao
+                });
+            }
+
+            TBGiaoVien giaoVien = new TBGiaoVien
+            {
+                MaGV = Convert.ToInt32(giaoVienId),
+                TenGV = Convert.ToString(tenGiaoVien),
+                TBChiTietHocHams = tBChiTietHocHams,
+                TBChiTietHocVis = tBChiTietHocVis,
+                TBChiTietChucVuChinhQuyens = tBChiTietChucVuChinhQuyens,
+                TBChiTietChuVuChuyenMons = tBChiTietChucVuChuyenMons,
+                TBChiTietDaiHocs = tBChiTietDaiHocs,
+                TBChiTietThacSis = tBChiTietThacSis,
+                TBChiTietTienSis = tBChiTietTienSis
+            };
+            return giaoVien;
         }
 
         public GiaoVienChuyenMonDTO ChuyenMonGiaoVienHienTai(int giaoVienId)

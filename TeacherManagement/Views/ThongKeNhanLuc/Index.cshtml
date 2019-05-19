@@ -1,0 +1,88 @@
+﻿@model IEnumerable<TeacherManagement.DTOs.ThongKeNhanLucDTO>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Quản Lý Giáo Viên</a>
+        </li>
+        <li class="breadcrumb-item active">Thống Kê Nhân Lực</li>
+    </ol>
+    <!-- DataTables Example -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            Thống Kê Nhân Lực
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>TT</th>
+                            <th>Tên Đơn Vị, Cơ Quan</th>
+                            <th>Tổng số</th>
+                            <th>Giáo sư</th>
+                            <th>Phó Giáo Sư</th>
+                            <th>Tiến Sĩ</th>
+                            <th>Thạc Sĩ</th>
+                            <th>Đại Học</th>
+                            <th>Ghi Chú</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @{
+                            int i = 1;
+                            int tongSoCount = 0;
+                            int giaoSuCount = 0;
+                            int phoGiaoSuCount = 0;
+                            int tienSyCount = 0;
+                            int thacSyCount = 0;
+                            int daiHocCount = 0;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                @{  i++; }
+                                <td>@item.TenDonVi</td>
+                                <td>@item.TongSo</td>
+                                <td>@item.GiaoSu</td>
+                                <td>@item.PhoGiaoSu</td>
+                                <td>@item.TienSy</td>
+                                <td>@item.ThacSy</td>
+                                <td>@item.DaiHoc</td>
+                                <td>@item.GhiChu</td>
+
+                                @{ 
+                                    tongSoCount = tongSoCount + item.TongSo;
+                                    giaoSuCount = giaoSuCount + item.GiaoSu;
+                                    phoGiaoSuCount = phoGiaoSuCount + item.PhoGiaoSu;
+                                    tienSyCount = tienSyCount + item.TienSy;
+                                    thacSyCount = thacSyCount + item.ThacSy;
+                                    daiHocCount = daiHocCount + item.DaiHoc;
+                                }
+                            </tr>
+                        }
+
+                        <tr>
+                            <td></td>
+                            <td>Tông số:</td>
+                            <td>@tongSoCount</td>
+                            <td>@giaoSuCount</td>
+                            <td>@phoGiaoSuCount</td>
+                            <td>@tienSyCount</td>
+                            <td>@thacSyCount</td>
+                            <td>@daiHocCount</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->
