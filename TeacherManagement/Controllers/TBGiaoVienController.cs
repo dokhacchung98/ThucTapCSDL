@@ -173,5 +173,32 @@ namespace TeacherManagement.Controllers
             return PartialView("_ThamGiaGiangDayKhacResult", listGiangDay);
         }
         #endregion
+
+        #region Công tác nghiên cứu khoa học
+        public PartialViewResult CongTacNghienCuuKH(string id)
+        {
+            var listSchoolYear = CreateSchoolYearExtention.CreateSchoolYear();
+            IList<SelectListItem> select = new List<SelectListItem>();
+            foreach (var item in listSchoolYear)
+            {
+                select.Add(new SelectListItem()
+                {
+                    Text = item,
+                    Value = item
+                });
+            }
+            ViewBag.SelectListSchoolYear = select;
+            var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(id));
+            return PartialView("_CongTacNghienCuuKH", giaoVien);
+        }
+
+        public ActionResult CongTacNghienCuuKHRenderResult(string id, string NamHoc)
+        {
+            if (id == null || NamHoc == null) return null;
+            var nghienCuuKhoaHoc = _repository.GiaoVienNghienCuuKhoaHoc(int.Parse(id), NamHoc);
+
+            return PartialView("_CongTacNghienCuuKHResult", nghienCuuKhoaHoc);
+        }
+        #endregion
     }
 }

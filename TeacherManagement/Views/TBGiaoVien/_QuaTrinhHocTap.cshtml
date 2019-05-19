@@ -29,9 +29,9 @@
                     @foreach (var item in giaoVienDaiHocDTO)
                     {
                         <tr>
-                            <th>@item.NganhHoc</th>
-                            <th>@item.HeDaoTao</th>
-                            <th>@Html.FormatDateTime2Date(@item.NamTotNghiep)</th>
+                            <td>@item.NganhHoc</td>
+                            <td>@item.HeDaoTao</td>
+                            <td>@Html.FormatDateTime2Date(@item.NamTotNghiep)</td>
                             <td>@item.NoiDaoTao</td>
                         </tr>
                     }

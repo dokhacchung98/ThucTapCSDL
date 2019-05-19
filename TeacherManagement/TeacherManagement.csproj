@@ -147,20 +147,24 @@
     <Compile Include="DTOs\GiaoVienChucVuDangDTO.cs" />
     <Compile Include="DTOs\GiaoVienChuyenMonDTO.cs" />
     <Compile Include="DTOs\GiaoVienCongTacKhacDTO.cs" />
+    <Compile Include="DTOs\GiaoVienVietSachDTO.cs" />
     <Compile Include="DTOs\GiaoVienCVChinhQuyenDTO.cs" />
     <Compile Include="DTOs\GiaoVienDaiHocDTO.cs" />
+    <Compile Include="DTOs\GiaoVienDeTaiKHDTO.cs" />
     <Compile Include="DTOs\GiaoVienDTO.cs" />
     <Compile Include="DTOs\GiaoVienGiangDayDTO.cs" />
     <Compile Include="DTOs\GiaoVienHoiDongDTO.cs" />
     <Compile Include="DTOs\GiaoVienHocHamDTO.cs" />
     <Compile Include="DTOs\GiaoVienHocViDTO.cs" />
     <Compile Include="DTOs\GiaoVienHuongDanDTO.cs" />
+    <Compile Include="DTOs\GiaoVienNghienCuuKhoaHocDTO.cs" />
     <Compile Include="DTOs\GiaoVienThacSiDTO.cs" />
     <Compile Include="DTOs\GiaoVienTienSiDTO.cs" />
     <Compile Include="DTOs\AbsGiaoVienTongHopTaiDaoTaoDTO.cs" />
     <Compile Include="DTOs\GiaoVienTongHopTaiDTO.cs" />
     <Compile Include="DTOs\GiaoVienTongHopTaiDaoTaoDTO.cs" />
     <Compile Include="DTOs\GiaoVienTongHopTaiNCKH.cs" />
+    <Compile Include="DTOs\GiaoVienVietBaoDTO.cs" />
     <Compile Include="DTOs\ThongKeNhanLucDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2019,6 +2023,8 @@
     <Content Include="Views\ThongKeNhanLuc\Index.cshtml" />
     <Content Include="Views\DinhMuc\DinhMucGiangDay.cshtml" />
     <Content Include="Views\DinhMuc\DinhMucNghienCuuKhoaHoc.cshtml" />
+    <Content Include="Views\TBGiaoVien\_CongTacNghienCuuKH.cshtml" />
+    <Content Include="Views\TBGiaoVien\_CongTacNghienCuuKHResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
