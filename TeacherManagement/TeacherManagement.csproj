@@ -152,6 +152,7 @@
     <Compile Include="DTOs\AbsGiaoVienTongHopTaiDaoTaoDTO.cs" />
     <Compile Include="DTOs\GiaoVienTongHopTaiDTO.cs" />
     <Compile Include="DTOs\GiaoVienTongHopTaiDaoTaoDTO.cs" />
+    <Compile Include="DTOs\GiaoVienTongHopTaiNCKH.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -802,12 +802,14 @@ namespace TeacherManagement.Repository
             {
                 int maGV = Convert.ToInt32(dr["MaGV"]);
                 var taiDaoTao = TongHopTaiDaoTaoCuaGiaoVienTheoNamHoc(maGV, namHoc);
+                var taiNCKH = TongHopTaiNCKHCuaGiaoVienTheoNamHoc(maGV, namHoc);
                 GiaoVienDTO giaoVienDTO = ThongTinCoBan(maGV);
 
                 giaoVienTongHopTais.Add(new GiaoVienTongHopTaiDTO()
                 {
                     GiaoVien = giaoVienDTO,
-                    TaiDaoTao = taiDaoTao
+                    TaiDaoTao = taiDaoTao,
+                    TaiNCKH = taiNCKH
                 });
             }
             return giaoVienTongHopTais;
@@ -839,6 +841,63 @@ namespace TeacherManagement.Repository
                     SoTietThucTe = Convert.ToDouble(dataTable.Rows[0]["SoTietThucTe"])
                 };
                 return taiDaoTao;
+            }
+            return null;
+        }
+
+        public double LayDinhMucNCKH(int maGV, string namHoc)
+        {
+            double dinhMuc;
+            string date = namHoc.Substring(0, 4).ToString() + "-8-15";
+            SqlCommand conn = new SqlCommand("dbo.DinhMucNghienCuuKhoaHoc", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@namhoc", SqlDbType.Char).Value = Convert.ToDateTime(date);
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+
+            if (dataTable.Rows.Count > 0)
+            {
+                dinhMuc = Convert.ToDouble(dataTable.Rows[0]["DinhMucGioChuan"]);
+                return dinhMuc;
+            }
+            return 0;
+        }
+
+        public GiaoVienTongHopTaiNCKH TongHopTaiNCKHCuaGiaoVienTheoNamHoc(int maGV, string namHoc)
+        {
+            SqlCommand conn = new SqlCommand("dbo.TinhTaiCongTacNghienCuuKhoaHoc", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@magv", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@nam", SqlDbType.Char).Value = namHoc.Trim();
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+
+            if (dataTable.Rows.Count > 0)
+            {
+                GiaoVienTongHopTaiNCKH taiNCKH = new GiaoVienTongHopTaiNCKH()
+                {
+                    MaGV = Convert.ToInt32(dataTable.Rows[0]["MaGV"]),
+                    TenGV = Convert.ToString(dataTable.Rows[0]["TenGV"]),
+                    SoTaiNCKHYeuCau = LayDinhMucNCKH(maGV, namHoc),
+                    SoTaiNCKHThucTe = Convert.ToDouble(dataTable.Rows[0]["TaiVietSach"]) + Convert.ToDouble(dataTable.Rows[0]["TaiVietBaiBao"]) +
+                                        Convert.ToDouble(dataTable.Rows[0]["TaiNghienCuu"])
+                };
+                return taiNCKH;
             }
             return null;
         }

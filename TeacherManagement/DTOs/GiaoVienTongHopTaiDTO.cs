@@ -9,6 +9,7 @@ namespace TeacherManagement.DTOs
     {
         public GiaoVienDTO GiaoVien { get; set; }
         public AbsGiaoVienTongHopTaiDaoTaoDTO TaiDaoTao { get; set; }
+        public GiaoVienTongHopTaiNCKH TaiNCKH { get; set; }
         public double TinhTongTaiPhanTram()
         {
             return 0;
