@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TeacherManagement.Helpers;
 using TeacherManagement.Repository;
 
 namespace TeacherManagement.Controllers
 {
-    public class TBGiaoVienController: Controller
+    public class TBGiaoVienController : Controller
     {
         private readonly TBGiaoVienRepository _repository = new TBGiaoVienRepository();
         // GET: TBChucVuDang
@@ -63,6 +64,30 @@ namespace TeacherManagement.Controllers
             var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(id));
 
             return PartialView("_QuaTrinhHocTap", giaoVien);
+        }
+        public PartialViewResult ThamGiaHoatDong(string id)
+        {
+            var listSchoolYear = CreateSchoolYearExtention.CreateSchoolYear();
+            IList<SelectListItem> select = new List<SelectListItem>();
+            foreach (var item in listSchoolYear)
+            {
+                select.Add(new SelectListItem()
+                {
+                    Text = item,
+                    Value = item
+                });
+            }
+            ViewBag.SelectListSchoolYear = select;
+            var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(id));
+            return PartialView("_ThamGiaHoatDong", giaoVien);
+        }
+
+        public ActionResult ThamGiaHoiDongRenderResult(string id, string NamHoc)
+        {
+            if (id == null || NamHoc == null) return null;
+            var listThamGiaHoiDong = _repository.LayThongTinGiaovienThamGiaHoiDong(int.Parse(id), NamHoc);
+
+            return PartialView("_ThamGiaHoatDongRenderResult", listThamGiaHoiDong);
         }
     }
 }

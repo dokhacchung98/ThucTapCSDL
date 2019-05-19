@@ -1,7 +1,7 @@
 ﻿@model TeacherManagement.Models.TBGiaoVien
 
 <head>
-    <link rel="stylesheet" type="text/css" href="~/Assets/css/detail.css"/>
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/detail.css" />
 </head>
 <div class="container-fluid">
     <!-- Breadcrumbs-->
@@ -19,6 +19,9 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#menu1">Quá Trình Học Tâp</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu2">Tham Gia Hoạt Động</a>
+        </li>
     </ul>
 
     <!-- Tab panes -->
@@ -28,6 +31,9 @@
         </div>
         <div id="menu1" class="container tab-pane fade">
             @Html.Action("QuaTrinhHocTap", new { @id = Model.MaGV })
+        </div>
+        <div id="menu2" class="container tab-pane fade">
+            @Html.Action("ThamGiaHoatDong", new { @id = Model.MaGV })
         </div>
     </div>
 </div>

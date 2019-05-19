@@ -780,6 +780,99 @@ namespace TeacherManagement.Repository
         }
         #endregion
 
+        #region Thông tin tham gia hội đồng của giáo viên
+        public IList<GiaoVienHoiDongDTO> LayThongTinGiaovienThamGiaHoiDong(int maGv, string namHoc)
+        {
+            IList<GiaoVienHoiDongDTO> listGVHoiDong = new List<GiaoVienHoiDongDTO>();
+
+            SqlCommand conn = new SqlCommand("dbo.LayThongTinThamGiaHoiDongTheoNamHoc", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            List<SqlParameter> prm = new List<SqlParameter>()
+             {
+                 new SqlParameter("@NamHoc",SqlDbType.Char, 10) {Value = namHoc.Trim()},
+                 new SqlParameter("@MaGV", SqlDbType.Int) {Value = maGv}
+             };
+
+            conn.Parameters.AddRange(prm.ToArray());
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable(); ;
+
+            sqlDataAdapter.Fill(dataTable);
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                string tenHoiDong = Convert.ToString(dr["TenHoiDong"]);
+                string tenLoaiHoiDong = Convert.ToString(dr["TenLoaiHoiDong"]);
+                int soLanThamGia = Convert.ToInt32(dr["SoLanThamGia"]);
+                double soGioThamGia = Convert.ToDouble(dr["SoGioThamGia"]);
+                string ghiChu = Convert.ToString(dr["GhiChu"]);
+                listGVHoiDong.Add(new GiaoVienHoiDongDTO()
+                {
+                    MaGV = maGv,
+                    TenHoiDong = tenHoiDong,
+                    TenLoaiHoiDong = tenLoaiHoiDong,
+                    SoGioThamGia = soGioThamGia,
+                    SoLanThamGia = soLanThamGia,
+                    GhiChu = ghiChu
+                });
+            }
+
+            return listGVHoiDong;
+        }
+        #endregion
+
+        #region Thông tin hướng dẫn của giáo viên
+        public IList<GiaoVienHuongDanDTO> LayThongTinHuongDanGiaoVien(int maGV, string namHoc)
+        {
+            IList<GiaoVienHuongDanDTO> giaoVienHuongDanDTOs = new List<GiaoVienHuongDanDTO>();
+
+            SqlCommand conn = new SqlCommand("LayThongTinHuongDanTheoNamHoc", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@NamHoc", SqlDbType.Char, 10).Value = namHoc.Trim();
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable(); ;
+
+            sqlDataAdapter.Fill(dataTable);
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                string tenHV = Convert.ToString(dr["TenHocVien"]);
+                string tenDT = Convert.ToString(dr["TenDeTai"]);
+                string tenLHD = Convert.ToString(dr["TenLopHuongDan"]);
+                string tenHDT = Convert.ToString(dr["TenDeDaoTao"]);
+                string tenLoaiHD = Convert.ToString(dr["TenLoaiHD"]);
+                double gio = Convert.ToDouble(dr["SoGio"]);
+                giaoVienHuongDanDTOs.Add(new GiaoVienHuongDanDTO()
+                {
+                    MaGV = maGV,
+                    TenDeTai = tenDT,
+                    TenHeDaoTao = tenHDT,
+                    TenHocVien = tenHV,
+                    TenLoaiHuongDan = tenLoaiHD,
+                    TenLopHuongDan = tenLHD
+                });
+            }
+
+            return giaoVienHuongDanDTOs;
+        }
+        #endregion
+
+        #region Thông tin giảng dạy của giáo viên
+        #endregion
+
+        #region Thông tin giáo viên tham gia công tác khác
+        #endregion
 
         #region tổng hợp tải theo năm học
         public IList<GiaoVienTongHopTaiDTO> TongHopTaiTheoNamHoc(string namHoc)

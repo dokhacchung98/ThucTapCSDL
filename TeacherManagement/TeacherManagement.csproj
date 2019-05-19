@@ -145,8 +145,10 @@
     <Compile Include="DTOs\GiaoVienCVChinhQuyenDTO.cs" />
     <Compile Include="DTOs\GiaoVienDaiHocDTO.cs" />
     <Compile Include="DTOs\GiaoVienDTO.cs" />
+    <Compile Include="DTOs\GiaoVienHoiDongDTO.cs" />
     <Compile Include="DTOs\GiaoVienHocHamDTO.cs" />
     <Compile Include="DTOs\GiaoVienHocViDTO.cs" />
+    <Compile Include="DTOs\GiaoVienHuongDanDTO.cs" />
     <Compile Include="DTOs\GiaoVienThacSiDTO.cs" />
     <Compile Include="DTOs\GiaoVienTienSiDTO.cs" />
     <Compile Include="DTOs\AbsGiaoVienTongHopTaiDaoTaoDTO.cs" />
@@ -155,6 +157,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CreateSchoolYearExtention.cs" />
     <Compile Include="Helpers\FormatDateTimeExtention.cs" />
     <Compile Include="Models\TBBaiBao.cs" />
     <Compile Include="Models\TBBienSoanSach.cs" />
@@ -1995,6 +1998,8 @@
     <Content Include="Views\TBDonVi\_DanhSachGiaoVienHienNay.cshtml" />
     <Content Include="Views\TBDonVi\_LichSuNhanSu.cshtml" />
     <Content Include="Views\TongHop\Index.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaHoatDong.cshtml" />
+    <Content Include="Views\TBGiaoVien\_ThamGiaHoatDongRenderResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
