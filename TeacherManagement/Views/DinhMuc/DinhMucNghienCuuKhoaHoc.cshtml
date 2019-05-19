@@ -1,0 +1,58 @@
+﻿@model IEnumerable<TeacherManagement.DTOs.DinhMucNghienCuuKHDTO>
+@using TeacherManagement.Helpers
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Quản Lý Giáo Viên</a>
+        </li>
+        <li class="breadcrumb-item active">Định Mức Của Giáo Viên</li>
+    </ol>
+    <!-- DataTables Example -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            Định Mức Nghiên Cứu Khoa Học
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>TT</th>
+                            <th>Tên Giáo Viên</th>
+                            <th>Chức Vụ Chuyên Môn</th>
+                            <th>Học Hàm</th>
+                            <th>Định Mức Thời Gian</th>
+                            <th>Định Mức Giờ Chuẩn</th>
+                            <th>Ghi Chú</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @{
+                            int i = 1;
+                        }
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                @{ i++; }
+                                <td>@item.TenGV</td>
+                                <td>@item.TenChucVuChuyenMon</td>
+                                <td>@item.TenHocHam</td>
+                                <td>@item.DinhMucThoiGian</td>
+                                <td>@item.DinhMucGioChuan</td>
+                                <td>@item.GhiChu</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->
