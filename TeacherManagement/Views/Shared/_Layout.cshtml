@@ -39,6 +39,18 @@
                     <span>Danh Sách Đơn Vị</span>
                 </a>
             </li>
+
+            <li class='nav-item @(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower().Equals("dinhmuc") ? "active" : "")'>
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Định Mức</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                    <a class="dropdown-item" href="/DinhMuc/DinhMucGiangDay">Định Mức Giảng Dạy</a>
+                    <a class="dropdown-item" href="/DinhMuc/DinhMucKhoaHoc">Định Mức Nghiên Cứu KH</a>
+                </div>
+            </li>
+
             <li class='nav-item @(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower().Equals("tonghop") ? "active" : "")'>
                 <a class="nav-link" href="@Url.Action("Index","TongHop")">
                     <i class="fa fa-file-alt"></i>
