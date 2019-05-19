@@ -1,0 +1,94 @@
+﻿@model TeacherManagement.DTOs.GiaoVienNghienCuuKhoaHocDTO
+@{
+    var selectListSchoolYear = ViewBag.SelectListSchoolYear as List<SelectListItem>;
+}
+@if (Model == null)
+{
+    <tr>
+        <td class="tg-0lax" colspan="4" style="text-align:center;">không có dữ liệu</td>
+    </tr>
+}
+else
+{
+    if (Model.GiaoVienVietSach != null)
+    {
+        <div class="title-sub-part">I. Sách</div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Tên sách</th>
+                    <th scope="col">Tên loại sách</th>
+                    <th scope="col">Loại hình</th>
+                    <th scope="col">Số tác giả</th>
+                    <th scope="col">Giờ chuẩn</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.GiaoVienVietSach)
+                {
+                    <tr>
+                        <td>@item.TenSach</td>
+                        <td>@item.LoaiSach</td>
+                        <td>@item.LoaiHinh</td>
+                        <td>@item.SoTacGia</td>
+                        <td>@item.GioChuan</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    if (Model.GiaoVienVietBao != null)
+    {
+        <div class="title-sub-part">II. Bài báo</div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Tên bài báo</th>
+                    <th scope="col">Tên loại báo</th>
+                    <th scope="col">Loại hình</th>
+                    <th scope="col">Số tác giả</th>
+                    <th scope="col">Giờ chuẩn</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.GiaoVienVietBao)
+                {
+                    <tr>
+                        <td>@item.TenBaiBao</td>
+                        <td>@item.LoaiBaiBao</td>
+                        <td>@item.LoaiHinh</td>
+                        <td>@item.SoTacGia</td>
+                        <td>@item.GioChuan</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    if (Model.GiaoVienDeTaiKH != null)
+    {
+        <div class="title-sub-part">III. Đề tài khoa học</div>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Tên đề tài</th>
+                    <th scope="col">Tên đề tài</th>
+                    <th scope="col">Loại hình</th>
+                    <th scope="col">Số tác giả</th>
+                    <th scope="col">Giờ chuẩn</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.GiaoVienDeTaiKH)
+                {
+                    <tr>
+                        <td>@item.TenDeTaiNCKH</td>
+                        <td>@item.LoaiDeTai</td>
+                        <td>@item.LoaiHinh</td>
+                        <td>@item.SoTacGia</td>
+                        <td>@item.GioChuan</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}

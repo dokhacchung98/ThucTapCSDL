@@ -160,6 +160,8 @@ namespace TeacherManagement.Repository
                 }
             }
 
+            // lay thong tin thac si
+
             GiaoVienThacSiDTO giaoVienThacSiDTO = LayThongTinThacSi(giaoVienId);
             List<TBChiTietThacSi> tBChiTietThacSis = new List<TBChiTietThacSi>();
             if (giaoVienThacSiDTO != null)
@@ -175,6 +177,8 @@ namespace TeacherManagement.Repository
                 });
             }
 
+            // lay thong tin tien si
+
             GiaoVienTienSiDTO giaoVienTienSiDTO = LayThongTinTienSi(giaoVienId);
             List<TBChiTietTienSi> tBChiTietTienSis = new List<TBChiTietTienSi>();
             if (giaoVienTienSiDTO != null)
@@ -188,6 +192,7 @@ namespace TeacherManagement.Repository
                     NoiDaoTao = giaoVienTienSiDTO.NoiDaoTao
                 });
             }
+            
 
             TBGiaoVien giaoVien = new TBGiaoVien
             {
@@ -1088,6 +1093,178 @@ namespace TeacherManagement.Repository
                 return taiNCKH;
             }
             return null;
+        }
+        #endregion
+
+        #region Thông tin nghiên cứu khoa học
+        public List<GiaoVienVietSachDTO> LayGiaoVienVietSaches(int maGV, string namHoc)
+        {
+            List<GiaoVienVietSachDTO> giaoVienVietSachDTOs = new List<GiaoVienVietSachDTO>();
+
+            SqlCommand conn = new SqlCommand("dbo.ChiTietVietSachChuyenKhao", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@NamHoc", SqlDbType.Char, 10).Value = namHoc.Trim();
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable(); 
+
+            sqlDataAdapter.Fill(dataTable);
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                giaoVienVietSachDTOs.Add(new GiaoVienVietSachDTO()
+                {
+                    MaGV = maGV,
+                    TenSach = Convert.ToString(dr["TenSach"]),
+                    LoaiSach = Convert.ToString(dr["TenLoaiSach"]),
+                    VaiTro = Convert.ToString(dr["TenVaiTro"]),
+                    LoaiHinh = Convert.ToString(dr["TenLoaiHinh"]),
+                    SoTacGia = TinhSoTacGiaVietSach(Convert.ToInt32(dr["MaSach"])),
+                    NamHoc = Convert.ToString(dr["NamHoc"]),
+                    GioChuan = Convert.ToDouble(dr["QuyRaGioChuan"])
+                });
+            }
+            return giaoVienVietSachDTOs;
+        }
+
+        public List<GiaoVienDeTaiKHDTO> LayGiaoVienDeTaiKHDTOs(int maGV, string namHoc)
+        {
+            List<GiaoVienDeTaiKHDTO> giaoVienDeTaiKHDTOs = new List<GiaoVienDeTaiKHDTO>();
+
+            SqlCommand conn = new SqlCommand("dbo.ChiTietDeTaiNghienCuuKhoaHoc", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@NamHoc", SqlDbType.Char, 10).Value = namHoc.Trim();
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable(); ;
+
+            sqlDataAdapter.Fill(dataTable);
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                giaoVienDeTaiKHDTOs.Add(new GiaoVienDeTaiKHDTO()
+                {
+                    MaGV = maGV,
+                    TenDeTaiNCKH = Convert.ToString(dr["TenDeTaiKhoaHoc"]),
+                    LoaiDeTai = Convert.ToString(dr["TenLoaiDeTaiKH"]),
+                    VaiTro = Convert.ToString(dr["TenVaiTro"]),
+                    LoaiHinh = Convert.ToString(dr["TenLoaiHinh"]),
+                    SoTacGia = TinhSoTacGiaLamDeTai(Convert.ToInt32(dr["MaDeTaiKhoaHoc"])),
+                    NamHoc = Convert.ToString(dr["NamHoc"]),
+                    GioChuan = Convert.ToDouble(dr["QuyRaGioChuan"])
+                });
+            }
+            return giaoVienDeTaiKHDTOs;
+        }
+
+        public List<GiaoVienVietBaoDTO> LayGiaoVienVietBaos(int maGV, string namHoc)
+        {
+            List<GiaoVienVietBaoDTO> giaoVienVietBaoDTOs = new List<GiaoVienVietBaoDTO>();
+
+            SqlCommand conn = new SqlCommand("dbo.ChiTietVietBaiBaoKhoaHoc", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@NamHoc", SqlDbType.Char, 10).Value = namHoc.Trim();
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable(); ;
+
+            sqlDataAdapter.Fill(dataTable);
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                giaoVienVietBaoDTOs.Add(new GiaoVienVietBaoDTO()
+                {
+                    MaGV = maGV,
+                    TenBaiBao = Convert.ToString(dr["TenBaiBao"]),
+                    LoaiBaiBao = Convert.ToString(dr["TenLoaiBao"]),
+                    VaiTro = Convert.ToString(dr["TenVaiTro"]),
+                    LoaiHinh = Convert.ToString(dr["TenLoaiHinh"]),
+                    SoTacGia = TinhSoTacGiaVietBao(Convert.ToInt32(dr["MaBaiBao"])),
+                    NamHoc = Convert.ToString(dr["NamHoc"]),
+                    GioChuan = Convert.ToDouble(dr["QuyRaGioChuan"])
+                });
+            }
+            return giaoVienVietBaoDTOs;
+        }
+
+        public int TinhSoTacGiaVietSach(int maSach)
+        {
+            SqlCommand conn = new SqlCommand("dbo.TinhSoTacGiaVietSach", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            conn.Parameters.Add("@maSach", SqlDbType.Int).Value = maSach;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable(); ;
+
+            sqlDataAdapter.Fill(dataTable);
+
+            return Convert.ToInt32(dataTable.Rows[0]["TongTacGia"]);
+        }
+
+        public int TinhSoTacGiaVietBao(int maSach)
+        {
+            SqlCommand conn = new SqlCommand("dbo.TinhSoTacGiaVietBao", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            conn.Parameters.Add("@maBao", SqlDbType.Int).Value = maSach;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable(); ;
+
+            sqlDataAdapter.Fill(dataTable);
+
+            return Convert.ToInt32(dataTable.Rows[0]["TongTacGia"]);
+        }
+
+        public int TinhSoTacGiaLamDeTai(int maSach)
+        {
+            SqlCommand conn = new SqlCommand("dbo.TinhSoTacGiaLamDeTai", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            conn.Parameters.Add("@maDeTai", SqlDbType.Int).Value = maSach;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable(); ;
+
+            sqlDataAdapter.Fill(dataTable);
+
+            return Convert.ToInt32(dataTable.Rows[0]["TongTacGia"]);
+        }
+
+        public GiaoVienNghienCuuKhoaHocDTO GiaoVienNghienCuuKhoaHoc(int maGV, string namHoc)
+        {
+            GiaoVienNghienCuuKhoaHocDTO giaoVienNghienCuuKhoaHocDTO = new GiaoVienNghienCuuKhoaHocDTO
+            {
+                GiaoVienVietSach = LayGiaoVienVietSaches(maGV, namHoc),
+                GiaoVienVietBao = LayGiaoVienVietBaos(maGV, namHoc),
+                GiaoVienDeTaiKH = LayGiaoVienDeTaiKHDTOs(maGV, namHoc)
+            };
+            return giaoVienNghienCuuKhoaHocDTO;
         }
         #endregion
     }

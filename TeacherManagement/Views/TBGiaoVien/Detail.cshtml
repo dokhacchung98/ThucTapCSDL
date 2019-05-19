@@ -31,6 +31,9 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="tab" href="#menu5">Tham Gia Công Tác Khác</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#menu6">Nghiên Cứu Khoa Học</a>
+        </li>
     </ul>
 
     <!-- Tab panes -->
@@ -52,6 +55,9 @@
         </div>
         <div id="menu5" class="container tab-pane fade">
             @Html.Action("ThamGiaCongTacKhac", new { @id = Model.MaGV })
+        </div>
+        <div id="menu6" class="container tab-pane fade">
+            @Html.Action("CongTacNghienCuuKH", new { @id = Model.MaGV })
         </div>
     </div>
 </div>
