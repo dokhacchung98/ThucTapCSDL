@@ -33,14 +33,23 @@
                 </a>
             </li>
 
-            <li class="nav-item active">
+            <li class='nav-item @(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower().Equals("tbdonvi") ? "active" : "")'>
                 <a class="nav-link" href="@Url.Action("Index","TBDonVi")">
                     <i class="fa fa-object-group"></i>
                     <span>Danh Sách Đơn Vị</span>
+                </a>
+            </li>
             <li class='nav-item @(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower().Equals("tonghop") ? "active" : "")'>
                 <a class="nav-link" href="@Url.Action("Index","TongHop")">
                     <i class="fa fa-file-alt"></i>
                     <span>Tổng Hợp</span>
+                </a>
+            </li>
+
+            <li class='nav-item @(HttpContext.Current.Request.RequestContext.RouteData.Values["controller"].ToString().ToLower().Equals("thongkenhanluc") ? "active" : "")'>
+                <a class="nav-link" href="@Url.Action("Index","ThongKeNhanLuc")">
+                    <i class="fa fa-file-alt"></i>
+                    <span>Thống Kê Nhân Lực</span>
                 </a>
             </li>
         </ul>
