@@ -42,7 +42,7 @@
 
     function callAjaxGetValue(namHoc) {
         $.ajax({
-            url: "/TBGiaoVien/ThamGiaHoiDongRenderResult?NamHoc='" + namHoc + "'&id=@Model.MaGV",
+            url: "/TBGiaoVien/ThamGiaHoiDongRenderResult?NamHoc=" + namHoc + "&id=@Model.MaGV",
             type: 'get',
             success: function (response) {
                 $('#render-result').html(response);
