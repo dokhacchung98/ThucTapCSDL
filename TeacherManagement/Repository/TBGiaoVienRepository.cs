@@ -869,9 +869,96 @@ namespace TeacherManagement.Repository
         #endregion
 
         #region Thông tin giảng dạy của giáo viên
+        public IList<GiaoVienGiangDayDTO> LayThongTinGiangDayGiaoVien(int maGV, string namHoc)
+        {
+            IList<GiaoVienGiangDayDTO> giaoVienCongTacKhacDTOs = new List<GiaoVienGiangDayDTO>();
+
+            SqlCommand conn = new SqlCommand("LayThongTinGiaoVienGiangDayTheoNamHoc", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@NamHoc", SqlDbType.Char, 10).Value = namHoc.Trim();
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable(); ;
+
+            sqlDataAdapter.Fill(dataTable);
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                string ghiChu = Convert.ToString(dr["GhiChu"]);
+                string tenLoaiDoiTuongDaoTao = Convert.ToString(dr["TenLoaiDoiTuongDaoTao"]);
+                string tenHeDaoTao = Convert.ToString(dr["TenHeDaoTao"]);
+                string tenHocPhan = Convert.ToString(dr["TenHocPhan"]);
+                string tenLoaiHocPhan = Convert.ToString(dr["TenLoaiHocPhan"]);
+                int soTinChi = Convert.ToInt32(dr["SoTinChi"]);
+                int tongTiet = Convert.ToInt32(dr["TongTiet"]);
+                int siSo = Convert.ToInt32(dr["SiSo"]);
+                int soTietDay = Convert.ToInt32(dr["SoTietDay"]);
+                double quyRaGioChuan = Convert.ToDouble(dr["QuyRaGioChuan"]);
+                string donViTinh = Convert.ToString(dr["DonViTinh"]);
+                DateTime thoiDiem = Convert.ToDateTime(dr["ThoiDiem"]);
+
+                giaoVienCongTacKhacDTOs.Add(new GiaoVienGiangDayDTO()
+                {
+                    MaGV = maGV,
+                    GhiChu = ghiChu,
+                    DonViTinh = donViTinh,
+                    QuyRaGioChuan = quyRaGioChuan,
+                    SiSo = siSo,
+                    SoTietDay = soTietDay,
+                    SoTinChi = soTinChi,
+                    TenHeDaoTao = tenHeDaoTao,
+                    ThoiDiem = thoiDiem,
+                    TenHocPhan = tenHocPhan,
+                    TenLoaiDoiTuongDaoTao = tenLoaiDoiTuongDaoTao,
+                    TenLoaiHocPhan = tenLoaiHocPhan,
+                    TongTiet = tongTiet
+                });
+            }
+
+            return giaoVienCongTacKhacDTOs;
+        }
         #endregion
 
         #region Thông tin giáo viên tham gia công tác khác
+        public IList<GiaoVienCongTacKhacDTO> LayThongTinCongTacKhacGiaoVien(int maGV, string namHoc)
+        {
+            IList<GiaoVienCongTacKhacDTO> giaoVienCongTacKhacDTOs = new List<GiaoVienCongTacKhacDTO>();
+
+            SqlCommand conn = new SqlCommand("LayThongTinGiaoVienThamGiaCongTacKhacTheoNamHoc", connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@NamHoc", SqlDbType.Char, 10).Value = namHoc.Trim();
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable(); ;
+
+            sqlDataAdapter.Fill(dataTable);
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                string noiDung = Convert.ToString(dr["NoidungCongTac"]);
+                string vaiTro = Convert.ToString(dr["VaiTro"]);
+                string ghiChu = Convert.ToString(dr["GhiChu"]);
+                giaoVienCongTacKhacDTOs.Add(new GiaoVienCongTacKhacDTO()
+                {
+                    MaGV = maGV,
+                    GhiChu = ghiChu,
+                    NoiDungCongTac = noiDung,
+                    VaiTro = vaiTro
+                });
+            }
+
+            return giaoVienCongTacKhacDTOs;
+        }
         #endregion
 
         #region tổng hợp tải theo năm học

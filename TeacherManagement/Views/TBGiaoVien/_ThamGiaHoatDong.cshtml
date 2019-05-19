@@ -8,7 +8,7 @@
     <div class="information-teacher">
         <div class="form-group">
             <label class="label">Năm Học: </label>
-            @Html.DropDownList("schoolYear", selectListSchoolYear, new { @class = "form-control text-box single-line", @id = "school-year" })
+            @Html.DropDownList("schoolYear", selectListSchoolYear, new { @class = "form-control text-box single-line", @id = "school-year-hoat-dong" })
             <br />
             <table class="table">
                 <thead class="thead-dark">
@@ -21,7 +21,7 @@
                         <th scope="col">Ghi chú</th>
                     </tr>
                 </thead>
-                <tbody id="render-result"></tbody>
+                <tbody id="render-result-hoat-dong"></tbody>
             </table>
         </div>
     </div>
@@ -30,22 +30,20 @@
 <script>
     $(document).ready(function () {
         var value = '@selectListSchoolYear.ElementAt(0).Value';
-        console.log('gia tri bat dau:: ' + value);
-        callAjaxGetValue(value);
+        callAjaxGetValueHD(value);
     });
 
-    $('#school-year').change(function () {
-        var value = $('#school-year').val();
-        console.log('gia tri tiep:: ' + value);
-        callAjaxGetValue(value);
+    $('#school-year-hoat-dong').change(function () {
+        var value = $('#school-year-hoat-dong').val();
+        callAjaxGetValueHD(value);
     });
 
-    function callAjaxGetValue(namHoc) {
+    function callAjaxGetValueHD(namHoc) {
         $.ajax({
-            url: "/TBGiaoVien/ThamGiaHoiDongRenderResult?NamHoc='" + namHoc + "'&id=@Model.MaGV",
+            url: "/TBGiaoVien/ThamGiaHoiDongRenderResult?NamHoc=" + namHoc + "&id=@Model.MaGV",
             type: 'get',
             success: function (response) {
-                $('#render-result').html(response);
+                $('#render-result-hoat-dong').html(response);
             }
         });
     };

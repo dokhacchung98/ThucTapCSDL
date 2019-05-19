@@ -1,0 +1,27 @@
+﻿@model IList<TeacherManagement.DTOs.GiaoVienGiangDayDTO>
+@{
+    var selectListSchoolYear = ViewBag.SelectListSchoolYear as List<SelectListItem>;
+}
+@if (Model == null || Model.Count == 0)
+{
+    <tr>
+        <td class="tg-0lax" colspan="7" style="text-align:center;">không có dữ liệu</td>
+    </tr>
+}
+else
+{
+    int i = 1;
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>@i</td>
+            <td>@(item.TenHocPhan != null ? item.TenHocPhan : "")</td>
+            <td style="text-align:center;">@(item.SoTinChi)</td>
+            <td>@(item.TenLoaiDoiTuongDaoTao != null ? item.TenLoaiDoiTuongDaoTao : "")</td>
+            <td style="text-align:center;">@(item.SoTietDay)</td>
+            <td style="text-align:center;">@(item.TongTiet)</td>
+            <td>@(item.GhiChu != null ? item.GhiChu : "")</td>
+        </tr>
+        i++;
+    }
+}

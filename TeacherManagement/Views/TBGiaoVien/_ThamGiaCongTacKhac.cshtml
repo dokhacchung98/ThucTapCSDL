@@ -1,0 +1,49 @@
+﻿@model TeacherManagement.Models.TBGiaoVien
+@{
+    var selectListSchoolYear = ViewBag.SelectListSchoolYear as List<SelectListItem>;
+}
+<div class="container mb-4 main-container">
+    <div class="title-part">Tham Gia Công Tác Khác</div>
+    <div class="information-teacher">
+        <div class="form-group">
+            <label class="label">Năm Học: </label>
+            @Html.DropDownList("schoolYear", selectListSchoolYear, new { @class = "form-control text-box single-line", @id = "school-year-ctk" })
+            <br />
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">STT</th>
+                        <th scope="col">Nội dung công tác</th>
+                        <th scope="col">Vai trò</th>
+                        <th scope="col">Ghi chú</th>
+                    </tr>
+                </thead>
+                <tbody id="render-result-ctk"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var value = '@selectListSchoolYear.ElementAt(0).Value';
+        callAjaxGetValueCTK(value);
+    });
+
+    $('#school-year-ctk').change(function () {
+        var value = $('#school-year-ctk').val();
+        callAjaxGetValueCTK(value);
+    });
+
+    function callAjaxGetValueCTK(namHoc) {
+        $.ajax({
+            url: "/TBGiaoVien/ThamGiaCongTacKhacRenderResult?NamHoc=" + namHoc + "&id=@Model.MaGV",
+            type: 'get',
+            success: function (response) {
+                $('#render-result-ctk').html(response);
+            }
+        });
+    };
+</script>
+
+

@@ -15,12 +15,12 @@ else
     foreach (var item in Model)
     {
         <tr>
-            <th>@i</th>
-            <th>@(item.TenHoiDong != null ? item.TenHoiDong : "")</th>
-            <th>@(item.TenLoaiHoiDong != null ? item.TenLoaiHoiDong : "")</th>
-            <th>@(item.SoLanThamGia)</th>
-            <th>@(item.SoGioThamGia)</th>
-            <th>@(item.GhiChu != null ? item.GhiChu : "")</th>
+            <td>@i</td>
+            <td>@(item.TenHoiDong != null ? item.TenHoiDong : "")</td>
+            <td>@(item.TenLoaiHoiDong != null ? item.TenLoaiHoiDong : "")</td>
+            <td style="text-align:center;">@(item.SoLanThamGia)</td>
+            <td style="text-align:center;">@(item.SoGioThamGia)</td>
+            <td>@(item.GhiChu != null ? item.GhiChu : "")</td>
         </tr>
         i++;
     }
