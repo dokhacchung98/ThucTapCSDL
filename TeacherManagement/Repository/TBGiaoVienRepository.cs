@@ -1041,7 +1041,8 @@ namespace TeacherManagement.Repository
         public double LayDinhMucNCKH(int maGV, string namHoc)
         {
             double dinhMuc;
-            string date = namHoc.Substring(0, 4).ToString() + "-8-15";
+            //string date = namHoc.Substring(0, 4).ToString() + "-05-19";
+            string date ="2018-05-19";
             SqlCommand conn = new SqlCommand("dbo.DinhMucNghienCuuKhoaHoc", connection)
             {
                 CommandType = CommandType.StoredProcedure,
@@ -1086,7 +1087,7 @@ namespace TeacherManagement.Repository
                 {
                     MaGV = Convert.ToInt32(dataTable.Rows[0]["MaGV"]),
                     TenGV = Convert.ToString(dataTable.Rows[0]["TenGV"]),
-                    SoTaiNCKHYeuCau = LayDinhMucNCKH(maGV, namHoc),
+                    SoTaiYeuCau = LayDinhMucNCKH(maGV, namHoc),
                     SoTaiNCKHThucTe = Convert.ToDouble(dataTable.Rows[0]["TaiVietSach"]) + Convert.ToDouble(dataTable.Rows[0]["TaiVietBaiBao"]) +
                                         Convert.ToDouble(dataTable.Rows[0]["TaiNghienCuu"])
                 };

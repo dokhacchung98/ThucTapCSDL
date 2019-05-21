@@ -1,6 +1,8 @@
 ﻿@model IEnumerable<TeacherManagement.DTOs.GiaoVienTongHopTaiDTO>
 @{
     ViewBag.Title = "Index";
+    double tongTaiYeuCau = 0;
+    double tongTaiThucTe = 0;
 }
 <div class="container-fluid">
     <!-- Breadcrumbs-->
@@ -59,15 +61,38 @@
                                     <td class="tg-0lax" style="text-align:center;">@(item.TaiDaoTao == null ? "0.0" : string.Format("{0:00.0}", item.TaiDaoTao.SoTietYeuCau))</td>
                                     <td class="tg-0lax" style="text-align:center;">@(item.TaiDaoTao == null ? "0.0%" : string.Format("{0:00.0}", item.TaiDaoTao.TinhPhanTram()) + "%")</td>
                                     <td class="tg-0lax" style="text-align:center;">@(item.TaiNCKH == null ? "0.0" : string.Format("{0:00.0}", item.TaiNCKH.SoTaiNCKHThucTe))</td>
-                                    <td class="tg-0lax" style="text-align:center;">@(item.TaiNCKH == null ? "0.0" : string.Format("{0:00.0}", item.TaiNCKH.SoTaiNCKHYeuCau))</td>
+                                    <td class="tg-0lax" style="text-align:center;">@(item.TaiNCKH == null ? "0.0" : string.Format("{0:00.0}", item.TaiNCKH.SoTaiYeuCau))</td>
                                     <td class="tg-0lax" style="text-align:center;">@(item.TaiNCKH == null ? "0.0%" : string.Format("{0:00.0}", item.TaiNCKH.TinhPhanTram()) + "%")</td>
-                                    <td class="tg-0lax" style="text-align:center;"></td>
-                                    <td class="tg-0lax" style="text-align:center;"></td>
-                                    <td class="tg-0lax" style="text-align:center;">@(string.Format("{0:00.0}", item.TinhTongTaiPhanTram()) + "%")</td>
-                                </tr>
-                                i++;
-                            }
+                                    @{ 
+                                        if(item.TaiDaoTao == null && item.TaiNCKH != null)
+                                        {
+                                            tongTaiThucTe = item.TaiNCKH.SoTaiNCKHThucTe;
+                                            tongTaiYeuCau = item.TaiNCKH.SoTaiYeuCau;
+                                        }
+                                        if (item.TaiDaoTao != null && item.TaiNCKH == null)
+                                        {
+                                            tongTaiThucTe = item.TaiDaoTao.SoTietThucTe;
+                                            tongTaiYeuCau = item.TaiDaoTao.SoTietYeuCau;
+                                        }
+                                        if (item.TaiDaoTao == null && item.TaiNCKH == null)
+                                        {
+                                            tongTaiThucTe = 0;
+                                            tongTaiYeuCau = 0;
+                                        }
+                                        if (item.TaiDaoTao != null && item.TaiNCKH != null)
+                                        {
+                                            tongTaiThucTe = item.TaiDaoTao.SoTietThucTe + item.TaiNCKH.SoTaiNCKHThucTe;
+                                            tongTaiYeuCau = item.TaiDaoTao.SoTietYeuCau + item.TaiNCKH.SoTaiYeuCau;
+                                        }
+
+                                    }
+                                    <td class="tg-0lax" style="text-align:center;">@(string.Format("{0:00.0}", tongTaiThucTe))</td>
+                                    <td class="tg-0lax" style="text-align:center;">@(string.Format("{0:00.0}", tongTaiYeuCau))</td>
+                                    <td class="tg-0lax" style="text-align:center;">@(string.Format("{0:00.0}", (tongTaiThucTe*100)/tongTaiYeuCau) + "%")</td>
+                            </tr>
+                            i++;
                         }
+                    }
 
                     </tbody>
                 </table>

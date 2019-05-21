@@ -11,6 +11,7 @@ namespace TeacherManagement.Controllers
     public class TBGiaoVienController : Controller
     {
         private readonly TBGiaoVienRepository _repository = new TBGiaoVienRepository();
+        private readonly DinhMucRepository _dinhMucRepository = new DinhMucRepository();
         // GET: TBChucVuDang
         public ActionResult Index()
         {
@@ -196,6 +197,7 @@ namespace TeacherManagement.Controllers
         {
             if (id == null || NamHoc == null) return null;
             var nghienCuuKhoaHoc = _repository.GiaoVienNghienCuuKhoaHoc(int.Parse(id), NamHoc);
+            
 
             return PartialView("_CongTacNghienCuuKHResult", nghienCuuKhoaHoc);
         }
