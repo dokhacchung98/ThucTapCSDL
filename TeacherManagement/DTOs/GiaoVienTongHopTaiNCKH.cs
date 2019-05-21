@@ -10,12 +10,12 @@ namespace TeacherManagement.DTOs
         public int MaGV { get; set; }
         public string TenGV { get; set; }
         public double SoTaiNCKHThucTe { get; set; }
-        public double SoTaiNCKHYeuCau { get; set; }
+        public double SoTaiYeuCau { get; set; }
         public double TinhPhanTram()
         {
-            if (SoTaiNCKHThucTe >= 0 && SoTaiNCKHYeuCau > 0)
+            if (SoTaiNCKHThucTe >= 0 && SoTaiYeuCau > 0)
             {
-                return (SoTaiNCKHThucTe * 100) / SoTaiNCKHYeuCau;
+                return (SoTaiNCKHThucTe * 100) / SoTaiYeuCau;
             }
             return 0.0;
         }
