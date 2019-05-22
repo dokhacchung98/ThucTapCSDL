@@ -279,6 +279,8 @@ namespace TeacherManagement.Controllers
                 ThoiDiemNhanHocHam, ThoiDiemNhanHocVi, ThoiDiemNhanDonVi, ThoiDiemKetThucDonVi, ThoiDiemNhanCVCM);
             return RedirectToAction("Index");
          }
+
+        #endregion
         #region Công tác nghiên cứu khoa học
         public PartialViewResult CongTacNghienCuuKH(string id)
         {
