@@ -13,6 +13,10 @@ namespace TeacherManagement.DTOs
         public string VaiTro { get; set; }
         public string LoaiHinh { get; set; }
         public string NamHoc { get; set; }
+        public string SoISBN { get; set; }
+        public string NoiXuatBan { get; set; }
+        public DateTime NamXuatBan { get; set; }
+        public int SoTrang { get; set; }
         public int SoTacGia { get; set; }
         public double GioChuan { get; set; }
     }
