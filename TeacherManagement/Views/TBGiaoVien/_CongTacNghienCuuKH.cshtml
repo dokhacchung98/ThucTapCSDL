@@ -6,8 +6,12 @@
     <div class="title-part">Công tác Nghiên Cứu Khoa Học</div>
     <div class="information-teacher">
         <div class="form-group">
-            <label class="label">Năm Học: </label>
-            @Html.DropDownList("schoolYear", selectListSchoolYear, new { @class = "form-control text-box single-line", @id = "school-year-ctnckh" })
+            <div class="col-lg-4">
+                <label class="label">Năm Học: </label>
+                @Html.DropDownList("schoolYear", selectListSchoolYear, new { @class = "form-control text-box single-line", @id = "school-year-ctnckh" })
+            </div>
+            @*<button class="btn btn-success" onclick="location.href='@Url.Action("ThemCongTacNghienCuuKH", "TBGiaoVien")'" style="float: right">Thêm</button>*@
+            <div class="btn btn-success" id="btnThem" style="float: right">Thêm</div>
             <br />
             <div id="render-result-ctnckh"></div>
         </div>
@@ -24,6 +28,21 @@
         var value = $('#school-year-ctnckh').val();
         callAjaxGetValueCTK(value);
     });
+
+    $("#btnThem").click(function () {
+        var value = $('#school-year-ctnckh').val();
+        callAjaxRenderThem(value);
+    });
+
+    function callAjaxRenderThem(namHoc) {
+        $.ajax({
+            url: "/TBGiaoVien/ThemCongTacNghienCuuKH?NamHoc=" + namHoc + "&id=@Model.MaGV",
+            type: 'get',
+            success: function (response) {
+                $('#render-result-ctnckh').html(response);
+            }
+        });
+    };
 
     function callAjaxGetValueCTK(namHoc) {
         $.ajax({

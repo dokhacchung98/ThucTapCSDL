@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TeacherManagement.DTOs;
 using TeacherManagement.Helpers;
 using TeacherManagement.Repository;
 
@@ -12,6 +13,7 @@ namespace TeacherManagement.Controllers
     {
         private readonly TBGiaoVienRepository _repository = new TBGiaoVienRepository();
         private readonly DinhMucRepository _dinhMucRepository = new DinhMucRepository();
+        private readonly CongTacNghienCuuKHResipotary _NCKHRepository = new CongTacNghienCuuKHResipotary();
         // GET: TBChucVuDang
         public ActionResult Index()
         {
@@ -200,6 +202,111 @@ namespace TeacherManagement.Controllers
             
 
             return PartialView("_CongTacNghienCuuKHResult", nghienCuuKhoaHoc);
+        }
+        #endregion
+
+        #region Thêm công tác nghiên cứu khoa học
+        public PartialViewResult ThemCongTacNghienCuuKH(string id, string NamHoc)
+        {
+            var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(id));
+            var listKind = _NCKHRepository.themCongTacNCKHDTO(id, NamHoc);
+                
+
+            return PartialView("_ThemCongTacNghienCuuKH", listKind);
+        }
+
+        [HttpPost]
+        public ActionResult ThemSachChuyenKhao(string maGV, string namHoc)
+        {
+            string tenSach = Request.Form["TenSach"];
+            string loaiSach = Request.Form["TenLoaiSach"];
+            string vaiTroSach = Request.Form["TenVaiTroSach"];
+            int soTrang = Convert.ToInt32(Request.Form["SoTrang"]);
+            string loaiHinh = Request.Form["TenLoaiHinhSach"];
+            string SoISBN = Request.Form["SoISBN"];
+            string NoiXuatBan = Request.Form["NoiXuatBan"];
+            string NamXuatBan = Request.Form["NamXuatBan"] + "-1-1";
+            
+            GiaoVienVietSachDTO vietSach = new GiaoVienVietSachDTO
+            {
+                MaGV = Convert.ToInt32(maGV),
+                TenSach = tenSach,
+                LoaiSach = loaiSach,
+                VaiTro = vaiTroSach,
+                SoTrang = soTrang,
+                NamHoc = namHoc,
+                LoaiHinh = loaiHinh,
+                SoISBN = SoISBN,
+                NoiXuatBan = NoiXuatBan,
+                NamXuatBan = Convert.ToDateTime(NamXuatBan)
+            };
+
+            _NCKHRepository.ThemVietSachChuyenKhao(vietSach);
+            var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(maGV));
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult ThemBaiBao(string maGV, string namHoc)
+        {
+            string tenBaiBao = Request.Form["TenBaiBao"];
+            string loaiBaiBao = Request.Form["TenLoaiBao"];
+            string vaiTroBaiBao = Request.Form["TenVaiTroBao"];
+            string loaiHinh = Request.Form["TenLoaiHinhBao"];
+            string SoISBN = Request.Form["SoISBN"];
+            string SoBaiBao = Request.Form["SoBaiBao"];
+            string NoiXuatBan = Request.Form["NoiXuatBan"];
+            string NamXuatBan = Request.Form["NgayXuatBan"];
+
+            GiaoVienVietBaoDTO vietBaiBao = new GiaoVienVietBaoDTO
+            {
+                MaGV = Convert.ToInt32(maGV),
+                TenBaiBao = tenBaiBao,
+                SoBaiBao = Convert.ToInt32(SoBaiBao),
+                LoaiBaiBao = loaiBaiBao,
+                VaiTro = vaiTroBaiBao,
+                NamHoc = namHoc,
+                LoaiHinh = loaiHinh,
+                SoISBN = SoISBN,
+                NoiXuatBan = NoiXuatBan,
+                NgayXuatBan = Convert.ToDateTime(NamXuatBan)
+            };
+
+            _NCKHRepository.ThemVietBaiBao(vietBaiBao);
+            var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(maGV));
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult ThemDeTaiKhoaHoc(string maGV, string namHoc)
+        {
+            string tenDeTai = Request.Form["TenDeTai"];
+            string loaiDeTai = Request.Form["TenLoaiDeTai"];
+            string vaiTroDeTai = Request.Form["TenVaiTroDeTai"];
+            string loaiHinh = Request.Form["TenLoaiHinhDeTai"];
+            string SoISBN = Request.Form["SoISBN"];
+            string SoDeTai = Request.Form["SoDeTai"];
+            string NamXuatBan = Request.Form["NgayXuatBan"];
+
+            GiaoVienDeTaiKHDTO vietDeTai = new GiaoVienDeTaiKHDTO
+            {
+                MaGV = Convert.ToInt32(maGV),
+                TenDeTaiNCKH = tenDeTai,
+                SoDeTai = Convert.ToInt32(SoDeTai),
+                LoaiDeTai = loaiDeTai,
+                VaiTro = vaiTroDeTai,
+                NamHoc = namHoc,
+                LoaiHinh = loaiHinh,
+                SoISBN = SoISBN,
+                NgayXuatBan = Convert.ToDateTime(NamXuatBan)
+            };
+
+            _NCKHRepository.ThemLamDeTaiKhoaHoc(vietDeTai);
+            var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(maGV));
+
+            return RedirectToAction("Index", "Home");
         }
         #endregion
     }

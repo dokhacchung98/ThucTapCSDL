@@ -1,0 +1,195 @@
+﻿@model TeacherManagement.DTOs.ThemCongTacNCKHDTO
+
+
+@using (Html.BeginForm("ThemSachChuyenKhao", "TBGiaoVien", new { @maGV = Model.MaGV, @namHoc = Model.NamHoc }, FormMethod.Post))
+{
+    <div class="title-part">I. Thêm công tác viết sách chuyên khảo</div>
+    <div class="form-group">
+        <label class="label">Tên sách: </label>
+        <input type="text" class="form-control" name="TenSach" />
+    </div>
+
+    <div class="form-group">
+        <label class="label">Tên loại sách: </label>
+        <input type="text" class="form-control" name="TenLoaiSach" list="LoaiSach" />
+        <datalist id="LoaiSach">
+            @foreach (var item in Model.LoaiSach)
+            {
+                <option>@(string.Format(item.Key + ". " + item.Value))</option>
+            }
+        </datalist>
+    </div>
+
+    <div class="form-group">
+        <label class="label">Vai trò: </label>
+        <input type="text" class="form-control" name="TenVaiTroSach" list="VaiTroSach" />
+        <datalist id="VaiTroSach">
+            @for (int i = 7; i < 9; i++)
+            {
+                <option>@(string.Format(@Model.LoaiVaiTro[i].Key + ". " + @Model.LoaiVaiTro[i].Value))</option>
+            }
+        </datalist>
+    </div>
+
+    <div class="form-group">
+        <label class="label">Loại hình: </label>
+        <input type="text" class="form-control" name="TenLoaiHinhSach" list="LoaiHinhSach" />
+        <datalist id="LoaiHinhSach">
+            @for (int i = 8; i < 13; i++)
+            {
+                <option>@(string.Format(@Model.LoaiHinh[i].Key + ". " + @Model.LoaiHinh[i].Value))</option>
+            }
+        </datalist>
+    </div>
+
+    <div class="form-group">
+        <label class="label">Số Trang: </label>
+        <input type="text" class="form-control" name="SoTrang" />
+    </div>
+
+    <div class="form-group">
+        <label class="label">Số ISBN: </label>
+        <input type="text" class="form-control" name="SoISBN" />
+    </div>
+
+    <div class="form-group">
+        <label class="label">Nơi xuất bản: </label>
+        <input type="text" class="form-control" name="NoiXuatBan" />
+    </div>
+
+    <div class="form-group">
+        <label class="label">Năm xuất bản: </label>
+        <input type="text" class="form-control" name="NamXuatBan" />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Thêm" />
+    </div>
+}
+
+@using (Html.BeginForm("ThemBaiBao", "TBGiaoVien", new { @maGV = Model.MaGV, @namHoc = Model.NamHoc }, FormMethod.Post))
+{
+    <div class="title-part">II. Thêm công tác viết bài báo</div>
+    <div class="form-group">
+        <label class="label">Tên bài báo: </label>
+        <input type="text" class="form-control" name="TenBaiBao" />
+    </div>
+
+    <div class="form-group">
+        <label class="label">Số bài báo: </label>
+        <input type="text" class="form-control" name="SoBaiBao" />
+    </div>
+
+    <div class="form-group">
+        <label class="label">Tên loại báo: </label>
+        <input type="text" class="form-control" name="TenLoaiBao" list="LoaiBao" />
+    </div>
+    <datalist id="LoaiBao">
+        @foreach (var item in Model.LoaiBao)
+        {
+            <option>@(string.Format(item.Key + ". " + item.Value))</option>
+        }
+    </datalist>
+
+    <div class="form-group">
+        <label class="label">Vai trò: </label>
+        <input type="text" class="form-control" name="TenVaiTroBao" list="LoaiVaiTroBao" />
+    </div>
+    <datalist id="LoaiVaiTroBao">
+        @for (int i = 0; i < 2; i++)
+        {
+            <option>@(string.Format(@Model.LoaiVaiTro[i].Key + ". " + @Model.LoaiVaiTro[i].Value))</option>
+        }
+    </datalist>
+
+    <div class="form-group">
+        <label class="label">Loại hình: </label>
+        <input type="text" class="form-control" name="TenLoaiHinhBao" list="LoaiHinhBao" />
+        <datalist id="LoaiHinhBao">
+            @for (int i = 0; i < 5; i++)
+            {
+                <option>@(string.Format(@Model.LoaiHinh[i].Key + ". " + @Model.LoaiHinh[i].Value))</option>
+            }
+        </datalist>
+    </div>
+
+    <div class="form-group">
+        <label class="label">Số ISBN: </label>
+        <input type="text" class="form-control" name="SoISBN" />
+    </div>
+
+    <div class="form-group">
+        <label class="label">Nơi xuất bản: </label>
+        <input type="text" class="form-control" name="NoiXuatBan" />
+    </div>
+
+    <div class="form-group">
+        <label class="label">Ngày xuất bản: </label>
+        <input type="text" class="form-control" name="NgayXuatBan" />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Thêm" />
+    </div>
+}
+
+@using (Html.BeginForm("ThemDeTaiKhoaHoc", "TBGiaoVien", new { @maGV = Model.MaGV, @namHoc = Model.NamHoc }, FormMethod.Post))
+{
+    <div class="title-part">III. Thêm đề tài nghiên cứu khoa học</div>
+    <div class="form-group">
+        <label class="label">Tên đề tài: </label>
+        <input type="text" class="form-control" name="TenDeTai" />
+    </div>
+
+    <div class="form-group">
+        <label class="label">Số đề tài: </label>
+        <input type="text" class="form-control" name="SoDeTai" />
+    </div>
+
+    <div class="form-group">
+        <label class="label">Tên loại đề tài: </label>
+        <input type="text" class="form-control" name="TenLoaiDeTai" list="LoaiDeTai" />
+    </div>
+    <datalist id="LoaiDeTai">
+        @foreach (var item in Model.LoaiDeTai)
+        {
+            <option>@(string.Format(item.Key + ". " + item.Value))</option>
+        }
+    </datalist>
+
+    <div class="form-group">
+        <label class="label">Vai trò: </label>
+        <input type="text" class="form-control" name="TenVaiTroDeTai" list="LoaiVaiTroDeTai" />
+    </div>
+    <datalist id="LoaiVaiTroDeTai">
+        @for (int i = 2; i < 7; i++)
+        {
+        <option>@(string.Format(@Model.LoaiVaiTro[i].Key + ". " + @Model.LoaiVaiTro[i].Value))</option>
+        }
+    </datalist>
+
+    <div class="form-group">
+        <label class="label">Loại hình: </label>
+        <input type="text" class="form-control" name="TenLoaiHinhDeTai" list="LoaiHinhDeTai" />
+        <datalist id="LoaiHinhDeTai">
+            @for (int i = 5; i < 8; i++)
+            {
+                <option>@(string.Format(@Model.LoaiHinh[i].Key + ". " + @Model.LoaiHinh[i].Value))</option>
+            }
+        </datalist>
+    </div>
+
+    <div class="form-group">
+        <label class="label">Số ISBN: </label>
+        <input type="text" class="form-control" name="SoISBN" />
+    </div>
+
+    <div class="form-group">
+        <label class="label">Ngày xuất bản: </label>
+        <input type="text" class="form-control" name="NgayXuatBan" />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Thêm" />
+    </div>
+}
