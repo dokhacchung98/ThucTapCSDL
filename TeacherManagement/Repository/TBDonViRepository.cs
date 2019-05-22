@@ -135,5 +135,31 @@ namespace TeacherManagement.Repository
             }
             return list;
         }
+
+        public List<TBDonVi> DanhSachDonViHienNay()
+        {
+            SqlCommand conn = new SqlCommand("dbo.DanhSachDonVi", _connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+            List<TBDonVi> list = new List<TBDonVi>();
+
+            foreach (DataRow dr in dataTable.Rows)
+            {
+                list.Add(new TBDonVi
+                {
+                    MaDonVi = Convert.ToInt32(dr["MaDonVi"]),
+                    TenDonVi = Convert.ToString(dr["TenDonVi"])
+                });
+            }
+
+            return list;
+        }
     }
 }

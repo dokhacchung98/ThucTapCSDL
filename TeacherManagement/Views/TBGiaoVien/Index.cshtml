@@ -13,8 +13,18 @@
     <!-- DataTables Example -->
     <div class="card mb-3">
         <div class="card-header">
-            <i class="fas fa-table"></i>
-            Danh Sách Giáo Viên
+            <span>
+                <i class="fas fa-table"></i>
+                Danh Sách Giáo Viên
+            </span>
+
+            <a href="/TBGiaoVien/Create" style="float:right">
+                <i class="fas fa-plus"></i>
+                Thêm Mới Giáo Viên
+            </a>
+        </div>
+        <div class="card-header">
+            
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -75,7 +85,7 @@
                                 <a class="view" href="@Url.Action("Detail", "TBGiaoVien", new { @id = item.MaGV})" style="color: #2ecc71">
                                     <i class="fa fa-eye"></i>
                                 </a>
-                                <a class="edit" href="#" style="color: #2980b9">
+                                <a class="edit" href="@Url.Action("Update", "TBGiaoVien", new { @id = item.MaGV})" style="color: #2980b9">
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 <a class="delete" href="#" style="color: #e74c3c">

@@ -39,8 +39,7 @@ namespace TeacherManagement.Models
 
         [StringLength(255)]
         public string TenGV { get; set; }
-
-        [Column(TypeName = "date")]
+        
         public DateTime NgaySinh { get; set; }
 
         [StringLength(255)]

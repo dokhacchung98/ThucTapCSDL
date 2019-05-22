@@ -1031,5 +1031,214 @@ namespace TeacherManagement.Repository
             return null;
         }
         #endregion
+
+        #region Thêm mới giáo viên
+        public void SuaThongTinGiaoVien(TBGiaoVien giaoVien,
+            string MaHocHam, string MaHocVi, string MaDonVi, string MaChucVuChuyenMon, string MaChucVuChinhQuyen,
+            DateTime? ThoiDiemNhanHocHam, DateTime? ThoiDiemNhanHocVi, DateTime? thoiDiemNhanDonVi, DateTime? thoiDiemKetThucDonVi, DateTime? thoiDiemNhanCVCM)
+        {
+            SuaThongTinCoBanGiaoVien(giaoVien);
+
+            var lichSuHocHam = LichSuHocHam(giaoVien.MaGV);
+
+            if (!ExistHocHam(lichSuHocHam, Convert.ToInt32(MaHocHam)))
+            {
+                ThemHocHamGiaoVien(giaoVien.MaGV, MaHocHam, ThoiDiemNhanHocHam);
+            }
+
+            var lichSuHocVi = LichSuHocVi(giaoVien.MaGV);
+            if (!ExistHocVi(lichSuHocVi, Convert.ToInt32(MaHocVi)))
+            {
+                ThemHocViGiaoVien(giaoVien.MaGV, MaHocVi, ThoiDiemNhanHocVi);
+            }
+
+            var lichSuCVCQ = LichSuCVChinhQuyen(giaoVien.MaGV);
+            if (!ExistChucVuChinhQuyen(lichSuCVCQ, Convert.ToInt32(MaDonVi), Convert.ToInt32(MaChucVuChinhQuyen)))
+            {
+                ThemChucVuChinhQuyenGiaoVien(giaoVien.MaGV, MaDonVi, MaChucVuChinhQuyen, thoiDiemNhanDonVi, thoiDiemKetThucDonVi);
+            }
+
+            var lichSUCVCM = LichSuChuyenMon(giaoVien.MaGV);
+            if (!ExistCVCM(lichSUCVCM, Convert.ToInt32(MaChucVuChuyenMon)))
+            {
+                ThemChucVuChuyenMonGiaoVien(giaoVien.MaGV, MaChucVuChuyenMon, thoiDiemNhanCVCM);
+            }
+        }
+        
+        private bool ExistHocHam(List<GiaoVienHocHamDTO> lichSuHocHam, int maHocHam)
+        {
+            foreach(var hocHam in lichSuHocHam)
+            {
+                if (hocHam.MaHocHam == maHocHam)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool ExistCVCM(List<GiaoVienChuyenMonDTO> lichSuChuyenMon, int maCVCM)
+        {
+            foreach (var chuyenMon in lichSuChuyenMon)
+            {
+                if (chuyenMon.MaChucVuCM == maCVCM)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool ExistChucVuChinhQuyen(List<GiaoVienCVChinhQuyenDTO> lichSuCVCQ, int maDonVi, int maChucVuCQ)
+        {
+            foreach (var chucVuCQ in lichSuCVCQ)
+            {
+                if (chucVuCQ.MaDonVi == maDonVi && chucVuCQ.MaChucVuCQ == maChucVuCQ)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool ExistHocVi(List<GiaoVienHocViDTO> lichSuHocVi, int maHocVi)
+        {
+            foreach (var hocVi in lichSuHocVi)
+            {
+                if (hocVi.MaHocVi == maHocVi)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void ThemGiaoVien(TBGiaoVien giaoVien)
+        {
+            ThemThongTinCoBanGiaoVien(giaoVien);
+        }
+
+        private void ThemChucVuChuyenMonGiaoVien(int maGV, string maChucVuChuyenMon, DateTime? thoiDiemNhanCVCM)
+        {
+            SqlCommand conn = new SqlCommand("dbo.ThemChiTietChucVuChuyenMon", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@MaChucVuCM", SqlDbType.Int).Value = Convert.ToInt32(maChucVuChuyenMon);
+            conn.Parameters.Add("@ThoiDiemNhan", SqlDbType.Date).Value = thoiDiemNhanCVCM ?? DateTime.Now;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+        }
+
+        private void ThemChucVuChinhQuyenGiaoVien(int maGV, string maDonVi, string maChucVuChinhQuyen, DateTime? thoiDiemNhanDonVi, DateTime? thoiDiemKetThucDonVi)
+        {
+            SqlCommand conn = new SqlCommand("dbo.ThemChiTietChucVuChinhQuyen", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaDonVi", SqlDbType.Int).Value = maDonVi;
+            conn.Parameters.Add("@MaChucVuCQ", SqlDbType.Int).Value = maChucVuChinhQuyen;
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@ThoiDiemNhan", SqlDbType.Date).Value = thoiDiemNhanDonVi ?? DateTime.Now;
+            conn.Parameters.Add("@ThoiDiemKetThuc", SqlDbType.Date).Value = thoiDiemKetThucDonVi ?? DateTime.Now;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+        }
+
+        private void ThemHocViGiaoVien(int maGV, string maHocVi, DateTime? thoiDiemNhanHocVi)
+        {
+            SqlCommand conn = new SqlCommand("dbo.ThemChiTietHocVi", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@MaHocVi", SqlDbType.Int).Value = Convert.ToInt32(maHocVi);
+            conn.Parameters.Add("@ThoiDiemNhan", SqlDbType.Date).Value = thoiDiemNhanHocVi ?? DateTime.Now;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+        }
+
+        private void ThemHocHamGiaoVien(int maGV, string maHocHam, DateTime? thoiDiemNhanHocHam)
+        {
+            SqlCommand conn = new SqlCommand("dbo.ThemChiTietHocHam", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@MaHocHam", SqlDbType.Int).Value = Convert.ToInt32(maHocHam);
+            conn.Parameters.Add("@ThoiDiemNhan", SqlDbType.Date).Value = thoiDiemNhanHocHam ?? DateTime.Now;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+        }
+
+        private void ThemThongTinCoBanGiaoVien(TBGiaoVien giaoVien)
+        {
+            SqlCommand conn = new SqlCommand("dbo.ThemGiaoVien", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@TenGV", SqlDbType.NVarChar).Value = giaoVien.TenGV;
+            conn.Parameters.Add("@NgaySinh", SqlDbType.Date).Value = giaoVien.NgaySinh;
+            conn.Parameters.Add("@Email", SqlDbType.NVarChar).Value = giaoVien.Email;
+            conn.Parameters.Add("@SDT", SqlDbType.VarChar).Value = giaoVien.SDT;
+            conn.Parameters.Add("@DiaChi", SqlDbType.NVarChar).Value = giaoVien.DiaChi;
+            conn.Parameters.Add("@GioiTinh", SqlDbType.Bit).Value = Convert.ToInt32(giaoVien.GioiTinh);
+            conn.Parameters.Add("@MaChucVuDang", SqlDbType.Int).Value = 1;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+        }
+
+        private void SuaThongTinCoBanGiaoVien(TBGiaoVien giaoVien)
+        {
+            SqlCommand conn = new SqlCommand("dbo.SuaGiaoVien", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = giaoVien.MaGV;
+            conn.Parameters.Add("@TenGV", SqlDbType.NVarChar).Value = giaoVien.TenGV;
+            conn.Parameters.Add("@NgaySinh", SqlDbType.Date).Value = giaoVien.NgaySinh;
+            conn.Parameters.Add("@Email", SqlDbType.NVarChar).Value = giaoVien.Email;
+            conn.Parameters.Add("@SDT", SqlDbType.VarChar).Value = giaoVien.SDT;
+            conn.Parameters.Add("@DiaChi", SqlDbType.NVarChar).Value = giaoVien.DiaChi;
+            conn.Parameters.Add("@GioiTinh", SqlDbType.Bit).Value = Convert.ToInt32(giaoVien.GioiTinh);
+            conn.Parameters.Add("@ChucVuDang", SqlDbType.Int).Value = 1;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+        }
+        #endregion
     }
 }
