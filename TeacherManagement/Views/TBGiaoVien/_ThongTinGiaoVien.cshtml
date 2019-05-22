@@ -84,10 +84,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>@hocHamHienTai.TenHocHam</th>
-                                <td>@Html.FormatDateTime2Date(@hocHamHienTai.ThoiDiemNhan)</td>
-                            </tr>
+                            @if (hocHamHienTai != null)
+                            {
+                                <tr>
+                                    <th>@hocHamHienTai.TenHocHam</th>
+                                    <td>@Html.FormatDateTime2Date(@hocHamHienTai.ThoiDiemNhan)</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                     <div class="title-sub-part">II.1.b. Lịch Sử Học Hàm Của Giáo Viên</div>
@@ -202,10 +205,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>@chuyenMonHienTai.TenChucVuCM</th>
-                                <td>@Html.FormatDateTime2Date(@chuyenMonHienTai.ThoiDiemNhan)</td>
-                            </tr>
+                            @if (chuyenMonHienTai != null)
+                            {
+                                <tr>
+                                    <th>@chuyenMonHienTai.TenChucVuCM</th>
+                                    <td>@Html.FormatDateTime2Date(@chuyenMonHienTai.ThoiDiemNhan)</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                     <div class="title-sub-part">II.4.b. Lịch Sử CV Chuyên Môn Của Giáo Viên</div>
@@ -239,11 +245,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>@chucVuCQHienTai.TenChucVuChinhQuyen</th>
-                                <td>@Html.FormatDateTime2Date(@chucVuCQHienTai.ThoiDiemNhan)</td>
-                                <td>@Html.FormatDateTime2Date(@chucVuCQHienTai.ThoiDiemKetThuc)</td>
-                            </tr>
+                            @if (chucVuCQHienTai != null)
+                            {
+                                <tr>
+                                    <th>@chucVuCQHienTai.TenChucVuChinhQuyen</th>
+                                    <td>@Html.FormatDateTime2Date(@chucVuCQHienTai.ThoiDiemNhan)</td>
+                                    <td>@Html.FormatDateTime2Date(@chucVuCQHienTai.ThoiDiemKetThuc)</td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                     <div class="title-sub-part">II.5.b. Lịch Sử Chức Vụ Chính Quyền Của Giáo Viên</div>

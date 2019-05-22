@@ -1,0 +1,107 @@
+﻿@model TeacherManagement.Models.TBGiaoVien
+
+@{
+    var listItems = new List<SelectListItem>
+{
+  new SelectListItem { Text = "Nữ", Value="0" },
+  new SelectListItem { Text = "Nam", Value="1" }
+};
+}
+<head>
+    <style>
+        .input {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<div class="container mb-4 main-container">
+    <div class="row">
+        <div class="col-lg-4 pb-5" style="height:100%; box-shadow: none; padding-top: 50px;">
+            <div class="author-card pb-3">
+                <div class="author-card-profile">
+                    <div class="author-card-avatar" style="width:100px; height:100px; ">
+                        <img class="img-profile rounded-circle avatar"
+                             src="~/Assets/img/default-avatar.png" style="width:100%; height:100%" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Orders Table-->
+        <div class="col-lg-8 pb-5 tab-content" id="v-pills-tabContent">
+            @using (@Html.BeginForm("SuaThongTinGiaoVien", "TBGiaoVien", FormMethod.Post))
+            {
+                @Html.HiddenFor(model => model.MaGV)
+                <div class="form-horizontal">
+                    <div class="title-part">I. Thông tin cơ bản của giáo viên</div>
+                    <div class="information-teacher">
+                        <div class="form-group">
+                            <label class="label">Tên Giáo Viên: </label>
+                            @Html.EditorFor(model => model.TenGV, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+
+                        <div class="form-group">
+                            <label class="label">Ngày Sinh: </label>
+                            @Html.TextBoxFor(m => m.NgaySinh, new { type = "date", @class = "input" })
+                        </div>
+
+                        <div class="form-group">
+                            <label class="label">Số Điện Thoại: </label>
+                            @Html.EditorFor(model => model.SDT, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+
+                        <div class="form-group">
+                            <label class="label">Giới Tính: </label>
+                            @Html.DropDownList("GioiTinh", @listItems, new { @class = "form-control" })
+                        </div>
+
+                        <div class="form-group">
+                            <label class="label">Địa Chỉ: </label>
+                            @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+
+                        <div class="form-group">
+                            <label class="label">Email: </label>
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                        </div>
+                    </div>
+
+                    <div class="title-part">II. Thông tin giáo viên</div>
+                    <div class="information-teacher">
+                        <div class="form-group">
+                            <label class="label">Học Hàm:</label>
+                            @Html.DropDownList("MaHocHam", (SelectList)ViewBag.DanhSachHocHam, new { @class = "form-control" })
+                            <label class="label">Thời Điêm Nhận</label>
+                            <input type="date" name="ThoiDiemNhanHocHam" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="label">Học Vị:</label>
+                            @Html.DropDownList("MaHocVi", (SelectList)ViewBag.DanhSachHocVi, new { @class = "form-control" })
+                            <label class="label">Thời Điêm Nhận</label>
+                            <input type="date" name="ThoiDiemNhanHocVi" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="label">Đơn Vị:</label>
+                            @Html.DropDownList("MaDonVi", (SelectList)ViewBag.DanhSachDonVi, new { @class = "form-control" })
+                            <label class="label">Thời Điêm Nhận</label>
+                            <input type="date" name="ThoiDiemNhanDonVi" class="form-control" />
+                            <label class="label">Thời Điêm Kết Thúc</label>
+                            <input type="date" name="ThoiDiemKetThucDonVi" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label class="label">Chính Vụ Chính Quyền:</label>
+                            @Html.DropDownList("MaChucVuChinhQuyen", (SelectList)ViewBag.DanhSachChucVuChinhQuyen, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label class="label">Chức Vụ Chuyên Môn:</label>
+                            @Html.DropDownList("MaChucVuChuyenMon", (SelectList)ViewBag.DanhSachChucVuChuyenMon, new { @class = "form-control" })
+                            <label class="label">Thời Điêm Nhận</label>
+                            <input type="date" name="ThoiDiemNhanCVCM" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-success">Thêm Giáo Viên</button>
+            }
+        </div>
+    </div>
+</div>
