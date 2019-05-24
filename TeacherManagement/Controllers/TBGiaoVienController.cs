@@ -20,6 +20,8 @@ namespace TeacherManagement.Controllers
 
         private readonly TBDonViRepository tBDonViRepository = new TBDonViRepository();
 
+        private readonly TBGiaoVienCongTacRepository tbCongTacRepository = new TBGiaoVienCongTacRepository();
+
         private readonly TBChucVuChuyenMonRepository tBChucVuChuyenMonRepository = new TBChucVuChuyenMonRepository();
 
         private readonly TBChucVuChinhQuyenRepository tBChucVuChinhQuyenRepository = new TBChucVuChinhQuyenRepository();
@@ -104,9 +106,23 @@ namespace TeacherManagement.Controllers
 
         public ActionResult ThamGiaHoiDongRenderResult(string id, string NamHoc)
         {
+            var listThamGiaHoiDong = new List<GiaoVienHoiDongDTO>();
             if (id == null || NamHoc == null) return null;
-            var listThamGiaHoiDong = _repository.LayThongTinGiaovienThamGiaHoiDong(int.Parse(id), NamHoc);
+            else if (id != null && NamHoc != null)
+            {
+                if (NamHoc == "0")
+                {
+                    var listSchoolYear = CreateSchoolYearExtention.CreateSchoolYear();
+                    foreach (var item in listSchoolYear)
+                    {
 
+                        var tmp = _repository.LayThongTinGiaovienThamGiaHoiDong(int.Parse(id), item).ToList();
+                        listThamGiaHoiDong.AddRange(tmp);
+                    }
+                }
+                else
+                    listThamGiaHoiDong = _repository.LayThongTinGiaovienThamGiaHoiDong(int.Parse(id), NamHoc).ToList();
+            }
             return PartialView("_ThamGiaHoatDongRenderResult", listThamGiaHoiDong);
         }
         #endregion
@@ -131,9 +147,23 @@ namespace TeacherManagement.Controllers
 
         public ActionResult ThamGiaHuongDanRenderResult(string id, string NamHoc)
         {
+            var listThamGiaHuongDan = new List<GiaoVienHuongDanDTO>();
             if (id == null || NamHoc == null) return null;
-            var listThamGiaHuongDan = _repository.LayThongTinHuongDanGiaoVien(int.Parse(id), NamHoc);
+            else if (id != null && NamHoc != null)
+            {
+                if (NamHoc == "0")
+                {
+                    var listSchoolYear = CreateSchoolYearExtention.CreateSchoolYear();
+                    foreach (var item in listSchoolYear)
+                    {
 
+                        var tmp = _repository.LayThongTinHuongDanGiaoVien(int.Parse(id), item).ToList();
+                        listThamGiaHuongDan.AddRange(tmp);
+                    }
+                }
+                else
+                    listThamGiaHuongDan = _repository.LayThongTinHuongDanGiaoVien(int.Parse(id), NamHoc).ToList();
+            }
             return PartialView("_ThamGiaHuongDanRenderResult", listThamGiaHuongDan);
         }
         #endregion
@@ -214,7 +244,7 @@ namespace TeacherManagement.Controllers
 
             var danhSachChucVuChinhQuyen = tBChucVuChinhQuyenRepository.DanhSachChucVuChinhQuyen();
             ViewBag.DanhSachChucVuChinhQuyen = new SelectList(danhSachChucVuChinhQuyen, "MaChucVuChinhQuyen", "TenChucVuChinhQuyen");
-            
+
             return PartialView("_ThemThongTinGiaoVien");
         }
 
@@ -282,7 +312,7 @@ namespace TeacherManagement.Controllers
             _repository.SuaThongTinGiaoVien(giaoVien, MaHocHam, MaHocVi, MaDonVi, MaChucVuChuyenMon, MaChucVuChinhQuyen,
                 ThoiDiemNhanHocHam, ThoiDiemNhanHocVi, ThoiDiemNhanDonVi, ThoiDiemKetThucDonVi, ThoiDiemNhanCVCM);
             return RedirectToAction("Index");
-         }
+        }
 
         public ActionResult SuaQuaTrinhHocVan(string id)
         {
@@ -331,7 +361,7 @@ namespace TeacherManagement.Controllers
         {
             if (id == null || NamHoc == null) return null;
             var nghienCuuKhoaHoc = _repository.GiaoVienNghienCuuKhoaHoc(int.Parse(id), NamHoc);
-            
+
 
             return PartialView("_CongTacNghienCuuKHResult", nghienCuuKhoaHoc);
         }
@@ -342,7 +372,7 @@ namespace TeacherManagement.Controllers
         {
             var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(id));
             var listKind = _NCKHRepository.themCongTacNCKHDTO(id, NamHoc);
-                
+
 
             return PartialView("_ThemCongTacNghienCuuKH", listKind);
         }
@@ -358,7 +388,7 @@ namespace TeacherManagement.Controllers
             string SoISBN = Request.Form["SoISBN"];
             string NoiXuatBan = Request.Form["NoiXuatBan"];
             string NamXuatBan = Request.Form["NamXuatBan"] + "-1-1";
-            
+
             GiaoVienVietSachDTO vietSach = new GiaoVienVietSachDTO
             {
                 MaGV = Convert.ToInt32(maGV),
@@ -374,7 +404,7 @@ namespace TeacherManagement.Controllers
             };
 
             _NCKHRepository.ThemVietSachChuyenKhao(vietSach);
-            
+
             var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(maGV));
             return RedirectToAction("Detail", "TBGiaoVien", new { id = maGV });
         }
@@ -528,6 +558,87 @@ namespace TeacherManagement.Controllers
             return RedirectToAction("Update", "TBGiaoVien", new { id = maGV });
         }
 
+        #endregion
+
+        #region Thêm quá trình hướng dẫn
+        public PartialViewResult SuaQuaTrinhHuongDan(string id)
+        {
+            var listSchoolYear = CreateSchoolYearExtention.CreateSchoolYear();
+            IList<SelectListItem> select = new List<SelectListItem>();
+            foreach (var item in listSchoolYear)
+            {
+                select.Add(new SelectListItem()
+                {
+                    Text = item,
+                    Value = item
+                });
+            }
+            var listHocVien = tbCongTacRepository.LayDanhSachHocVienHuongDan();
+            IList<SelectListItem> selectHocVien = new List<SelectListItem>();
+            foreach (var item in listHocVien)
+            {
+                selectHocVien.Add(new SelectListItem()
+                {
+                    Text = item.TenHocVien,
+                    Value = item.MaHocVien.ToString()
+                });
+            }
+
+            ViewBag.SelectListSchoolYear = select;
+            ViewBag.SelectListHocVien = selectHocVien;
+
+            var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(id));
+            return PartialView("_SuaQuaTrinhHuongDan", giaoVien);
+        }
+
+        [HttpPost]
+        public ActionResult ThemQuaTrinhHuongDan(ChiTietHuongDanDTO chiTietHuongDanDTO)
+        {
+            string success = "success";
+            _repository.ThemChiTietHuongDan(chiTietHuongDanDTO);
+            return Json(success, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+
+
+        #region Thêm quá trình tham gia hội đồng
+        public PartialViewResult SuaQuaTrinhThamGiaHoiDong(string id)
+        {
+            var listSchoolYear = CreateSchoolYearExtention.CreateSchoolYear();
+            IList<SelectListItem> select = new List<SelectListItem>();
+            foreach (var item in listSchoolYear)
+            {
+                select.Add(new SelectListItem()
+                {
+                    Text = item,
+                    Value = item
+                });
+            }
+            var listHoiDong = tbCongTacRepository.LayDanhSachHoiDong();
+            IList<SelectListItem> selectHocVien = new List<SelectListItem>();
+            foreach (var item in listHoiDong)
+            {
+                selectHocVien.Add(new SelectListItem()
+                {
+                    Text = item.TenHoiDong,
+                    Value = item.MaHoiDong.ToString()
+                });
+            }
+
+            ViewBag.SelectListSchoolYearHoiDong = select;
+            ViewBag.SelectListHoiDong = selectHocVien;
+
+            var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(id));
+            return PartialView("_SuaQuaTrinhThamGiaHoiDong", giaoVien);
+        }
+
+        [HttpPost]
+        public ActionResult ThemQuaTrinhThamGiaHoiDong(ChiTietThamGiaHoiDongDTO chiTietThamGiaHoiDongDTO)
+        {
+            string success = "success";
+            _repository.ThemChiTietThamGiaHoiDong(chiTietThamGiaHoiDongDTO);
+            return Json(success, JsonRequestBehavior.AllowGet);
+        }
         #endregion
     }
 }

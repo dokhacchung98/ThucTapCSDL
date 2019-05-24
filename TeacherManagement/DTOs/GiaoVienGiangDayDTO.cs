@@ -20,5 +20,6 @@ namespace TeacherManagement.DTOs
         public string DonViTinh { get; set; }
         public string GhiChu { get; set; }
         public DateTime ThoiDiem { get; set; }
+        public string NamHoc { get; set; }
     }
 }

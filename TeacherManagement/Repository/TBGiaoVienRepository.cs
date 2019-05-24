@@ -898,7 +898,8 @@ namespace TeacherManagement.Repository
                     TenLoaiHoiDong = tenLoaiHoiDong,
                     SoGioThamGia = soGioThamGia,
                     SoLanThamGia = soLanThamGia,
-                    GhiChu = ghiChu
+                    GhiChu = ghiChu,
+                    NamHoc = namHoc
                 });
             }
 
@@ -933,6 +934,7 @@ namespace TeacherManagement.Repository
                 string tenHDT = Convert.ToString(dr["TenDeDaoTao"]);
                 string tenLoaiHD = Convert.ToString(dr["TenLoaiHD"]);
                 double gio = Convert.ToDouble(dr["SoGio"]);
+                string nh = Convert.ToString(dr["NamHoc"]);
                 giaoVienHuongDanDTOs.Add(new GiaoVienHuongDanDTO()
                 {
                     MaGV = maGV,
@@ -940,7 +942,8 @@ namespace TeacherManagement.Repository
                     TenHeDaoTao = tenHDT,
                     TenHocVien = tenHV,
                     TenLoaiHuongDan = tenLoaiHD,
-                    TenLopHuongDan = tenLHD
+                    TenLopHuongDan = tenLHD,
+                    NamHoc = nh
                 });
             }
 
@@ -996,7 +999,8 @@ namespace TeacherManagement.Repository
                     TenHocPhan = tenHocPhan,
                     TenLoaiDoiTuongDaoTao = tenLoaiDoiTuongDaoTao,
                     TenLoaiHocPhan = tenLoaiHocPhan,
-                    TongTiet = tongTiet
+                    TongTiet = tongTiet,
+                    NamHoc = namHoc
                 });
             }
 
@@ -1033,7 +1037,8 @@ namespace TeacherManagement.Repository
                     MaGV = maGV,
                     GhiChu = ghiChu,
                     NoiDungCongTac = noiDung,
-                    VaiTro = vaiTro
+                    VaiTro = vaiTro,
+                    NamHoc = namHoc
                 });
             }
 
@@ -1609,6 +1614,114 @@ namespace TeacherManagement.Repository
             sqlDataAdapter.Fill(dataTable);
         }
 
+        #endregion
+
+        #region Thêm thông hướng dẫn giáo viên
+        public void ThemChiTietHuongDan(ChiTietHuongDanDTO chiTietHuongDanDTO)
+        {
+            if (chiTietHuongDanDTO.TenDeTai == null)
+            {
+                chiTietHuongDanDTO.TenDeTai = "";
+            }
+            SqlCommand conn = new SqlCommand("dbo.ThemChiTietHuongDan", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = chiTietHuongDanDTO.MaGV;
+            conn.Parameters.Add("@MaHocVien", SqlDbType.Int).Value = chiTietHuongDanDTO.MaHocVien;
+            conn.Parameters.Add("@TenDeTai", SqlDbType.NVarChar).Value = chiTietHuongDanDTO.TenDeTai;
+            conn.Parameters.Add("@SoGio", SqlDbType.Float).Value = chiTietHuongDanDTO.SoGio;
+            conn.Parameters.Add("@NamHoc", SqlDbType.Char).Value = chiTietHuongDanDTO.NamHoc;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+        }
+        #endregion
+
+
+        #region Thêm thông tin tham gia hội đồng
+        public void ThemChiTietThamGiaHoiDong(ChiTietThamGiaHoiDongDTO chiTietThamGiaHoiDongDTO)
+        {
+            if (chiTietThamGiaHoiDongDTO.GhiChu == null)
+            {
+                chiTietThamGiaHoiDongDTO.GhiChu = "";
+            }
+            SqlCommand conn = new SqlCommand("dbo.ThemChiTietThamGiaHoiDong", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = chiTietThamGiaHoiDongDTO.MaGV;
+            conn.Parameters.Add("@MaHoiDong", SqlDbType.Int).Value = chiTietThamGiaHoiDongDTO.MaHoiDong;
+            conn.Parameters.Add("@GhiChu", SqlDbType.NVarChar).Value = chiTietThamGiaHoiDongDTO.GhiChu;
+            conn.Parameters.Add("@SoLanThamGia", SqlDbType.Int).Value = chiTietThamGiaHoiDongDTO.SoLanThamGia;
+            conn.Parameters.Add("@SoGio", SqlDbType.Float).Value = chiTietThamGiaHoiDongDTO.SoGio;
+            conn.Parameters.Add("@NamHoc", SqlDbType.Char).Value = chiTietThamGiaHoiDongDTO.NamHoc;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+        }
+        #endregion
+
+
+        #region Thêm thông tin tham gia công tác khác
+        public void ThemChiTietThamGiaCongTacKhac(ChiTietCongTacKhacDTO chiTietCongTacKhacDTO)
+        {
+            if (chiTietCongTacKhacDTO.GhiChu == null)
+            {
+                chiTietCongTacKhacDTO.GhiChu = "";
+            }
+            if (chiTietCongTacKhacDTO.VaiTro == null)
+            {
+                chiTietCongTacKhacDTO.VaiTro = "";
+            }
+            SqlCommand conn = new SqlCommand("dbo.ThemChiTietCongTacKhac", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = chiTietCongTacKhacDTO.MaGV;
+            conn.Parameters.Add("@MaCongTac", SqlDbType.Int).Value = chiTietCongTacKhacDTO.MaCongTac;
+            conn.Parameters.Add("@GhiChu", SqlDbType.NVarChar).Value = chiTietCongTacKhacDTO.GhiChu;
+            conn.Parameters.Add("@VaiTro", SqlDbType.NVarChar).Value = chiTietCongTacKhacDTO.VaiTro;
+            conn.Parameters.Add("@NamHoc", SqlDbType.Char).Value = chiTietCongTacKhacDTO.NamHoc;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+        }
+        #endregion
+
+
+        #region Thêm thông tin tham gia giảng dạy
+        public void ThemChiTietThamGiaGiangDay(ChiTietGiangDayDTO chiTietGiangDayDTO)
+        {
+            SqlCommand conn = new SqlCommand("dbo.ThemChiTietGiangDay", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = chiTietGiangDayDTO.MaGV;
+            conn.Parameters.Add("@MaLop", SqlDbType.Int).Value = chiTietGiangDayDTO.MaLop;
+            conn.Parameters.Add("@SoTiet", SqlDbType.Int).Value = chiTietGiangDayDTO.SoTiet;
+            conn.Parameters.Add("@MaLoaiGiangDay", SqlDbType.Int).Value = chiTietGiangDayDTO.MaLoaiGiangDay;
+            conn.Parameters.Add("@NamHoc", SqlDbType.Char).Value = chiTietGiangDayDTO.NamHoc;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+        }
         #endregion
     }
 }
