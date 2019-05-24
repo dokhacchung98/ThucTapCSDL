@@ -78,6 +78,9 @@ namespace TeacherManagement.Controllers
 
             var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(id));
 
+            var ngoaiNgu = _repository.LayThongTinNgoaiNgu(Convert.ToInt32(id));
+            ViewBag.LayThongTinNgoaiNgu = ngoaiNgu;
+
             return PartialView("_QuaTrinhHocTap", giaoVien);
         }
 
@@ -281,7 +284,31 @@ namespace TeacherManagement.Controllers
             return RedirectToAction("Index");
          }
 
+        public ActionResult SuaQuaTrinhHocVan(string id)
+        {
+            TBGiaoVien giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(id));
+
+            var d = tBHocHamRepository.DanhSachHocHam();
+
+            ViewBag.DanhSachHocHam = new SelectList(d, "MaHocHam", "TenHocHam");
+
+            var danhSachHocVi = tBHocViRepository.DanhSachHocVi();
+            ViewBag.DanhSachHocVi = new SelectList(danhSachHocVi, "MaHocVi", "TenHocVi");
+
+            var danhSachDonVi = tBDonViRepository.DanhSachDonViHienNay();
+            ViewBag.DanhSachDonVi = new SelectList(danhSachDonVi, "MaDonVi", "TenDonVi");
+
+            var danhSachChucVuChuyenMon = tBChucVuChuyenMonRepository.DanhSachChucVuChuyenMon();
+            ViewBag.DanhSachChucVuChuyenMon = new SelectList(danhSachChucVuChuyenMon, "MaChucVuCM", "TenChuVuCM");
+
+            var danhSachChucVuChinhQuyen = tBChucVuChinhQuyenRepository.DanhSachChucVuChinhQuyen();
+            ViewBag.DanhSachChucVuChinhQuyen = new SelectList(danhSachChucVuChinhQuyen, "MaChucVuChinhQuyen", "TenChucVuChinhQuyen");
+
+            return PartialView("_SuaThongTinGiaoVien", giaoVien);
+        }
+
         #endregion
+
         #region Công tác nghiên cứu khoa học
         public PartialViewResult CongTacNghienCuuKH(string id)
         {
@@ -347,9 +374,9 @@ namespace TeacherManagement.Controllers
             };
 
             _NCKHRepository.ThemVietSachChuyenKhao(vietSach);
+            
             var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(maGV));
-
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Detail", "TBGiaoVien", new { id = maGV });
         }
 
         [HttpPost]
@@ -381,7 +408,7 @@ namespace TeacherManagement.Controllers
             _NCKHRepository.ThemVietBaiBao(vietBaiBao);
             var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(maGV));
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Detail", "TBGiaoVien", new { id = maGV });
         }
 
         [HttpPost]
@@ -411,8 +438,96 @@ namespace TeacherManagement.Controllers
             _NCKHRepository.ThemLamDeTaiKhoaHoc(vietDeTai);
             var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(maGV));
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Detail", "TBGiaoVien", new { id = maGV });
         }
+        #endregion
+
+        #region Thêm quá trình học tập
+        public PartialViewResult SuaQuaTrinhHocTap(string id)
+        {
+            var daiHoc = _repository.LayThongTinDaiHoc(Convert.ToInt32(id));
+            ViewBag.LayThongTinDaiHoc = daiHoc;
+
+            var thacSi = _repository.LayThongTinThacSi(Convert.ToInt32(id));
+            ViewBag.LayThongTinThacSi = thacSi;
+
+            var tienSi = _repository.LayThongTinTienSi(Convert.ToInt32(id));
+            ViewBag.LayThongTinTienSi = tienSi;
+
+            var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(id));
+            return PartialView("_SuaQuaTrinhHocTap", giaoVien);
+        }
+
+
+        [HttpPost]
+        public ActionResult ThemGiaoVienDaiHoc(string maGV)
+        {
+            string nganhHoc = Request.Form["NganhDaiHoc"];
+            string heHoc = Request.Form["HeDaiHoc"];
+            string noiHoc = Request.Form["NoiDaiHoc"];
+            string nuocHoc = Request.Form["NuocDaiHoc"];
+            string namTotNghiep = Request.Form["NamTotNghiep"];
+
+            GiaoVienDaiHocDTO newDaiHoc = new GiaoVienDaiHocDTO
+            {
+                MaGV = Convert.ToInt32(maGV),
+                NganhHoc = nganhHoc,
+                HeDaoTao = heHoc,
+                NoiDaoTao = noiHoc,
+                NuocDaoTao = nuocHoc,
+                NamTotNghiep = Convert.ToDateTime(namTotNghiep)
+            };
+
+            _repository.ThemDaiHoc(newDaiHoc);
+
+            var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(maGV));
+            return RedirectToAction("Update", "TBGiaoVien", new { id = maGV });
+        }
+
+        [HttpPost]
+        public ActionResult ThemGiaoVienThacSi(string maGV)
+        {
+            string luanVan = Request.Form["LuanVan"];
+            string nganh = Request.Form["Nganh"];
+            string noiHoc = Request.Form["NoiDaoTao"];
+            string namCapBang = Request.Form["NamCB"];
+
+            GiaoVienThacSiDTO newThacSi = new GiaoVienThacSiDTO
+            {
+                MaGV = Convert.ToInt32(maGV),
+                TenLuanVan = luanVan,
+                ThacSyChuyenNganh = nganh,
+                NoiDaoTao = noiHoc,
+                NamCapBang = Convert.ToDateTime(namCapBang)
+            };
+
+            _repository.ThemThacSi(newThacSi);
+
+            var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(maGV));
+            return RedirectToAction("Update", "TBGiaoVien", new { id = maGV });
+        }
+
+        [HttpPost]
+        public ActionResult ThemGiaoVienTienSi(string maGV)
+        {
+            string luanAn = Request.Form["LuanAn"];
+            string noiHoc = Request.Form["NoiDaoTao"];
+            string namCapBang = Request.Form["NamCB"];
+
+            GiaoVienTienSiDTO newTienSi = new GiaoVienTienSiDTO
+            {
+                MaGV = Convert.ToInt32(maGV),
+                TenLuanAn = luanAn,
+                NoiDaoTao = noiHoc,
+                NamCapBang = Convert.ToDateTime(namCapBang)
+            };
+
+            _repository.ThemTienSi(newTienSi);
+
+            var giaoVien = _repository.LayGiaoVienTheoMaGV(Convert.ToInt32(maGV));
+            return RedirectToAction("Update", "TBGiaoVien", new { id = maGV });
+        }
+
         #endregion
     }
 }

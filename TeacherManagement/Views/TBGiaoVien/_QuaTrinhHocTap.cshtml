@@ -5,8 +5,9 @@
 
 @{
     List<GiaoVienDaiHocDTO> giaoVienDaiHocDTO = ViewBag.LayThongTinDaiHoc;
-    GiaoVienThacSiDTO giaoVienThacSiDTO = ViewBag.LayThongTinThacSi;
-    GiaoVienTienSiDTO giaoVienTienSiDTO = ViewBag.LayThongTinTienSi;
+    List<GiaoVienThacSiDTO> giaoVienThacSiDTO = ViewBag.LayThongTinThacSi;
+    List<GiaoVienTienSiDTO> giaoVienTienSiDTO = ViewBag.LayThongTinTienSi;
+    List<GiaoVienTrinhDoNgoaiNguDTO> giaoVienTrinhDoNgoaiNguDTOs = ViewBag.LayThongTinNgoaiNgu;
 }
 
 <div class="container mb-4 main-container">
@@ -51,12 +52,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>@giaoVienThacSiDTO.ThacSyChuyenNganh</th>
-                        <th>@giaoVienThacSiDTO.TenLuanVan</th>
-                        <th>@Html.FormatDateTime2Date(@giaoVienThacSiDTO.NamCapBang)</th>
-                        <td>@giaoVienThacSiDTO.NoiDaoTao</td>
-                    </tr>
+                    @foreach (var item in giaoVienThacSiDTO)
+                    {
+                        <tr>
+                            <th>@item.ThacSyChuyenNganh</th>
+                            <th>@item.TenLuanVan</th>
+                            <th>@Html.FormatDateTime2Date(item.NamCapBang)</th>
+                            <td>@item.NoiDaoTao</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
         }
@@ -72,13 +76,38 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>@giaoVienTienSiDTO.TenLuanAn</th>
-                        <th>@Html.FormatDateTime2Date(@giaoVienTienSiDTO.NamCapBang)</th>
-                        <th>@giaoVienTienSiDTO.NoiDaoTao</th>
-                    </tr>
+                    @foreach (var item in giaoVienTienSiDTO)
+                    {
+                        <tr>
+                            <th>@item.TenLuanAn</th>
+                            <th>@Html.FormatDateTime2Date(item.NamCapBang)</th>
+                            <th>@item.NoiDaoTao</th>
+                        </tr>
+                    }
                 </tbody>
             </table>
         }
+
+        @if (giaoVienTrinhDoNgoaiNguDTOs != null)
+        {
+            <div class="title-sub-part">IV. Ngoại ngữ</div>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Tên trình độ</th>
+                        <th scope="col">Năm cấp bằng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in giaoVienTrinhDoNgoaiNguDTOs)
+                    {
+                        <tr>
+                            <th>@item.TenTrinhDo</th>
+                            <th>@Html.FormatDateTime2Date(item.NamCapBang)</th>
+                        </tr>
+                    }
+                </tbody>
+                </table>
+            }
     </div>
 </div>

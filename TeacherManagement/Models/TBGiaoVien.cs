@@ -32,6 +32,7 @@ namespace TeacherManagement.Models
             TBDeTaiNghienCuuKHs = new HashSet<TBDeTaiNghienCuuKH>();
             TBVietBaiBaoKhoaHocs = new HashSet<TBVietBaiBaoKhoaHoc>();
             TBVietSachChuyenKhaos = new HashSet<TBVietSachChuyenKhao>();
+            TBChiTietTrinhDoNgoaiNgus = new HashSet<TBChiTietTrinhDoNgoaiNgu>();
         }
 
         [Key]
