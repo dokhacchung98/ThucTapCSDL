@@ -222,7 +222,7 @@ namespace TeacherManagement.Repository
             conn.Parameters.Add("@maGV", SqlDbType.Int).Value = giaoVienVietSach.MaGV;
             conn.Parameters.Add("@soTrang", SqlDbType.Int).Value = giaoVienVietSach.SoTrang;
             conn.Parameters.Add("@maVaiTro", SqlDbType.Int).Value = Convert.ToInt32(giaoVienVietSach.VaiTro.Substring(0, 1));
-            conn.Parameters.Add("@maHinhThuc", SqlDbType.Int).Value = Convert.ToInt32(giaoVienVietSach.LoaiHinh.Substring(0, 1));
+            conn.Parameters.Add("@maHinhThuc", SqlDbType.Int).Value = Convert.ToInt32(giaoVienVietSach.LoaiHinh.Split('.')[0]);
             conn.Parameters.Add("@namHoc", SqlDbType.Char).Value = giaoVienVietSach.NamHoc;
             _connection.Open();
 

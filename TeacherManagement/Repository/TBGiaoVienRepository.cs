@@ -162,37 +162,59 @@ namespace TeacherManagement.Repository
 
             // lay thong tin thac si
 
-            GiaoVienThacSiDTO giaoVienThacSiDTO = LayThongTinThacSi(giaoVienId);
+            List<GiaoVienThacSiDTO> giaoVienThacSiDTO = LayThongTinThacSi(giaoVienId);
             List<TBChiTietThacSi> tBChiTietThacSis = new List<TBChiTietThacSi>();
             if (giaoVienThacSiDTO != null)
             {
-                tBChiTietThacSis.Add(
+                foreach (GiaoVienThacSiDTO item in giaoVienThacSiDTO)
+                {
+                    tBChiTietThacSis.Add(
                 new TBChiTietThacSi
                 {
-                    MaGV = giaoVienThacSiDTO.MaGV,
-                    NamCapBang = giaoVienThacSiDTO.NamCapBang,
-                    TenLuanVan = giaoVienThacSiDTO.TenLuanVan,
-                    ThacSyChuyenNganh = giaoVienThacSiDTO.ThacSyChuyenNganh,
-                    NoiDaoTao = giaoVienThacSiDTO.NoiDaoTao
+                    MaGV = item.MaGV,
+                    NamCapBang = item.NamCapBang,
+                    TenLuanVan = item.TenLuanVan,
+                    ThacSyChuyenNganh = item.ThacSyChuyenNganh,
+                    NoiDaoTao = item.NoiDaoTao
                 });
+                }
             }
 
             // lay thong tin tien si
 
-            GiaoVienTienSiDTO giaoVienTienSiDTO = LayThongTinTienSi(giaoVienId);
+            List<GiaoVienTienSiDTO> giaoVienTienSiDTO = LayThongTinTienSi(giaoVienId);
             List<TBChiTietTienSi> tBChiTietTienSis = new List<TBChiTietTienSi>();
             if (giaoVienTienSiDTO != null)
             {
-                tBChiTietTienSis.Add(
-                new TBChiTietTienSi
+                foreach (GiaoVienTienSiDTO item in giaoVienTienSiDTO)
                 {
-                    MaGV = giaoVienTienSiDTO.MaGV,
-                    NamCapBang = giaoVienTienSiDTO.NamCapBang,
-                    TenLuanAn = giaoVienTienSiDTO.TenLuanAn,
-                    NoiDaoTao = giaoVienTienSiDTO.NoiDaoTao
-                });
+                    tBChiTietTienSis.Add(
+                    new TBChiTietTienSi
+                    {
+                        MaGV = item.MaGV,
+                        NamCapBang = item.NamCapBang,
+                        TenLuanAn = item.TenLuanAn,
+                        NoiDaoTao = item.NoiDaoTao
+                    });
+                }
             }
-            
+
+            List<GiaoVienTrinhDoNgoaiNguDTO> giaoVienTrinhDoNgoaiNguDTOs = LayThongTinNgoaiNgu(giaoVienId);
+            List<TBChiTietTrinhDoNgoaiNgu> tBChiTietTrinhDoNgoaiNgus = new List<TBChiTietTrinhDoNgoaiNgu>();
+            if (giaoVienTrinhDoNgoaiNguDTOs != null)
+            {
+                foreach (GiaoVienTrinhDoNgoaiNguDTO item in giaoVienTrinhDoNgoaiNguDTOs)
+                {
+                    tBChiTietTrinhDoNgoaiNgus.Add(
+                    new TBChiTietTrinhDoNgoaiNgu
+                    {
+                        MaGV = item.MaGV,
+                        TenTrinhDo = item.TenTrinhDo,
+                        NamCapBang = item.NamCapBang
+                    });
+                }
+            }
+
 
             TBGiaoVien giaoVien = new TBGiaoVien
             {
@@ -204,7 +226,8 @@ namespace TeacherManagement.Repository
                 TBChiTietChuVuChuyenMons = tBChiTietChucVuChuyenMons,
                 TBChiTietDaiHocs = tBChiTietDaiHocs,
                 TBChiTietThacSis = tBChiTietThacSis,
-                TBChiTietTienSis = tBChiTietTienSis
+                TBChiTietTienSis = tBChiTietTienSis,
+                TBChiTietTrinhDoNgoaiNgus = tBChiTietTrinhDoNgoaiNgus
             };
             return giaoVien;
         }
@@ -733,7 +756,7 @@ namespace TeacherManagement.Repository
             return list;
         }
 
-        public GiaoVienThacSiDTO LayThongTinThacSi(int giaoVienId)
+        public List<GiaoVienThacSiDTO> LayThongTinThacSi(int giaoVienId)
         {
             SqlCommand conn = new SqlCommand("dbo.ChiTietThacSy", connection)
             {
@@ -750,20 +773,25 @@ namespace TeacherManagement.Repository
 
             if (dataTable.Rows.Count > 0)
             {
-                GiaoVienThacSiDTO thacSi = new GiaoVienThacSiDTO
+                List<GiaoVienThacSiDTO> lst = new List<GiaoVienThacSiDTO>();
+                foreach (DataRow dr in dataTable.Rows)
                 {
-                    MaGV = Convert.ToInt32(dataTable.Rows[0]["MaGV"]),
-                    NamCapBang = Convert.ToDateTime(dataTable.Rows[0]["NamCapBang"]),
-                    TenLuanVan = Convert.ToString(dataTable.Rows[0]["TenLuanVan"]),
-                    ThacSyChuyenNganh = Convert.ToString(dataTable.Rows[0]["ThacSyChuyenNganh"]),
-                    NoiDaoTao = Convert.ToString(dataTable.Rows[0]["NoiDaoTao"])
-                };
-                return thacSi;
+                    GiaoVienThacSiDTO thacSi = new GiaoVienThacSiDTO
+                    {
+                        MaGV = Convert.ToInt32(dr["MaGV"]),
+                        NamCapBang = Convert.ToDateTime(dr["NamCapBang"]),
+                        TenLuanVan = Convert.ToString(dr["TenLuanVan"]),
+                        ThacSyChuyenNganh = Convert.ToString(dr["ThacSyChuyenNganh"]),
+                        NoiDaoTao = Convert.ToString(dr["NoiDaoTao"])
+                    };
+                    lst.Add(thacSi);
+                }
+                return lst;
             }
             return null;
         }
 
-        public GiaoVienTienSiDTO LayThongTinTienSi(int giaoVienId)
+        public List<GiaoVienTienSiDTO> LayThongTinTienSi(int giaoVienId)
         {
             SqlCommand conn = new SqlCommand("dbo.ChiTietTienSy", connection)
             {
@@ -780,17 +808,56 @@ namespace TeacherManagement.Repository
 
             if (dataTable.Rows.Count > 0)
             {
-                GiaoVienTienSiDTO tienSi = new GiaoVienTienSiDTO
+                List<GiaoVienTienSiDTO> lst = new List<GiaoVienTienSiDTO>();
+                foreach (DataRow dr in dataTable.Rows)
                 {
-                    MaGV = Convert.ToInt32(dataTable.Rows[0]["MaGV"]),
-                    NamCapBang = Convert.ToDateTime(dataTable.Rows[0]["NamCapBang"]),
-                    TenLuanAn = Convert.ToString(dataTable.Rows[0]["TenLuanAn"]),
-                    NoiDaoTao = Convert.ToString(dataTable.Rows[0]["NoiDaoTao"])
-                };
-                return tienSi;
+                    GiaoVienTienSiDTO tienSi = new GiaoVienTienSiDTO
+                    {
+                        MaGV = Convert.ToInt32(dr["MaGV"]),
+                        NamCapBang = Convert.ToDateTime(dr["NamCapBang"]),
+                        TenLuanAn = Convert.ToString(dr["TenLuanAn"]),
+                        NoiDaoTao = Convert.ToString(dr["NoiDaoTao"])
+                    };
+                    lst.Add(tienSi);
+                }
+                return lst;
             }
             return null;
         }
+
+        public List<GiaoVienTrinhDoNgoaiNguDTO> LayThongTinNgoaiNgu(int giaoVienId)
+        {
+            SqlCommand conn = new SqlCommand("dbo.ChiTietNgoaiNgu", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = giaoVienId;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+
+            if (dataTable.Rows.Count > 0)
+            {
+                List<GiaoVienTrinhDoNgoaiNguDTO> lst = new List<GiaoVienTrinhDoNgoaiNguDTO>();
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    GiaoVienTrinhDoNgoaiNguDTO ngoaiNgu = new GiaoVienTrinhDoNgoaiNguDTO
+                    {
+                        MaGV = giaoVienId,
+                        TenTrinhDo = Convert.ToString(dr["TenTrinhDo"]),
+                        NamCapBang = Convert.ToDateTime(dr["NamCapBang"])
+                    };
+                    lst.Add(ngoaiNgu);
+                }
+                return lst;
+            }
+            return null;
+        }
+
         #endregion
 
         #region Thông tin tham gia hội đồng của giáo viên
@@ -1042,7 +1109,7 @@ namespace TeacherManagement.Repository
         {
             double dinhMuc;
             //string date = namHoc.Substring(0, 4).ToString() + "-05-19";
-            string date ="2018-05-19";
+            string date = "2018-05-19";
             SqlCommand conn = new SqlCommand("dbo.DinhMucNghienCuuKhoaHoc", connection)
             {
                 CommandType = CommandType.StoredProcedure,
@@ -1112,7 +1179,7 @@ namespace TeacherManagement.Repository
 
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
 
-            DataTable dataTable = new DataTable(); 
+            DataTable dataTable = new DataTable();
 
             sqlDataAdapter.Fill(dataTable);
 
@@ -1301,10 +1368,10 @@ namespace TeacherManagement.Repository
                 ThemChucVuChuyenMonGiaoVien(giaoVien.MaGV, MaChucVuChuyenMon, thoiDiemNhanCVCM);
             }
         }
-        
+
         private bool ExistHocHam(List<GiaoVienHocHamDTO> lichSuHocHam, int maHocHam)
         {
-            foreach(var hocHam in lichSuHocHam)
+            foreach (var hocHam in lichSuHocHam)
             {
                 if (hocHam.MaHocHam == maHocHam)
                 {
@@ -1476,6 +1543,72 @@ namespace TeacherManagement.Repository
 
             sqlDataAdapter.Fill(dataTable);
         }
+
+
+        #endregion
+
+        #region Thêm thông tin học vấn
+
+        public void ThemDaiHoc(GiaoVienDaiHocDTO giaoVienDaiHocDTO)
+        {
+            SqlCommand conn = new SqlCommand("dbo.ThemChiTietDaiHoc", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = giaoVienDaiHocDTO.MaGV;
+            conn.Parameters.Add("@NganhHoc", SqlDbType.Char).Value = giaoVienDaiHocDTO.NganhHoc;
+            conn.Parameters.Add("@NamTotNghiep", SqlDbType.Date).Value = giaoVienDaiHocDTO.NamTotNghiep;
+            conn.Parameters.Add("@HeDaoTao", SqlDbType.Char).Value = giaoVienDaiHocDTO.HeDaoTao;
+            conn.Parameters.Add("@NoiDaoTao", SqlDbType.Char).Value = giaoVienDaiHocDTO.NoiDaoTao;
+            conn.Parameters.Add("@NuocDaoTao", SqlDbType.Char).Value = giaoVienDaiHocDTO.NuocDaoTao;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+        }
+
+        public void ThemThacSi(GiaoVienThacSiDTO giaoVienThacSiDTO)
+        {
+            SqlCommand conn = new SqlCommand("dbo.ThemChiTietThacSi", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = giaoVienThacSiDTO.MaGV;
+            conn.Parameters.Add("@TenLuanVan", SqlDbType.Char).Value = giaoVienThacSiDTO.TenLuanVan;
+            conn.Parameters.Add("@NamCapBang", SqlDbType.Date).Value = giaoVienThacSiDTO.NamCapBang;
+            conn.Parameters.Add("@ThacSyChuyenNganh", SqlDbType.Char).Value = giaoVienThacSiDTO.ThacSyChuyenNganh;
+            conn.Parameters.Add("@NoiDaoTao", SqlDbType.Char).Value = giaoVienThacSiDTO.NoiDaoTao;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+        }
+
+        public void ThemTienSi(GiaoVienTienSiDTO giaoVienTienSiDTO)
+        {
+            SqlCommand conn = new SqlCommand("dbo.ThemChiTietTienSi", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = giaoVienTienSiDTO.MaGV;
+            conn.Parameters.Add("@TenLuanAn", SqlDbType.Char).Value = giaoVienTienSiDTO.TenLuanAn;
+            conn.Parameters.Add("@NamCapBang", SqlDbType.Date).Value = giaoVienTienSiDTO.NamCapBang;
+            conn.Parameters.Add("@NoiDaoTao", SqlDbType.Char).Value = giaoVienTienSiDTO.NoiDaoTao;
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+        }
+
         #endregion
     }
 }

@@ -147,6 +147,7 @@
     <Compile Include="DTOs\GiaoVienChucVuDangDTO.cs" />
     <Compile Include="DTOs\GiaoVienChuyenMonDTO.cs" />
     <Compile Include="DTOs\GiaoVienCongTacKhacDTO.cs" />
+    <Compile Include="DTOs\GiaoVienTrinhDoNgoaiNguDTO.cs" />
     <Compile Include="DTOs\GiaoVienVietSachDTO.cs" />
     <Compile Include="DTOs\GiaoVienCVChinhQuyenDTO.cs" />
     <Compile Include="DTOs\GiaoVienDaiHocDTO.cs" />
@@ -2036,6 +2037,7 @@
     <Content Include="Views\TBGiaoVien\_CongTacNghienCuuKH.cshtml" />
     <Content Include="Views\TBGiaoVien\_CongTacNghienCuuKHResult.cshtml" />
     <Content Include="Views\TBGiaoVien\_ThemCongTacNghienCuuKH.cshtml" />
+    <Content Include="Views\TBGiaoVien\_SuaQuaTrinhHocTap.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
