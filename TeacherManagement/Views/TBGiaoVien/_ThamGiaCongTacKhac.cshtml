@@ -7,7 +7,7 @@
     <div class="information-teacher">
         <div class="form-group">
             <label class="label">Năm Học: </label>
-            @Html.DropDownList("schoolYear", selectListSchoolYear, new { @class = "form-control text-box single-line", @id = "school-year-ctk" })
+            @Html.DropDownList("schoolYear", selectListSchoolYear, new { @class = "form-control text-box single-line", @id = "school-year-cong-tac-khac" })
             <br />
             <table class="table">
                 <thead class="thead-dark">
@@ -16,9 +16,10 @@
                         <th scope="col">Nội dung công tác</th>
                         <th scope="col">Vai trò</th>
                         <th scope="col">Ghi chú</th>
+                        <th scope="col">Năm học</th>
                     </tr>
                 </thead>
-                <tbody id="render-result-ctk"></tbody>
+                <tbody id="render-result-cong-tac-khac"></tbody>
             </table>
         </div>
     </div>
@@ -27,20 +28,20 @@
 <script>
     $(document).ready(function () {
         var value = '@selectListSchoolYear.ElementAt(0).Value';
-        callAjaxGetValueCTK(value);
+        callAjaxGetValueCongTacKHac(value);
     });
 
-    $('#school-year-ctk').change(function () {
-        var value = $('#school-year-ctk').val();
-        callAjaxGetValueCTK(value);
+    $('#school-year-cong-tac-khac').change(function () {
+        var value = $('#school-year-cong-tac-khac').val();
+        callAjaxGetValueCongTacKHac(value);
     });
 
-    function callAjaxGetValueCTK(namHoc) {
+    function callAjaxGetValueCongTacKHac(namHoc) {
         $.ajax({
             url: "/TBGiaoVien/ThamGiaCongTacKhacRenderResult?NamHoc=" + namHoc + "&id=@Model.MaGV",
             type: 'get',
             success: function (response) {
-                $('#render-result-ctk').html(response);
+                $('#render-result-cong-tac-khac').html(response);
             }
         });
     };

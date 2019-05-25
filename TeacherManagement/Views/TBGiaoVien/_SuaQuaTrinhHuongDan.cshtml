@@ -1,0 +1,97 @@
+﻿@model TeacherManagement.Models.TBGiaoVien
+@using TeacherManagement.DTOs
+@using TeacherManagement.Helpers
+
+
+@{
+    var selectListSchoolYear = ViewBag.SelectListSchoolYear as IList<SelectListItem>;
+    var selectListHocVien = ViewBag.SelectListHocVien as IList<SelectListItem>;
+    int i = 1;
+}
+<div class="title-part">Tham Gia Hướng Dẫn</div>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Học viên</th>
+            <th scope="col">Đề tài</th>
+            <th scope="col">Lớp hướng dẫn</th>
+            <th scope="col">Loại hướng dẫn</th>
+            <th scope="col">Hệ đào tạo</th>
+            <th scope="col">Năm học</th>
+        </tr>
+    </thead>
+    <tbody id="render-result-huong-dan"></tbody>
+</table>
+
+
+<div class="form-group">
+    <label class="label">Học viên: </label>
+    @Html.DropDownList("huongdan-hocvien", selectListHocVien, new { @id = "huongdan-hocvien", @class = "form-control" })
+</div>
+
+<div class="form-group">
+    <label class="label">Tên đề tài: </label>
+    <input type="text" id="huongdan-tendetai" class="form-control" />
+</div>
+
+<div class="form-group">
+    <label class="label">Số giờ hướng dẫn: </label>
+    <input type="number" id="huongdan-sogio" class="form-control" />
+</div>
+
+<div class="form-group">
+    <label class="label">Năm học: </label>
+    @Html.DropDownList("huongdan-namhoc", selectListSchoolYear, new { @id = "huongdan-namhoc", @class = "form-control" })
+</div>
+
+
+<div class="form-group">
+    <input type="button" class="btn btn-dark" id="btn-submit-huong-dan" value="Thêm" />
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        callAjaxGetValueHuongDan('0');
+        //$('.huongdan-hocvien').select2({
+        //    placeholder: "",
+        //    allowClear: true,
+        //    selectOnClose: true
+        //});
+    });
+
+    function callAjaxGetValueHuongDan(namHoc) {
+        $.ajax({
+            url: "/TBGiaoVien/ThamGiaHuongDanRenderResult?NamHoc=" + namHoc + "&id=@Model.MaGV",
+            type: 'get',
+            success: function (response) {
+                $('#render-result-huong-dan').html(response);
+            }
+        });
+    };
+
+    $('#btn-submit-huong-dan').click(function () {
+var data = {
+            "MaGV": '@Model.MaGV',
+            "MaHocVien": $('#huongdan-hocvien').val(),
+            "TenDeTai": $('#huongdan-tendetai').val(),
+            "SoGio": $('#huongdan-sogio').val(),
+            "NamHoc": $('#huongdan-namhoc').val()
+        }
+
+        $.ajax({
+            url: "/TBGiaoVien/ThemQuaTrinhHuongDan",
+            type: 'post',
+            data: data,
+            success: function (response) {
+                showAlertSuccess();
+                callAjaxGetValueHuongDan('0');
+            },
+            error: function (e) {
+                showAlertFail();
+            }
+        });
+    });
+
+</script>

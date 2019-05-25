@@ -1,0 +1,97 @@
+﻿@model TeacherManagement.Models.TBGiaoVien
+@using TeacherManagement.DTOs
+@using TeacherManagement.Helpers
+
+
+@{
+    var selectListSchoolYear = ViewBag.SelectListSchoolYearHoiDong as IList<SelectListItem>;
+    var SelectListHoiDong = ViewBag.SelectListHoiDong as IList<SelectListItem>;
+}
+<div class="title-part">Tham Gia Hội Đồng</div>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Học viên</th>
+            <th scope="col">Đề tài</th>
+            <th scope="col">Lớp hướng dẫn</th>
+            <th scope="col">Loại hướng dẫn</th>
+            <th scope="col">Hệ đào tạo</th>
+            <th scope="col">Năm học</th>
+        </tr>
+    </thead>
+    <tbody id="render-result-hoi-dong"></tbody>
+</table>
+
+
+<div class="form-group">
+    <label class="label">Hội đồng: </label>
+    @Html.DropDownList("hoidong-hoidong", SelectListHoiDong, new { @id = "hoidong-hoidong", @class = "form-control" })
+</div>
+
+<div class="form-group">
+    <label class="label">Số lần tham gia: </label>
+    <input type="number" id="hoidong-solanthamgia" class="form-control" />
+</div>
+
+<div class="form-group">
+    <label class="label">Số giờ: </label>
+    <input type="number" id="hoidong-sogio" class="form-control" />
+</div>
+
+<div class="form-group">
+    <label class="label">Ghi chú: </label>
+    <input type="text" id="hoidong-ghichu" class="form-control" />
+</div>
+
+<div class="form-group">
+    <label class="label">Năm học: </label>
+    @Html.DropDownList("hoidong-namhoc", selectListSchoolYear, new { @id = "hoidong-namhoc", @class = "form-control" })
+</div>
+
+
+<div class="form-group">
+    <input type="button" class="btn btn-dark" id="btn-submit-hoi-dong" value="Thêm" />
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        callAjaxGetValuehoidong('0');
+    });
+
+    function callAjaxGetValuehoidong(namHoc) {
+        $.ajax({
+            url: "/TBGiaoVien/ThamGiaHoiDongRenderResult?NamHoc=" + namHoc + "&id=@Model.MaGV",
+            type: 'get',
+            success: function (response) {
+                $('#render-result-hoi-dong').html(response);
+            }
+        });
+    };
+
+    $('#btn-submit-hoi-dong').click(function () {
+        var data = {
+            "MaGV": '@Model.MaGV',
+            "MaHoiDong": $('#hoidong-hoidong').val(),
+            "SoLanThamGia": $('#hoidong-solanthamgia').val(),
+            "SoGio": $('#hoidong-sogio').val(),
+            "GhiChu": $('#hoidong-ghichu').val(),
+            "NamHoc": $('#hoidong-namhoc').val()
+        }
+
+        $.ajax({
+            url: "/TBGiaoVien/ThemQuaTrinhThamGiaHoiDong",
+            type: 'post',
+            data: data,
+            success: function (response) {
+                showAlertSuccess();
+                callAjaxGetValuehoidong('0');
+            },
+            error: function (e) {
+                showAlertFail();
+            }
+        });
+    });
+
+</script>

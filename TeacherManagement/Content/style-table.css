@@ -1,0 +1,7 @@
+﻿table tbody tr{
+    background:#fff;
+}
+
+table tbody tr:hover{
+    background:#cacaca;
+}

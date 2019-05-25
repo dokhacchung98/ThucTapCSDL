@@ -5,13 +5,12 @@ using System.Web;
 
 namespace TeacherManagement.DTOs
 {
-    public class GiaoVienCongTacKhacDTO
+    public class ChiTietHuongDanDTO
     {
-        public int Ma { get; set; }
         public int MaGV { get; set; }
-        public string NoiDungCongTac { get; set; }
-        public string VaiTro { get; set; }
-        public string GhiChu { get; set; }
+        public int MaHocVien { get; set; }
+        public string TenDeTai { get; set; }
+        public float SoGio { get; set; }
         public string NamHoc { get; set; }
     }
 }

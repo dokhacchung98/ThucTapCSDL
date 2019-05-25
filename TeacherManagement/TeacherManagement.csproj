@@ -139,6 +139,11 @@
     <Compile Include="Controllers\TBDonViController.cs" />
     <Compile Include="Controllers\TBGiaoVienController.cs" />
     <Compile Include="Controllers\ThongKeNhanLucController.cs" />
+    <Compile Include="DTOs\ChiTietCongTacKhacDTO.cs" />
+    <Compile Include="DTOs\ChiTietGiangDayDTO.cs" />
+    <Compile Include="DTOs\ChiTietHuongDanDTO.cs" />
+    <Compile Include="DTOs\ChiTietThamGiaHoiDongDTO.cs" />
+    <Compile Include="DTOs\CongTacKhacsDTO.cs" />
     <Compile Include="DTOs\DinhMucGiangDayDTO.cs" />
     <Compile Include="DTOs\DinhMucNghienCuuKHDTO.cs" />
     <Compile Include="DTOs\DonViDTO.cs" />
@@ -166,6 +171,9 @@
     <Compile Include="DTOs\GiaoVienTongHopTaiDaoTaoDTO.cs" />
     <Compile Include="DTOs\GiaoVienTongHopTaiNCKH.cs" />
     <Compile Include="DTOs\GiaoVienVietBaoDTO.cs" />
+    <Compile Include="DTOs\HocVienHuongDanDTO.cs" />
+    <Compile Include="DTOs\HoiDongDTO.cs" />
+    <Compile Include="DTOs\LopMonHocGiangDayDTO.cs" />
     <Compile Include="DTOs\ThemCongTacNCKHDTO.cs" />
     <Compile Include="DTOs\ThongKeNhanLucDTO.cs" />
     <Compile Include="Global.asax.cs">
@@ -234,6 +242,7 @@
     <Compile Include="Repository\TBDonViRepository.cs" />
     <Compile Include="Repository\TBGiaoVienRepository.cs" />
     <Compile Include="Repository\TBHocHamRepository.cs" />
+    <Compile Include="Repository\TBGiaoVienCongTacRepository.cs" />
     <Compile Include="Repository\TBHocViRepository.cs" />
     <Compile Include="Repository\ThongKeNhanSuRepository.cs" />
   </ItemGroup>
@@ -1823,6 +1832,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\style-table.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -2038,6 +2048,15 @@
     <Content Include="Views\TBGiaoVien\_CongTacNghienCuuKHResult.cshtml" />
     <Content Include="Views\TBGiaoVien\_ThemCongTacNghienCuuKH.cshtml" />
     <Content Include="Views\TBGiaoVien\_SuaQuaTrinhHocTap.cshtml" />
+    <Content Include="Views\TBGiaoVien\_SuaQuaTrinhHuongDan.cshtml" />
+    <Content Include="Views\TBGiaoVien\_SuaQuaTrinhThamGiaHoiDong.cshtml" />
+    <Content Include="Views\TBGiaoVien\_SuaQuaTrinhThamGiaCongTacKhac.cshtml" />
+    <Content Include="Views\TBGiaoVien\_SuaQuaTrinhThamGiaGiangDay.cshtml" />
+    <Content Include="Views\TBGiaoVien\XemChiTietThamGiaHoiDong.cshtml" />
+    <Content Include="Views\TBGiaoVien\XemChiTietThamGiaHuongDan.cshtml" />
+    <Content Include="Views\TBGiaoVien\XemChiTietThamGiaCTK.cshtml" />
+    <Content Include="Views\TBGiaoVien\XemChiTietThamGiaGiangDay.cshtml" />
+    <Content Include="Views\TongHop\_PartialTongHopView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
