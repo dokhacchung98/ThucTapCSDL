@@ -7,6 +7,7 @@ namespace TeacherManagement.DTOs
 {
     public class GiaoVienCongTacKhacDTO
     {
+        public int Ma { get; set; }
         public int MaGV { get; set; }
         public string NoiDungCongTac { get; set; }
         public string VaiTro { get; set; }

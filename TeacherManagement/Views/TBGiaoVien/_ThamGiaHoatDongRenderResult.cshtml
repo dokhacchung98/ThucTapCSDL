@@ -16,13 +16,13 @@ else
     {
         <tr>
             <td>@i</td>
-            <td>@(item.TenHoiDong != null ? item.TenHoiDong : "")</td>
+            <td><a href="@Url.Action("XemChiTietThamGiaHoiDong","TBGiaoVien", new { @id = item.Ma })" style="color:#000000;">@(item.TenHoiDong != null ? item.TenHoiDong : "")</a></td>
             <td>@(item.TenLoaiHoiDong != null ? item.TenLoaiHoiDong : "")</td>
             <td style="text-align:center;">@(item.SoLanThamGia)</td>
             <td style="text-align:center;">@(item.SoGioThamGia)</td>
             <td>@(item.GhiChu != null ? item.GhiChu : "")</td>
             <td>@(item.NamHoc != null ? item.NamHoc : "")</td>
-        </tr>
+        </tr>   
         i++;
     }
 }

@@ -1,0 +1,86 @@
+﻿@model TeacherManagement.Models.TBGiaoVien
+@using TeacherManagement.DTOs
+@using TeacherManagement.Helpers
+
+
+@{
+    var selectListSchoolYear = ViewBag.SelectListSchoolYearGiangDay as IList<SelectListItem>;
+    var selectListHocVien = ViewBag.SelectListLopHoc as IList<SelectListItem>;
+    int i = 1;
+}
+<div class="title-part">Tham Gia Giảng Dạy</div>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Tên học phần</th>
+            <th scope="col">Số tín chỉ</th>
+            <th scope="col">Tên đối tượng đào tạo</th>
+            <th scope="col">Số tiết dạy</th>
+            <th scope="col">Tổng số tiết</th>
+            <th scope="col">Năm học</th>
+        </tr>
+    </thead>
+    <tbody id="render-result-giangday"></tbody>
+</table>
+
+
+<div class="form-group">
+    <label class="label">Lớp môn học giảng dạy: </label>
+    @Html.DropDownList("giangday-lop", selectListHocVien, new { @id = "giangday-lop", @class = "form-control" })
+</div>
+
+<div class="form-group">
+    <label class="label">Số tiết: </label>
+    <input type="number" id="giangday-sotiet" class="form-control" />
+</div>
+
+<div class="form-group">
+    <label class="label">Năm học: </label>
+    @Html.DropDownList("giangday-namhoc", selectListSchoolYear, new { @id = "giangday-namhoc", @class = "form-control" })
+</div>
+
+<div class="form-group">
+    <input type="button" class="btn btn-dark" id="btn-submit-giangday" value="Thêm" />
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        callAjaxGetValuegiangday('0');
+    });
+
+    function callAjaxGetValuegiangday(namHoc) {
+        $.ajax({
+            url: "/TBGiaoVien/ThamGiaGiangDayRenderResult?NamHoc=" + namHoc + "&id=@Model.MaGV",
+            type: 'get',
+            success: function (response) {
+                $('#render-result-giangday').html(response);
+            }
+        });
+    };
+
+    $('#btn-submit-giangday').click(function () {
+        var data = {
+            "MaGV": '@Model.MaGV',
+            "MaLop": $('#giangday-lop').val(),
+            "SoTiet": $('#giangday-sotiet').val(),
+            "MaLoaiGiangDay": 1,
+            "NamHoc": $('#giangday-namhoc').val()
+        }
+
+        $.ajax({
+            url: "/TBGiaoVien/ThemQuaTrinhThamGiaGiangDay",
+            type: 'post',
+            data: data,
+            success: function (response) {
+                showAlertSuccess();
+                callAjaxGetValuegiangday('0');
+            },
+            error: function (e) {
+                showAlertFail();
+            }
+        });
+    });
+
+</script>

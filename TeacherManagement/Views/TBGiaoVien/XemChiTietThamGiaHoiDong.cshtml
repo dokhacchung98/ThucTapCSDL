@@ -1,0 +1,89 @@
+﻿@model TeacherManagement.Models.TBGiaoVien
+@{
+    ViewBag.Title = "Sửa thông tin";
+    var selectListSchoolYear = ViewBag.SelectListSchoolYearHoiDong as IList<SelectListItem>;
+    var SelectListHoiDong = ViewBag.SelectListHoiDong as IList<SelectListItem>;
+    var MaChiTietThamGiaHoiDong = ViewBag.MaChiTietThamGiaHoiDong;
+    var ghiChu = ViewBag.GhiChu;
+    var SoLan = ViewBag.SoLanThamGia;
+    var SoGio = ViewBag.SoGio;
+}
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="#">Quản Lý Giáo Viên</a>
+        </li>
+        <li class="breadcrumb-item active">Sửa Thông Tin Tham Gia Hội Đồng</li>
+    </ol>
+    <!-- DataTables Example -->
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            Sửa thông tin tham gia hội đồng
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("SuaThamGiaHoiDong", "TBGiaoVien", new { @maGV = Model.MaGV, @maChiTietThamGiaHoiDong = MaChiTietThamGiaHoiDong }, FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label class="label">Hội đồng: </label>
+                    @Html.DropDownList("MaHoiDong", SelectListHoiDong, new { @class = "form-control" })
+                </div>
+
+                <div class="form-group">
+                    <label class="label">Số lần tham gia: </label>
+                    <input type="text" name="SoLanThamGia" class="form-control" value="@SoLan" />
+                </div>
+
+                <div class="form-group">
+                    <label class="label">Số giờ: </label>
+                    <input type="text" name="SoGio" class="form-control" value="@SoGio" />
+                </div>
+
+                <div class="form-group">
+                    <label class="label">Ghi chú: </label>
+                    <input type="text" name="GhiChu" class="form-control" value="@ghiChu" />
+                </div>
+
+                <div class="form-group">
+                    <label class="label">Năm học: </label>
+                    @Html.DropDownList("NamHoc", selectListSchoolYear, new { @class = "form-control" })
+                </div>
+
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-dark" value="Chỉnh Sửa" />
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">
+                        Xóa tham gia hội đồng
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!-- /.container-fluid -->
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Cảnh báo</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                Bạn có chắc muốn xóa?
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <a href=@Url.Action("XoaThamGiaHoiDong", new { @maChiTiet = MaChiTietThamGiaHoiDong, @maGV = Model.MaGV}) class="btn btn-danger">Xóa tham gia hội đồng</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -7,6 +7,7 @@ namespace TeacherManagement.DTOs
 {
     public class GiaoVienHuongDanDTO
     {
+        public int Ma { get; set; }
         public int MaGV { get; set; }
         public string TenHocVien { get; set; }
         public string TenLopHuongDan { get; set; }
@@ -14,5 +15,6 @@ namespace TeacherManagement.DTOs
         public string TenLoaiHuongDan { get; set; }
         public string TenHeDaoTao { get; set; }
         public string NamHoc { get; set; }
+        public double SoGio { get; set; }
     }
 }

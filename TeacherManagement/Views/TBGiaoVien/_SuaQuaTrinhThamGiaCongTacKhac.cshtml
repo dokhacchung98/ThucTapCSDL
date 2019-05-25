@@ -1,0 +1,90 @@
+﻿@model TeacherManagement.Models.TBGiaoVien
+@using TeacherManagement.DTOs
+@using TeacherManagement.Helpers
+
+
+@{
+    var selectListSchoolYear = ViewBag.SelectListSchoolYearCongTacKhac as IList<SelectListItem>;
+    var selectListHocVien = ViewBag.SelectListCongTacKhac as IList<SelectListItem>;
+    int i = 1;
+}
+<div class="title-part">Tham Gia Công Tác Khác</div>
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Nội dung công tác</th>
+            <th scope="col">Vai trò</th>
+            <th scope="col">Ghi chú</th>
+            <th scope="col">Năm học</th>
+        </tr>
+    </thead>
+    <tbody id="render-result-ctk"></tbody>
+</table>
+
+
+<div class="form-group">
+    <label class="label">Công tác: </label>
+    @Html.DropDownList("ctk-congtac", selectListHocVien, new { @id = "ctk-congtac", @class = "form-control" })
+</div>
+
+<div class="form-group">
+    <label class="label">Vai trò: </label>
+    <input type="text" id="ctk-vaitro" class="form-control" />
+</div>
+
+<div class="form-group">
+    <label class="label">Ghi chú: </label>
+    <input type="text" id="ctk-ghichu" class="form-control" />
+</div>
+
+<div class="form-group">
+    <label class="label">Năm học: </label>
+    @Html.DropDownList("ctk-namhoc", selectListSchoolYear, new { @id = "ctk-namhoc", @class = "form-control" })
+</div>
+
+
+<div class="form-group">
+    <input type="button" class="btn btn-dark" id="btn-submit-ctk" value="Thêm" />
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        callAjaxGetValueCTK('0');
+    });
+
+    function callAjaxGetValueCTK(namHoc) {
+        $.ajax({
+            url: "/TBGiaoVien/ThamGiaCongTacKhacRenderResult?NamHoc=" + namHoc + "&id=@Model.MaGV",
+            type: 'get',
+            success: function (response) {
+                $('#render-result-ctk').html(response);
+            }
+        });
+    };
+
+    $('#btn-submit-ctk').click(function () {
+        var data = {
+            "MaGV": '@Model.MaGV',
+            "MaCongTac": $('#ctk-congtac').val(),
+            "VaiTro": $('#ctk-vaitro').val(),
+            "GhiChu": $('#ctk-ghichu').val(),
+            "NamHoc": $('#ctk-namhoc').val()
+        }
+
+        $.ajax({
+            url: "/TBGiaoVien/ThemQuaTrinhThamGiaCongTacKhac",
+            type: 'post',
+            data: data,
+            success: function (response) {
+                showAlertSuccess();
+                callAjaxGetValueCTK('0');
+            },
+            error: function (e) {
+                showAlertFail();
+            }
+        });
+    });
+
+</script>
