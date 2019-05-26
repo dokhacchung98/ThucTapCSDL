@@ -1334,13 +1334,32 @@ namespace TeacherManagement.Repository
 
         public GiaoVienTongHopTaiNCKH TongHopTaiNCKHCuaGiaoVienTheoNamHoc(int maGV, string namHoc)
         {
-            SqlCommand conn = new SqlCommand("dbo.TinhTaiCongTacNghienCuuKhoaHoc", connection)
+            double taiVietSach = TaiVietSach(maGV, namHoc);
+            double taiVietBao = TaiVietBao(maGV, namHoc);
+            double taiNghienCuu = TaiNghienCuu(maGV, namHoc);
+
+            var giaoVien = LayGiaoVienTheoMaGV(maGV);
+
+            GiaoVienTongHopTaiNCKH taiNCKH = new GiaoVienTongHopTaiNCKH()
+            {
+                MaGV = giaoVien.MaGV,
+                TenGV = giaoVien.TenGV,
+                SoTaiYeuCau = LayDinhMucNCKH(maGV, namHoc),
+                SoTaiNCKHThucTe = taiVietSach + taiVietBao + taiNghienCuu
+            };
+            return taiNCKH;
+        }
+
+        public double TaiVietSach(int maGV, string namHoc)
+        {
+            int taiVietSach = 0;
+            SqlCommand conn = new SqlCommand("dbo.ChiTietVietSachChuyenKhao", connection)
             {
                 CommandType = CommandType.StoredProcedure,
             };
 
-            conn.Parameters.Add("@magv", SqlDbType.Int).Value = maGV;
-            conn.Parameters.Add("@nam", SqlDbType.Char).Value = namHoc.Trim();
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@NamHoc", SqlDbType.Char).Value = namHoc.Trim();
 
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
 
@@ -1350,17 +1369,66 @@ namespace TeacherManagement.Repository
 
             if (dataTable.Rows.Count > 0)
             {
-                GiaoVienTongHopTaiNCKH taiNCKH = new GiaoVienTongHopTaiNCKH()
+                foreach (DataRow dr in dataTable.Rows)
                 {
-                    MaGV = Convert.ToInt32(dataTable.Rows[0]["MaGV"]),
-                    TenGV = Convert.ToString(dataTable.Rows[0]["TenGV"]),
-                    SoTaiYeuCau = LayDinhMucNCKH(maGV, namHoc),
-                    SoTaiNCKHThucTe = Convert.ToDouble(dataTable.Rows[0]["TaiVietSach"]) + Convert.ToDouble(dataTable.Rows[0]["TaiVietBaiBao"]) +
-                                        Convert.ToDouble(dataTable.Rows[0]["TaiNghienCuu"])
-                };
-                return taiNCKH;
+                    taiVietSach += Convert.ToInt32(dr["QuyRaGioChuan"]);
+                }
             }
-            return null;
+            return taiVietSach;
+        }
+
+        public double TaiVietBao(int maGV, string namHoc)
+        {
+            int taiVietBao = 0;
+            SqlCommand conn = new SqlCommand("dbo.ChiTietVietBaiBaoKhoaHoc", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@NamHoc", SqlDbType.Char).Value = namHoc.Trim();
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+
+            if (dataTable.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    taiVietBao += Convert.ToInt32(dr["QuyRaGioChuan"]);
+                }
+            }
+            return taiVietBao;
+        }
+
+        public double TaiNghienCuu(int maGV, string namHoc)
+        {
+            int taiNghienCuu = 0;
+            SqlCommand conn = new SqlCommand("dbo.ChiTietDeTaiNghienCuuKhoaHoc", connection)
+            {
+                CommandType = CommandType.StoredProcedure,
+            };
+
+            conn.Parameters.Add("@MaGV", SqlDbType.Int).Value = maGV;
+            conn.Parameters.Add("@NamHoc", SqlDbType.Char).Value = namHoc.Trim();
+
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(conn);
+
+            DataTable dataTable = new DataTable();
+
+            sqlDataAdapter.Fill(dataTable);
+
+            if (dataTable.Rows.Count > 0)
+            {
+                foreach (DataRow dr in dataTable.Rows)
+                {
+                    taiNghienCuu += Convert.ToInt32(dr["QuyRaGioChuan"]);
+                }
+            }
+            return taiNghienCuu;
         }
         #endregion
 
@@ -1385,10 +1453,16 @@ namespace TeacherManagement.Repository
 
             foreach (DataRow dr in dataTable.Rows)
             {
+                string tenSach = Convert.ToString(dr["TenSach"]);
+                if(Convert.ToInt32(dr["MaLoaiSach"]) == 2 || Convert.ToInt32(dr["MaLoaiSach"]) == 3)
+                {
+                    tenSach = tenSach + " (" + Convert.ToString(dr["SoTrang"]) + " tín chỉ)";
+                }
+                else tenSach = tenSach + " (" + Convert.ToString(dr["SoTrang"]) + " trang)";
                 giaoVienVietSachDTOs.Add(new GiaoVienVietSachDTO()
                 {
                     MaGV = maGV,
-                    TenSach = Convert.ToString(dr["TenSach"]),
+                    TenSach = tenSach,
                     LoaiSach = Convert.ToString(dr["TenLoaiSach"]),
                     VaiTro = Convert.ToString(dr["TenVaiTro"]),
                     LoaiHinh = Convert.ToString(dr["TenLoaiHinh"]),
